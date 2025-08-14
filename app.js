@@ -11,7 +11,7 @@ const data = {
         productivity: [
             {"name": "Drive Folder/File Listing Tool", "description": "Track and manage action items with priority levels", "url": "https://docs.google.com/spreadsheets/d/1hQAUfsITf9PabBQ8hQGvDjNKXSH0ot9hy_92G_kRyGs/copy"},
             {"name": "Task Tracker Reminder", "description": "Organize daily tasks with time tracking", "url": "./template/tasktracker.html"},
-            {"name": "Change Log Tracker", "description": "Monitor Cell-Level Edits Automatically!", "url": "./template/changelog.html"}
+            {"name": "Change Log Tracker", "description": "Monitor Cell-Level Edits Automatically!", "url": "./template/changelog.html"},
             {"name": "Gmail Search & Organize Tool", "description": "Track employee work hours and overtime", "url": "https://docs.google.com/spreadsheets/d/1pBYwtRYjd6SFXaZ6O9JkrcJzc96vfH_z9eHrG1zJWGg/copy"},
             {"name": "Gmail To Sheet Extractor Tool", "description": "Search, Export, and Clean Your Inbox in One Click!", "url": "./template/gmailtosheet.html"},
             {"name": "Send Email from Sheet", "description": "Plan your day with time blocks and priorities", "url": "https://docs.google.com/spreadsheets/d/1mSACwzIh69jN7UkacGdh7wscNAW5yr6uGYiBMAljXoQ/copy"},
@@ -21,7 +21,7 @@ const data = {
         business: [
             {"name": "Precious Metal Transaction Sheet", "description": "Track sales performance and pipeline", "url": "https://docs.google.com/spreadsheets/d/1_Q0z5tQDbGX5-8uAPHsudvYH8uxFdjHx/copy"},
             {"name": "Real-Time NSE Dashboard", "description": "Monitor business expenses by category", "url": "https://docs.google.com/spreadsheets/d/170G-ir3p0u3LYGcjCf0f_HPxDgn7CwFrGfMfhhZcNIs/copy"},
-            {"name": "Inventory Management System with Reminder", "description": "Professional invoice generation template",  "url": "./template/inventory.html"},
+            {"name": "Inventory Management System with Reminder", "description": "Professional invoice generation template", "url": "./template/inventory.html"},
             {"name": "Bulk Invoice Generator", "description": "Create and manage purchase orders", "url": "https://docs.google.com/spreadsheets/d/1hQnOOubhbWVSGcJ_6RAao7aBSZugitMmzubGMxwMO50/copy"},
             {"name": "Smart Tab Generator", "description": "Calculate employee payroll and deductions", "url": "./template/smarttab.html"},
             {"name": "Shared Materials Tracker", "description": "Track assets, liabilities, and equity", "url": "./template/sharedmaterial.html"},
@@ -40,36 +40,35 @@ const data = {
     },
     tools: {
         'file-tools': [
-            {"name": "PDF Combiner & Extractor", "description": "Merge multiple PDF files into one", "url": "./tools/pdf merge/index.html"},
-            {"name": "Excel Converter", "description": "Extract specific pages from PDF files", "url": "./tools/excel convertor/index.html"},
-            {"name": "Text Cleaner", "description": "Split PDF files into separate documents", "url": "./tools/Cleaner/index.html"},
-            {"name": "File Rename and Organizer", "description": "Reduce PDF file size while maintaining quality", "url": "./tools/File rename and organise/index.html"}
+            {"name": "PDF Combiner & Extractor", "description": "Merge multiple PDF files into one", "url": "./tools/pdf-merge/index.html"},
+            {"name": "Excel Converter", "description": "Extract specific pages from PDF files", "url": "./tools/excel-converter/index.html"},
+            {"name": "Text Cleaner", "description": "Split PDF files into separate documents", "url": "./tools/cleaner/index.html"},
+            {"name": "File Rename and Organizer", "description": "Reduce PDF file size while maintaining quality", "url": "./tools/file-rename-and-organizer/index.html"}
         ],
         'business-tools': [
-            {"name": "Image Resizer", "description": "Convert text to natural speech audio", "url": "./tools/image resizer/index.html"},
-            {"name": "Units Converter", "description": "Generate QR codes for text, URLs, and data", "url": "./tools/units calculator/index.html"},
+            {"name": "Image Resizer", "description": "Convert text to natural speech audio", "url": "./tools/image-resizer/index.html"},
+            {"name": "Units Converter", "description": "Generate QR codes for text, URLs, and data", "url": "./tools/units-converter/index.html"},
             {"name": "Data Extractor", "description": "Create secure passwords with custom options", "url": "./tools/extraction/index.html"},
-            {"name": "Finance Resume Parser", "description": "Generate color schemes for design projects", "url": "./tools/Finance Job Match/index.html"},
-            {"name": "Hotel Guest Management", "description": "Convert between different units of measurement", "url": "./tools/hotel guest management/index.html"},
+            {"name": "Finance Resume Parser", "description": "Generate color schemes for design projects", "url": "./tools/finance-job-match/index.html"},
+            {"name": "Hotel Guest Management", "description": "Convert between different units of measurement", "url": "./tools/hotel-guest-management/index.html"},
 	    {"name": "Smartsheet Guard", "description": "Protect Your Data", "url": "./tools/smartsheet.html"}
-
         ],
         'lifestyle-tools': [
-            {"name": "Password Remover", "description": "Convert files between different formats", "url": "./tools/password remover/index.html"},
-            {"name": "Meal Idea", "description": "Remove backgrounds from images automatically", "url": "./tools/meal idea/index.html"},
-            {"name": "Habit Tracker", "description": "Create short links for long URLs", "url": "./tools/habit tracker/index.html"},
-            {"name": "Experienced Resume Builder", "description": "Generate various types of barcodes", "url": "./tools/Experienced Resume Builder/index.html"}
+            {"name": "Password Remover", "description": "Convert files between different formats", "url": "./tools/password-remover/index.html"},
+            {"name": "Meal Idea", "description": "Remove backgrounds from images automatically", "url": "./tools/meal-idea/index.html"},
+            {"name": "Habit Tracker", "description": "Create short links for long URLs", "url": "./tools/habit-tracker/index.html"},
+            {"name": "Experienced Resume Builder", "description": "Generate various types of barcodes", "url": "./tools/experienced-resume-builder/index.html"}
         ]
     },
     games: {
         'puzzle-games': [
             {"name": "Wordle Game", "description": "Slide numbered tiles to reach 2048", "url": "https://docs.google.com/spreadsheets/d/1r8gBRx5Prm-du-VoMfOaW06oCghy8o10G6bMY9FDmEQ/copy"},
             {"name": "Memory Game", "description": "Classic number puzzle game", "url": "./games/memory/index.html"},
-            {"name": "Tic Tac Toe", "description": "Find hidden words in letter grid", "url": "./games/tic tac toe/index.html"}
+            {"name": "Tic Tac Toe", "description": "Find hidden words in letter grid", "url": "./games/tic-tac-toe/index.html"}
         ],
         'arcade-games': [
-            {"name": "Blocks Game", "description": "Guide the snake to eat food and grow", "url": "./games/blocks game/index.html"},
-            {"name": "Billiards Game", "description": "Classic arcade maze game", "url": "./games/billiard/index.html"}
+            {"name": "Blocks Game", "description": "Guide the snake to eat food and grow", "url": "./games/blocks-game/index.html"},
+            {"name": "Billiards Game", "description": "Classic arcade maze game", "url": "./games/billiards-game/index.html"}
         ]
     }
 };
@@ -421,4 +420,5 @@ if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initializeApp);
 } else {
     initializeApp();
+}
 }
