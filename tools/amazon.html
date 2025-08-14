@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <title>Top 5 Amazon Deals</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4; }
     h1 { color: #ff6600; }
     ul { list-style-type: none; padding: 0; }
-    li { background: #f9f9f9; margin: 10px 0; padding: 10px; border-radius: 8px; }
+    li { background: #fff; margin: 10px 0; padding: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
     a { text-decoration: none; color: #0073e6; font-weight: bold; }
     a:hover { text-decoration: underline; }
   </style>
@@ -16,39 +16,35 @@
 
 <h1>Top 5 Amazon Deals</h1>
 <p>Updated daily from IndiaDesiDeals feed</p>
-<ul id="deals-list"></ul>
+<ul id="deals-list"><li>Loading deals...</li></ul>
 
 <script>
 const RSS_URL = "https://feeds.feedburner.com/IndiaDesiDealsAmazon";
-const API_URL = "https://api.allorigins.win/get?url=" + encodeURIComponent(RSS_URL);
+const API_URL = "https://api.allorigins.win/get?url=" + encodeURIComponent(RSS_URL) + "&callback=parseDeals";
 
-fetch(API_URL)
-  .then(response => {
-    if (!response.ok) throw new Error("Failed to fetch feed");
-    return response.json();
-  })
-  .then(data => {
-    const parser = new DOMParser();
-    const xml = parser.parseFromString(data.contents, "application/xml");
-    const items = xml.querySelectorAll("item");
-    const dealsList = document.getElementById("deals-list");
+function parseDeals(data) {
+  const parser = new DOMParser();
+  const xml = parser.parseFromString(data.contents, "application/xml");
+  const items = xml.querySelectorAll("item");
+  const dealsList = document.getElementById("deals-list");
 
-    dealsList.innerHTML = "";
+  dealsList.innerHTML = "";
 
-    items.forEach((item, index) => {
-      if (index >= 5) return; // Only top 5
-      const title = item.querySelector("title").textContent;
-      const link = item.querySelector("link").textContent;
+  items.forEach((item, index) => {
+    if (index >= 5) return; // Only top 5
+    const title = item.querySelector("title").textContent;
+    const link = item.querySelector("link").textContent;
 
-      const li = document.createElement("li");
-      li.innerHTML = `<a href="${link}" target="_blank">${title}</a>`;
-      dealsList.appendChild(li);
-    });
-  })
-  .catch(err => {
-    document.getElementById("deals-list").innerHTML = "<li>Error loading deals.</li>";
-    console.error(err);
+    const li = document.createElement("li");
+    li.innerHTML = `<a href="${link}" target="_blank">${title}</a>`;
+    dealsList.appendChild(li);
   });
+}
+
+// JSONP method
+const script = document.createElement("script");
+script.src = API_URL;
+document.body.appendChild(script);
 </script>
 
 </body>
