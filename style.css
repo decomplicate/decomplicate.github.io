@@ -72,6 +72,7 @@
   --ease-standard: ease-in-out;
 }
 
+/* Global Styles */
 body {
   font-family: var(--font-family-base);
   background-color: var(--color-background);
@@ -126,6 +127,7 @@ body {
   margin-bottom: var(--space-8);
 }
 
+/* Header */
 .header {
   background-color: var(--color-surface);
   box-shadow: var(--shadow-sm);
@@ -206,6 +208,7 @@ body {
   background: var(--color-text);
 }
 
+/* Hero */
 .hero {
   background: linear-gradient(135deg, var(--color-indigo-500), var(--color-coral-500));
   color: var(--color-white);
@@ -252,6 +255,7 @@ body {
   gap: var(--space-16);
 }
 
+/* Sections */
 .section {
   padding: var(--space-48) 0;
 }
@@ -355,6 +359,7 @@ body {
   color: var(--color-text-secondary);
 }
 
+/* About Section */
 .about__content {
   max-width: 800px;
   margin: 0 auto;
@@ -379,6 +384,7 @@ body {
   box-shadow: var(--shadow-sm);
 }
 
+/* Footer */
 .footer {
   background: var(--color-indigo-700);
   color: var(--color-gray-200);
@@ -420,6 +426,7 @@ body {
   border-radius: var(--radius-sm);
 }
 
+/* Modal */
 .modal {
   position: fixed;
   top: 0;
@@ -501,8 +508,30 @@ body {
   100% { transform: rotate(360deg); }
 }
 
-/* Responsive Design */
+/* ---------- Responsive Design Tweaks ---------- */
+
+/* Medium screens (Laptops/Tablets) */
+@media (max-width: 1024px) {
+  .categories {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+}
+
+/* Tablets & Small Laptops */
 @media (max-width: 768px) {
+  .header__content {
+    flex-wrap: wrap;
+    gap: var(--space-16);
+  }
+
+  .header__logo {
+    flex: 1 1 100%;
+  }
+
+  .header__search {
+    flex: 1 1 100%;
+  }
+
   .header__nav {
     display: none;
     flex-direction: column;
@@ -522,12 +551,15 @@ body {
     display: flex;
   }
 
-  .hero__stats, .hero__cta {
+  .hero__stats,
+  .hero__cta {
     flex-direction: column;
     gap: var(--space-16);
+    align-items: center;
   }
 
-  .categories, .about__features {
+  .categories,
+  .about__features {
     grid-template-columns: 1fr;
   }
 
@@ -536,6 +568,7 @@ body {
   }
 }
 
+/* Mobile Phones */
 @media (max-width: 480px) {
   .header__search {
     width: 100%;
@@ -548,5 +581,9 @@ body {
 
   .section__header h2 {
     font-size: var(--font-size-lg);
+  }
+
+  .footer__content {
+    text-align: center;
   }
 }
