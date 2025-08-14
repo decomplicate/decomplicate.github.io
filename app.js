@@ -51,7 +51,7 @@ const data = {
             {"name": "Data Extractor", "description": "Create secure passwords with custom options", "url": "./tools/extraction/index.html"},
             {"name": "Finance Resume Parser", "description": "Generate color schemes for design projects", "url": "./tools/finance-job-match/index.html"},
             {"name": "Hotel Guest Management", "description": "Convert between different units of measurement", "url": "./tools/hotel-guest-management/index.html"},
-	    {"name": "Smartsheet Guard", "description": "Protect Your Data", "url": "./tools/smartsheet.html"}
+            {"name": "Smartsheet Guard", "description": "Protect Your Data", "url": "./tools/smartsheet.html"}
         ],
         'lifestyle-tools': [
             {"name": "Password Remover", "description": "Convert files between different formats", "url": "./tools/password-remover/index.html"},
@@ -63,7 +63,7 @@ const data = {
     games: {
         'puzzle-games': [
             {"name": "Wordle Game", "description": "Slide numbered tiles to reach 2048", "url": "https://docs.google.com/spreadsheets/d/1r8gBRx5Prm-du-VoMfOaW06oCghy8o10G6bMY9FDmEQ/copy"},
-            {"name": "Memory Game", "description": "Classic number puzzle game", "url": "./games/memory/index.html"},
+            {"name": "Memory Game", "description": "Classic number puzzle game", "url": "./games/memory-game/index.html"},
             {"name": "Tic Tac Toe", "description": "Find hidden words in letter grid", "url": "./games/tic-tac-toe/index.html"}
         ],
         'arcade-games': [
@@ -420,5 +420,4 @@ if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initializeApp);
 } else {
     initializeApp();
-}
 }
