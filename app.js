@@ -10,10 +10,10 @@ const data = {
     templates: {
         productivity: [
             {"name": "Drive Folder/File Listing Tool", "description": "Track and manage action items with priority levels", "url": "https://docs.google.com/spreadsheets/d/1hQAUfsITf9PabBQ8hQGvDjNKXSH0ot9hy_92G_kRyGs/copy"},
-            {"name": "Task Tracker Reminder", "description": "Organize daily tasks with time tracking", "url": ".template/tasktracker.html"},
-            {"name": "Change Log Tracker", "description": "Monitor Cell-Level Edits Automatically!", "url": ".template/changelog.html"}
+            {"name": "Task Tracker Reminder", "description": "Organize daily tasks with time tracking", "url": "./template/tasktracker.html"},
+            {"name": "Change Log Tracker", "description": "Monitor Cell-Level Edits Automatically!", "url": "./template/changelog.html"}
             {"name": "Gmail Search & Organize Tool", "description": "Track employee work hours and overtime", "url": "https://docs.google.com/spreadsheets/d/1pBYwtRYjd6SFXaZ6O9JkrcJzc96vfH_z9eHrG1zJWGg/copy"},
-            {"name": "Gmail To Sheet Extractor Tool", "description": "Search, Export, and Clean Your Inbox in One Click!", "url": ".template/gmailtosheet.html"},
+            {"name": "Gmail To Sheet Extractor Tool", "description": "Search, Export, and Clean Your Inbox in One Click!", "url": "./template/gmailtosheet.html"},
             {"name": "Send Email from Sheet", "description": "Plan your day with time blocks and priorities", "url": "https://docs.google.com/spreadsheets/d/1mSACwzIh69jN7UkacGdh7wscNAW5yr6uGYiBMAljXoQ/copy"},
             {"name": "GSheet Keywords Search", "description": "Collaborative task management for teams", "url": "https://docs.google.com/spreadsheets/d/1fcBaqxUPFsEfkw8dJWv_jdIArzBsBsYLeb0KwOTdBUc/copy"},
             {"name": "Pre-Filled GForm", "description": "Basic task tracking with status updates","url": "./template/gform.html"}
@@ -30,7 +30,7 @@ const data = {
         personal: [
             {"name": "WhatsApp Messaging Tool", "description": "Reminders to send messages/ wishes to friends and family", "url": "./template/whatsapp.html"},
             {"name": "BarCode & QRCode Generator", "description": "Track monthly budget vs actual spending", "url": "./template/barcode.html"},
-            {"name": "Change Font Template", "description": "Track attendance for events or meetings", "url": ".template/changefont.html"},
+            {"name": "Change Font Template", "description": "Track attendance for events or meetings", "url": "./template/changefont.html"},
             {"name": "Conditional Formatting", "description": "Manage guest lists for events", "url": "https://docs.google.com/spreadsheets/d/10YbpPdUNXxFRTSPUOwERzFX7_4hRdTVd9SbBqLhNKOw/copy"}
         ],
         education: [
