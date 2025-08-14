@@ -1,7 +1,5 @@
 // EffortlesslyDone - Complete JavaScript functionality
-document.getElementById('mobileMenuBtn').addEventListener('click', () => {
-  document.getElementById('nav').classList.toggle('mobile-open');
-});
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log('EffortlesslyDone initialized');
     initializeApp();
@@ -424,5 +422,3 @@ if (document.readyState === 'loading') {
 } else {
     initializeApp();
 }
-
-console.log('EffortlesslyDone JavaScript loaded successfully');
