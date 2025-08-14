@@ -607,3 +607,6 @@ body {
     display: flex;
   }
 }
+.footer__nav a {
+    color: yellow;
+}

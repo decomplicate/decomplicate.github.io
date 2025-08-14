@@ -57,8 +57,7 @@ const data = {
             {"name": "Password Remover", "description": "Remove passwords from multiple files in Bulk", "url": "./tools/passwordremover/index.html"},
             {"name": "Meal Idea", "description": "Get daily meal suggestions", "url": "./tools/mealapp/index.html"},
             {"name": "Habit Tracker", "description": "Build your Habits for better Lifestyle", "url": "./tools/habittracker/index.html"},
-            {"name": "Experienced Resume Builder", "description": "Experienced Resumes for Free", "url": "./tools/experiencedresumebuilder/index.html"}
-        ]
+            {"name": "Experienced Resume Builder", "description": "Experienced Resumes for Free", "url": "./tools/experiencedresumebuilder/index.html"}        ]
     },
     games: {
         'puzzle-games': [
