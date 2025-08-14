@@ -14,12 +14,15 @@
 </head>
 <body>
 
-<h1>Top 5 Amazon Deals</h1>
-<p>Updated daily from IndiaDesiDeals feed</p>
+<h1>Top 5 Amazon Deals (India)</h1>
+<p>Live from Amazon's Today’s Deals RSS feed</p>
 <ul id="deals-list"><li>Loading deals...</li></ul>
 
 <script>
-const RSS_URL = "https://feeds.feedburner.com/IndiaDesiDealsAmazon";
+// Amazon India's Today’s Deals RSS
+const RSS_URL = "https://www.amazon.in/gp/rss/deals"; 
+
+// Use AllOrigins JSONP to bypass CORS
 const API_URL = "https://api.allorigins.win/get?url=" + encodeURIComponent(RSS_URL) + "&callback=parseDeals";
 
 function parseDeals(data) {
@@ -31,9 +34,9 @@ function parseDeals(data) {
   dealsList.innerHTML = "";
 
   items.forEach((item, index) => {
-    if (index >= 5) return; // Only top 5
-    const title = item.querySelector("title").textContent;
-    const link = item.querySelector("link").textContent;
+    if (index >= 5) return; // Show only top 5
+    const title = item.querySelector("title")?.textContent || "No title";
+    const link = item.querySelector("link")?.textContent || "#";
 
     const li = document.createElement("li");
     li.innerHTML = `<a href="${link}" target="_blank">${title}</a>`;
@@ -41,7 +44,7 @@ function parseDeals(data) {
   });
 }
 
-// JSONP method
+// Inject script for JSONP call
 const script = document.createElement("script");
 script.src = API_URL;
 document.body.appendChild(script);
