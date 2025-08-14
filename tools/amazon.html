@@ -1,33 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <title>Top 5 Amazon Deals</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    h1 { color: #ff6600; }
+    ul { list-style-type: none; padding: 0; }
+    li { background: #f9f9f9; margin: 10px 0; padding: 10px; border-radius: 8px; }
+    a { text-decoration: none; color: #0073e6; font-weight: bold; }
+    a:hover { text-decoration: underline; }
+  </style>
 </head>
 <body>
-  <h1>Top 5 Amazon Deals (Auto-refresh Daily)</h1>
-  <div id="deals">Loading...</div>
 
-  <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbzHesLtvYgKRSJqg8Hc7g6GqMrKfsXLA9C65fPteRE2iacv3GZs2ZwSIYth9bTIl2MKpA/exec";
+<h1>Top 5 Amazon Deals</h1>
+<p>Updated daily from IndiaDesiDeals feed</p>
+<ul id="deals-list"></ul>
 
-    fetch(API_URL)
-      .then(res => res.json())
-      .then(data => {
-        if (!data.success) {
-          document.getElementById('deals').innerText = "No deals found.";
-          return;
-        }
-        let html = "<ul>";
-        data.items.forEach(d => {
-          html += `<li><a href="${d.link}" target="_blank">${d.title}</a></li>`;
-        });
-        html += "</ul>";
-        document.getElementById('deals').innerHTML = html;
-      })
-      .catch(err => {
-        document.getElementById('deals').innerText = "Error loading deals.";
-        console.error(err);
-      });
-  </script>
+<script>
+const RSS_URL = "https://feeds.feedburner.com/IndiaDesiDealsAmazon";
+const API_URL = "https://api.allorigins.win/get?url=" + encodeURIComponent(RSS_URL);
+
+fetch(API_URL)
+  .then(response => {
+    if (!response.ok) throw new Error("Failed to fetch feed");
+    return response.json();
+  })
+  .then(data => {
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(data.contents, "application/xml");
+    const items = xml.querySelectorAll("item");
+    const dealsList = document.getElementById("deals-list");
+
+    dealsList.innerHTML = "";
+
+    items.forEach((item, index) => {
+      if (index >= 5) return; // Only top 5
+      const title = item.querySelector("title").textContent;
+      const link = item.querySelector("link").textContent;
+
+      const li = document.createElement("li");
+      li.innerHTML = `<a href="${link}" target="_blank">${title}</a>`;
+      dealsList.appendChild(li);
+    });
+  })
+  .catch(err => {
+    document.getElementById("deals-list").innerHTML = "<li>Error loading deals.</li>";
+    console.error(err);
+  });
+</script>
+
 </body>
 </html>
