@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Barcode & QR Code Generator in Google Sheets – Free & Instant</title>
+<meta name="description" content="Free Google Sheets template to generate Code 39 barcodes and QR codes instantly. No add-ons or scripts needed—just enter your data and copy the images." />
+<link rel="canonical" href="https://effortlesslydone.com/barcode-qr-generator" />
+<meta name="author" content="EffortlesslyDone" />
+<meta name="keywords" content="barcode generator, QR code generator, Google Sheets barcode, Code 39, inventory labels, SKU barcodes, free template" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="Barcode & QR Code Generator in Google Sheets – Free & Instant" />
+<meta property="og:description" content="Generate Code 39 barcodes and QR codes directly in Google Sheets. Free, no add-ons, no scripts." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://effortlesslydone.com/barcode-qr-generator" />
+<meta property="og:image" content="https://effortlesslydone.com/images/barcode-qr-generator.jpg" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Barcode & QR Code Generator in Google Sheets – Free & Instant" />
+<meta name="twitter:description" content="Create barcodes & QR codes in Google Sheets. Copy, print, and use for products, events, education and more." />
+<meta name="twitter:image" content="https://effortlesslydone.com/images/barcode-qr-generator.jpg" />
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet" />
+
+<style>
+:root{
+  --color-bg:#FAFAFB;
+  --color-surface:#FFFFFF;
+  --color-text:#213248;
+  --color-muted:#65738a;
+  --color-primary:#FF6F61;     /* Indigo */
+  --color-primary-600:#3949AB;
+  --color-accent:#FF6B5E;       /* Coral */
+  --radius-md:12px;
+  --radius-lg:16px;
+  --shadow-sm:0 2px 8px rgba(18,30,50,.06);
+  --shadow-md:0 8px 24px rgba(18,30,50,.10);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--color-bg); color:var(--color-text);
+  font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;
+  line-height:1.6;
+}
+/* Hero */
+header.hero{
+  background:linear-gradient(90deg,var(--color-primary),var(--color-primary-600));
+  color:#fff; padding:28px 0; text-align:center;
+  border-radius:0 0 var(--radius-lg) var(--radius-lg); box-shadow:var(--shadow-md);
+}
+.hero h1{font-family:'Poppins',sans-serif;margin:0 0 6px;font-size:2rem}
+.hero p{margin:.25rem 0 0;opacity:.95}
+/* Container + cards */
+.container{max-width:1100px;margin:1.75rem auto;padding:0 1rem}
+.card{
+  background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-md);
+  padding:1.25rem; margin-bottom:1rem;
+}
+.meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;color:#e7ecff}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);color:#fff;padding:4px 10px;border-radius:999px;font-size:.85rem}
+h2{font-family:'Poppins',sans-serif;color:var(--color-primary);margin:0 0 .5rem;font-size:1.25rem}
+h3{margin:.1rem 0 .35rem;color:#12324a}
+.lead{font-size:1.05rem;color:var(--color-text)}
+ul{padding-left:1.2rem;margin:.25rem 0}
+.note{font-size:.95rem;color:var(--color-muted)}
+/* CTA buttons */
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:.75rem}
+.btn{
+  display:inline-block;text-decoration:none;font-weight:700;border-radius:10px;padding:12px 18px;
+  box-shadow:var(--shadow-sm);transition:transform .08s ease,opacity .2s ease;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--color-accent);color:#fff}
+.btn-primary:hover{opacity:.95}
+.btn-ghost{background:#fff;color:var(--color-primary);border:1px solid #e7e8f3}
+/* Table */
+.table-wrap{overflow:auto;border-radius:10px;border:1px solid #e9ecfb}
+table{width:100%;border-collapse:collapse;min-width:560px}
+th, td{padding:10px 12px;border-bottom:1px solid #eef2fb;text-align:left}
+th{background:#f6f8fe;color:#2a3e85;font-weight:700}
+kbd{background:#eef2ff;border:1px solid #dfe6fd;border-bottom-width:2px;border-radius:6px;padding:2px 6px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+/* Callout */
+.callout{
+  background:linear-gradient(180deg,rgba(63,81,181,.06),rgba(255,107,94,.06));
+  border:1px solid #e9ecfb;border-radius:14px;padding:14px
+}
+/* Footer */
+footer{ text-align:center;color:var(--color-muted);padding:1.25rem 0;margin-top:.5rem }
+/* Responsive */
+@media (min-width:860px){
+  .flex-2{display:grid;grid-template-columns:1.1fr .9fr;gap:1rem}
+}
+</style>
+</head>
+<body>
+
+<header class="hero" role="banner">
+  <h1>Barcode &amp; QR Code Generator in Google Sheets – Free &amp; Instant</h1>
+  <p>Generate Code 39 barcodes and QR codes directly in Google Sheets — no add-ons, no scripts.</p>
+
+</header>
+
+<main class="container" role="main">
+  <!-- Intro -->
+  <section class="card">
+    <p class="lead">
+      Need to create barcodes or QR codes for your products, inventory, or business tools — <em>without</em> special software?
+      This template lets you generate both instantly, right inside Google Sheets. No apps. No scripts. Just enter your data and copy the images.
+    </p>
+    <div class="cta-row" role="group" aria-label="Primary actions">
+      <a class="btn btn-primary" target="_blank" rel="noopener noreferrer"
+         href="https://docs.google.com/spreadsheets/d/1frXArKJw-Hs0ie4L5JrfE57_bqRFO261gvkywc8uJow/copy">📥 Open the Barcode &amp; QR Generator Template</a>
+      <a class="btn btn-ghost" href="https://effortlesslydone.com/">⬅ Back to Home</a>
+    </div>
+  </section>
+
+  <div class="flex-2">
+    <!-- What it does -->
+    <section class="card">
+      <h2>✅ What It Does</h2>
+      <p>This smart template allows you to:</p>
+      <ul>
+        <li>🔢 Generate <strong>Code 39 barcodes</strong> for product IDs, SKUs, or serial numbers</li>
+        <li>📱 Generate <strong>QR codes</strong> for each item</li>
+        <li>📋 <strong>Export and print</strong> barcodes for physical labels</li>
+        <li>🆓 Use it <strong>without add-ons or subscriptions</strong></li>
+      </ul>
+      <p class="note">Perfect for inventory managers, retailers, educators, marketers, or anyone who wants to encode data visually!</p>
+    </section>
+
+    <!-- How to use -->
+    <section class="card">
+      <h2>🛠️ How to Use It</h2>
+      <div class="table-wrap" role="region" aria-label="How to use steps">
+        <table>
+          <thead>
+            <tr><th style="width:72px;">Step</th><th>What to Do</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><kbd>1️⃣</kbd></td><td>Go to the template sheet</td></tr>
+            <tr><td><kbd>2️⃣</kbd></td><td>Enter <strong>Product ID</strong> and <strong>Product Name</strong> in columns <strong>A</strong> and <strong>B</strong></td></tr>
+            <tr><td><kbd>3️⃣</kbd></td><td>Columns <strong>C–E</strong> will auto-generate: Code 39 barcode text → barcode image → QR code image</td></tr>
+            <tr><td><kbd>4️⃣</kbd></td><td>Drag down the formulas for new rows as needed</td></tr>
+            <tr><td><kbd>5️⃣</kbd></td><td>Copy/paste the images into print layouts, product sheets, or ID cards</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note" style="margin-top:.5rem;">💡 Tip: In Google Sheets use <em>File → Download → PDF</em> to print clean label pages.</p>
+    </section>
+  </div>
+
+  <!-- Use cases -->
+  <section class="card">
+    <h2>💡 Use Cases</h2>
+    <div class="table-wrap" role="region" aria-label="Use cases table">
+      <table>
+        <thead>
+          <tr><th>👤 User</th><th>💼 Use Case</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Retailers / Shop Owners</td><td>Label products with barcodes &amp; QR codes for checkout or packaging</td></tr>
+          <tr><td>Warehouse Teams</td><td>Tag inventory and make scanning easier</td></tr>
+          <tr><td>Event Organizers</td><td>Generate access passes, coupons, or attendee IDs</td></tr>
+          <tr><td>Educators</td><td>Create QR codes for student logins or assignments</td></tr>
+          <tr><td>Freelancers / Creators</td><td>Add QR codes to products, invoices, or business cards</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="card callout">
+    <h2>🔗 Try It Now</h2>
+    <div class="cta-row">
+      <a class="btn btn-primary" target="_blank" rel="noopener noreferrer"
+         href="https://docs.google.com/spreadsheets/d/1frXArKJw-Hs0ie4L5JrfE57_bqRFO261gvkywc8uJow/copy">📥 Open the Barcode &amp; QR Generator Template</a>
+      <a class="btn btn-ghost" href="mailto:decomplicate001@gmail.com">Contact: decomplicate001@gmail.com</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © 2025 EffortlesslyDone — Simple, powerful Google Sheets tools
+</footer>
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"SoftwareApplication",
+  "name":"Barcode & QR Code Generator (Google Sheets Template)",
+  "applicationCategory":"BusinessApplication",
+  "operatingSystem":"Web",
+  "description":"Free Google Sheets template to generate Code 39 barcodes and QR codes instantly without add-ons or scripts.",
+  "author":{"@type":"Organization","name":"EffortlesslyDone"},
+  "publisher":{"@type":"Organization","name":"EffortlesslyDone"},
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+  "url":"https://effortlesslydone.com/barcode-qr-generator",
+  "image":"https://effortlesslydone.com/images/barcode-qr-generator.jpg",
+  "keywords":"barcode generator, QR code generator, Google Sheets barcode, Code 39, inventory labels, SKU barcodes, free template"
+}
+</script>
+
+</body>
+</html>

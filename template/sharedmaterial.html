@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Shared Materials Tracker – Easy, Organized, Efficient! (Google Sheets Template)</title>
+<meta name="description" content="A smart, user-friendly Google Sheets template to manage shared materials: borrow/return, reservations, live inventory, and a status dashboard. Perfect for schools, teams, and offices." />
+<link rel="canonical" href="https://effortlesslydone.com/shared-materials-tracker" />
+<meta name="author" content="EffortlesslyDone" />
+<meta name="keywords" content="Shared materials tracker, Google Sheets inventory, borrow return tracker, reservations sheet, school inventory template, office materials log" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="Shared Materials Tracker – Easy, Organized, Efficient!" />
+<meta property="og:description" content="Manage shared resources with ease: borrow/return, reservations, live inventory, and a status dashboard — all in Google Sheets." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://effortlesslydone.com/shared-materials-tracker" />
+<meta property="og:image" content="https://effortlesslydone.com/images/shared-materials-tracker.jpg" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Shared Materials Tracker – Easy, Organized, Efficient!" />
+<meta name="twitter:description" content="Lightweight Google Sheets tracker with alerts and dashboards for teams, schools, and offices." />
+<meta name="twitter:image" content="https://effortlesslydone.com/images/shared-materials-tracker.jpg" />
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet" />
+
+<style>
+:root{
+  --color-bg:#FAFAFB;
+  --color-surface:#FFFFFF;
+  --color-text:#213248;
+  --color-muted:#65738a;
+  --color-primary:#FF6F61;   /* Indigo */
+  --color-primary-600:#3949AB;
+  --color-accent:#FF6B5E;       /* Coral */
+  --radius-md:12px;
+  --radius-lg:16px;
+  --shadow-sm:0 2px 8px rgba(18,30,50,.06);
+  --shadow-md:0 8px 24px rgba(18,30,50,.10);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--color-bg); color:var(--color-text);
+  font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;
+  line-height:1.6;
+}
+header.hero{
+  background:linear-gradient(90deg,var(--color-primary),var(--color-primary-600));
+  color:#fff; padding:28px 0; text-align:center;
+  border-radius:0 0 var(--radius-lg) var(--radius-lg); box-shadow:var(--shadow-md);
+}
+.hero h1{font-family:'Poppins',sans-serif;margin:0 0 6px;font-size:2rem}
+.hero p{margin:.25rem 0 0;opacity:.95}
+
+.container{max-width:1100px;margin:1.75rem auto;padding:0 1rem}
+.card{
+  background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-md);
+  padding:1.25rem; margin-bottom:1rem;
+}
+.meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;color:#e7ecff}
+.meta .dot{opacity:.7}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);color:#fff;padding:4px 10px;border-radius:999px;font-size:.85rem}
+
+h2{font-family:'Poppins',sans-serif;color:var(--color-primary);margin:0 0 .5rem;font-size:1.25rem}
+.lead{font-size:1.05rem;color:var(--color-text)}
+ul{padding-left:1.2rem;margin:.25rem 0}
+.note{font-size:.95rem;color:var(--color-muted)}
+
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:.75rem}
+.btn{
+  display:inline-block;text-decoration:none;font-weight:700;border-radius:10px;padding:12px 18px;
+  box-shadow:var(--shadow-sm);transition:transform .08s ease,opacity .2s ease;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--color-accent);color:#fff}
+.btn-primary:hover{opacity:.95}
+.btn-ghost{background:#fff;color:var(--color-primary);border:1px solid #e7e8f3}
+
+.kb{display:grid;grid-template-columns:1fr;gap:1rem}
+.kb .card h3{margin:.1rem 0 .35rem;color:#12324a}
+.kb .card p{margin:.25rem 0}
+
+.callout{
+  background:linear-gradient(180deg,rgba(63,81,181,.06),rgba(255,107,94,.06));
+  border:1px solid #e9ecfb;border-radius:14px;padding:14px
+}
+
+footer{
+  text-align:center;color:var(--color-muted);padding:1.25rem 0;margin-top:.5rem
+}
+
+/* Responsive */
+@media (min-width:860px){
+  .kb{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<header class="hero" role="banner">
+  <h1>Shared Materials Tracker – Easy, Organized, Efficient!</h1>
+
+
+</header>
+
+<main class="container" role="main">
+  <!-- Intro -->
+  <section class="card">
+    <p class="lead">
+      Welcome to the <strong>Shared Materials Tracker</strong> — a smart, user-friendly Google Sheet designed to help teams, schools, or departments manage and track shared resources with ease. Whether you’re checking out teaching aids, lab equipment, or office materials, this tracker has you covered.
+    </p>
+    <div class="cta-row" role="group" aria-label="Primary actions">
+      <a class="btn btn-primary" target="_blank" rel="noopener noreferrer"
+         href="https://docs.google.com/spreadsheets/d/13XLBgHcBhqyR6cdwvN6-nXvaTityT7giZepcF2Y3ans/copy">🔗 👉 Open the Tracker Now</a>
+      <a class="btn btn-ghost" href="https://effortlesslydone.com/">⬅ Back to Home</a>
+    </div>
+  </section>
+
+  <!-- Inventory Tab -->
+  <section class="card">
+    <h2>📋 1. Inventory Tab – Your Master List</h2>
+    <p><strong>What it is:</strong> A live, auto-updated list of all materials, their total count, and current status (<em>Available</em>, <em>All Out</em>, <em>Partially Available</em>).</p>
+    <p class="note"><strong>What to do:</strong></p>
+    <ul>
+      <li>✅ Look here first to check availability before requesting anything.</li>
+      <li>❌ Don’t edit this tab manually — it updates automatically based on other tabs.</li>
+    </ul>
+  </section>
+
+  <!-- Current Tab -->
+  <section class="card">
+    <h2>➡️ 2. Current Tab – Borrow &amp; Return Materials</h2>
+    <h3>To Borrow (Check Out):</h3>
+    <p>🚀 Add a new row at the bottom. Fill in:</p>
+    <ul>
+      <li>Date</li>
+      <li>Material Name (use dropdown)</li>
+      <li>Your Name</li>
+      <li>Expected Return Date</li>
+    </ul>
+    <h3>To Return (Check In):</h3>
+    <p>↩️ Locate your item’s row and simply fill in the <em>Actual Return Date</em>.</p>
+  </section>
+
+  <!-- Reservations Tab -->
+  <section class="card">
+    <h2>🗓️ 3. Reservations Tab – Plan Ahead</h2>
+    <h3>To Reserve Items:</h3>
+    <p>📝 Add a new row at the bottom with:</p>
+    <ul>
+      <li>Reservation Date</li>
+      <li>Material Name</li>
+      <li>Your Name</li>
+      <li>Start Date and End Date of your reservation</li>
+    </ul>
+    <p class="note">Use this tab to avoid conflicts and secure items in advance!</p>
+  </section>
+
+  <!-- Status Dashboard -->
+  <section class="card">
+    <h2>📊 4. Status Dashboard – At-a-Glance View</h2>
+    <p><strong>What it shows:</strong> A live summary of all currently borrowed items and future reservations.</p>
+    <p><strong>Use it to:</strong></p>
+    <ul>
+      <li>✨ Get a quick overview of what’s available, in use, or soon to be used.</li>
+    </ul>
+    <p class="note">❌ Please do not edit this tab — it’s for viewing only.</p>
+  </section>
+
+  <!-- Why Use -->
+  <section class="card callout">
+    <h2>💡 Why Use This Tracker?</h2>
+    <ul>
+      <li>✅ Eliminates confusion</li>
+      <li>📅 Encourages planning</li>
+      <li>🔁 Promotes accountability</li>
+      <li>🔒 Prevents double bookings</li>
+      <li>👥 Useful for teams with shared resources</li>
+    </ul>
+    <p>Whether you’re a teacher, librarian, admin, or office manager – this tracker is a simple, efficient solution for keeping shared resources flowing smoothly.</p>
+  </section>
+
+  <!-- Contact -->
+  <section class="card">
+    <h2>💬 Need a Customized Version?</h2>
+    <p>Got suggestions or need a tailored build (barcodes, email alerts, dashboards, access roles)? We help schools and teams automate workflows in Google Workspace.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" target="_blank" rel="noopener noreferrer"
+         href="https://docs.google.com/spreadsheets/d/13XLBgHcBhqyR6cdwvN6-nXvaTityT7giZepcF2Y3ans/copy">Make a Copy of the Sheet</a>
+      <a class="btn btn-ghost" href="mailto:decomplicate001@gmail.com">Contact: decomplicate001@gmail.com</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © 2025 EffortlesslyDone — Smart tools on Google Sheets & Apps Script
+</footer>
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"TechArticle",
+  "headline":"Shared Materials Tracker – Easy, Organized, Efficient!",
+  "datePublished":"2025-07-17",
+  "dateModified":"2025-07-17",
+  "author":{"@type":"Organization","name":"EffortlesslyDone"},
+  "publisher":{"@type":"Organization","name":"EffortlesslyDone"},
+  "about":["Google Sheets","Inventory","Borrow/Return","Reservations","Status Dashboard"],
+  "keywords":"Shared materials tracker, Google Sheets inventory, borrow return tracker, reservations sheet, school inventory template, office materials log",
+  "mainEntityOfPage":{"@type":"WebPage","@id":"https://effortlesslydone.com/shared-materials-tracker"},
+  "url":"https://effortlesslydone.com/shared-materials-tracker"
+}
+</script>
+
+</body>
+</html>

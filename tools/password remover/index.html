@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bulk Password Remover - PDF & Excel | Effortless Automation</title>
+<meta name="description" content="Free online tool to remove passwords from multiple PDF or Excel files in bulk. No installation required. Process securely in your browser." />
+<meta name="keywords" content="bulk pdf password remover, excel unlocker, remove pdf password online, remove excel password, batch file unlock" />
+<meta name="author" content="Effortless Automation" />
+<style>
+  :root {
+    --main-gradient: linear-gradient(120deg,#f6d365 0%,#fda085 100%);
+    --accent: #7842e7;
+    --btn-gradient: linear-gradient(90deg,#7f7fd5 20%,#86a8e7 80%,#91eac9 120%);
+    --bg: #f8fafb;
+    --card-glass: rgba(255,255,255,0.96);
+    --shadow: 0 8px 38px rgba(122,110,209,0.12);
+    --success: #4CAF50;
+    --danger: #f44336;
+    --text: #1e1346;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--main-gradient) fixed;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+  }
+  .container {
+    max-width: 800px;
+    width: 100%;
+    margin: 30px;
+    background: var(--card-glass);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    padding: 20px 25px;
+  }
+  header {
+    text-align: center;
+    padding: 20px 10px;
+  }
+  header h1 {
+    font-size: 2rem;
+    margin: 0;
+    color: var(--text);
+  }
+  header p {
+    color: #555;
+    font-size: 1rem;
+    margin-top: 8px;
+  }
+  label {
+    display: block;
+    margin: 14px 0 6px;
+    font-weight: bold;
+    color: var(--text);
+  }
+  select, input[type="password"], input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+  }
+  select:focus, input:focus {
+    border-color: var(--accent);
+  }
+  button {
+    margin-top: 20px;
+    padding: 12px;
+    font-size: 1rem;
+    width: 100%;
+    background: var(--btn-gradient);
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  button:hover:not(:disabled) {
+    background: linear-gradient(90deg,#a18cd1 20%,#fbc2eb 100%);
+  }
+  button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+  #output {
+    margin-top: 20px;
+    background: #fff;
+    padding: 14px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.05);
+    max-height: 300px;
+    overflow-y: auto;
+    font-size: 0.95rem;
+  }
+  .file-result {
+    margin-bottom: 10px;
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+  }
+  .file-result.success { color: var(--success); }
+  .file-result.error { color: var(--danger); }
+  a.download-link {
+    text-decoration: none;
+    color: var(--accent);
+    margin-left: 12px;
+    font-weight: bold;
+  }
+  .small {
+    font-size: 0.9rem;
+    color: #555;
+  }
+  .promo {
+    margin-top: 30px;
+    background: #f7e8ff;
+    padding: 14px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--text);
+  }
+  @media(max-width: 600px) {
+    .container { margin: 15px; padding: 15px; }
+    header h1 { font-size: 1.6rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Bulk Password Remover - PDF & Excel</h1>
+    <p><b>Unlock multiple PDF or Excel files in one go — right in your browser, safely and free.</b></p>
+    <p class="small">Removes passwords from multiple files at once; unlocked files are prefixed with <b>unlocked_</b>. A log of issues is provided for review.</p>
+  </header>
+
+  <label for="fileType">Choose File Type:</label>
+  <select id="fileType">
+    <option value="pdf">PDF</option>
+    <option value="excel">Excel (.xlsx)</option>
+  </select>
+
+  <label for="password">Enter Password (same for all files):</label>
+  <input type="password" id="password" placeholder="Enter password" />
+
+  <label for="files">Select Password-Protected Files:</label>
+  <input type="file" id="files" multiple />
+
+  <button id="processBtn" disabled>Remove Passwords</button>
+
+  <div id="output"></div>
+  <button id="downloadLog" style="display:none; margin-top:10px;">Download Issue Log</button>
+
+  <div class="promo">
+    For more automation tools visit:<br>
+    <b><a href="https://effortlesslydone.com/" target="_blank">Effortless Automation</a></b><br>
+    <b>Contact:</b> <a href="mailto:decomplicate001@gmail.com">decomplicate001@gmail.com</a>
+  </div>
+</div>
+
+<!-- PDFLib.js -->
+<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+<!-- SheetJS -->
+<script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+<script>
+  const fileTypeSelect = document.getElementById('fileType');
+  const filesInput = document.getElementById('files');
+  const passwordInput = document.getElementById('password');
+  const processBtn = document.getElementById('processBtn');
+  const output = document.getElementById('output');
+  const downloadLogBtn = document.getElementById('downloadLog');
+  let issueLog = [];
+
+  fileTypeSelect.addEventListener('change', () => {
+    output.innerHTML = '';
+    passwordInput.value = '';
+    filesInput.value = '';
+    toggleButton();
+    filesInput.accept = fileTypeSelect.value === 'pdf'
+      ? 'application/pdf'
+      : '.xlsx,.xlsm,.xlsb';
+  });
+
+  function toggleButton() {
+    processBtn.disabled = !(filesInput.files.length > 0 && passwordInput.value.trim() !== '');
+  }
+  filesInput.addEventListener('change', toggleButton);
+  passwordInput.addEventListener('input', toggleButton);
+
+  processBtn.addEventListener('click', async () => {
+    output.innerHTML = '';
+    issueLog = [];
+    downloadLogBtn.style.display = 'none';
+    const password = passwordInput.value.trim();
+    const files = Array.from(filesInput.files);
+    if (!password) return alert('Please enter the password.');
+    if (!files.length) return alert('Please select files.');
+    processBtn.disabled = true;
+
+    if (fileTypeSelect.value === 'pdf') await processPDFs(files, password);
+    else if (fileTypeSelect.value === 'excel') await processExcels(files, password);
+
+    let logText = 'Issue Log for Unlocking\n-------------------------\n';
+    issueLog.forEach(e=>{
+      logText += `${e.filename}: ${e.status}${e.message ? ' ('+e.message+')' : ''}\n`;
+    });
+    const blob = new Blob([logText], {type: "text/plain"});
+    downloadLogBtn.onclick = ()=> {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = "unlock_issue_log.txt";
+      link.click();
+      setTimeout(()=>URL.revokeObjectURL(url),1000);
+    };
+    downloadLogBtn.style.display = 'block';
+    processBtn.disabled = false;
+  });
+
+  async function processPDFs(files, password) {
+    for (const file of files) {
+      const fileResultDiv = document.createElement('div');
+      fileResultDiv.className = 'file-result';
+      fileResultDiv.textContent = `Processing "${file.name}"...`;
+      output.appendChild(fileResultDiv);
+      let result = { filename: file.name };
+      try {
+        const arrayBuffer = await file.arrayBuffer();
+        const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer, { password });
+        const pdfBytes = await pdfDoc.save();
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = "unlocked_" + file.name.replace(/\.pdf$/i, '') + ".pdf";
+        link.textContent = 'Download';
+        link.className = 'download-link';
+        fileResultDiv.textContent = `✅ "${file.name}" unlocked.`;
+        fileResultDiv.classList.add('success');
+        fileResultDiv.appendChild(link);
+        result.status = "Success";
+      } catch (e) {
+        fileResultDiv.textContent = `❌ Error unlocking "${file.name}": ${e.message}`;
+        fileResultDiv.classList.add('error');
+        result.status = "Failed";
+        result.message = e.message;
+      }
+      issueLog.push(result);
+    }
+  }
+
+  async function processExcels(files, password) {
+    for (const file of files) {
+      const fileResultDiv = document.createElement('div');
+      fileResultDiv.className = 'file-result';
+      fileResultDiv.textContent = `Processing "${file.name}"...`;
+      output.appendChild(fileResultDiv);
+      let result = { filename: file.name };
+      try {
+        const arrayBuffer = await file.arrayBuffer();
+        let wb;
+        try {
+          wb = XLSX.read(arrayBuffer, { type: 'array', password });
+        } catch (e) {
+          throw new Error('Full open password removal not supported for Excel in browser.');
+        }
+        wb.SheetNames.forEach(name => {
+          let sheet = wb.Sheets[name];
+          if (sheet && sheet['!protect']) delete sheet['!protect'];
+        });
+        const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+        const blob = new Blob([wbout], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = "unlocked_" + file.name.replace(/\.(xlsx|xlsm|xlsb)$/i, '') + ".xlsx";
+        link.textContent = 'Download';
+        link.className = 'download-link';
+        fileResultDiv.textContent = `✅ "${file.name}" processed (sheet protection removed if present).`;
+        fileResultDiv.classList.add('success');
+        fileResultDiv.appendChild(link);
+        result.status = "Success";
+      } catch (e) {
+        fileResultDiv.textContent = `❌ Error processing "${file.name}": ${e.message}`;
+        fileResultDiv.classList.add('error');
+        result.status = "Failed";
+        result.message = e.message;
+      }
+      issueLog.push(result);
+    }
+  }
+
+  filesInput.accept = 'application/pdf';
+</script>
+</body>
+</html>

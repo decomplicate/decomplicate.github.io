@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EffortlesslyDone - Free Productivity Solutions</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header__content">
+            <div class="header__logo">
+                <h1><i class="fas fa-rocket"></i> EffortlesslyDone</h1>
+            </div>
+            <nav class="header__nav" id="nav">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#templates" class="nav-link">Templates</a>
+                <a href="#tools" class="nav-link">Tools</a>
+                <a href="#games" class="nav-link">Games</a>
+                <a href="#about" class="nav-link">About</a>
+            </nav>
+            <div class="header__search">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search templates, tools, games...">
+                <button id="searchBtn" class="btn btn--primary search-btn"><i class="fas fa-search"></i></button>
+            </div>
+            <button id="mobileMenuBtn" class="mobile-menu-btn">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container hero__content">
+            <h2>Simplify Your Life with Free Tools & Games</h2>
+            <p>Discover Google Sheets templates, powerful web apps, and fun browser games to boost productivity and enjoy breaks.</p>
+            <div class="hero__stats">
+                <div class="stat"><span class="stat__number">21+</span><span class="stat__label">Templates</span></div>
+                <div class="stat"><span class="stat__number">13+</span><span class="stat__label">Tools</span></div>
+                <div class="stat"><span class="stat__number">5+</span><span class="stat__label">Games</span></div>
+            </div>
+            <div class="hero__cta">
+                <button onclick="scrollToSection('templates')" class="btn btn--primary">Explore Templates</button>
+                <button onclick="scrollToSection('tools')" class="btn btn--secondary">Discover Tools</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Templates Section -->
+    <section id="templates" class="section">
+        <div class="container">
+            <div class="section__header">
+                <h2><i class="fas fa-table icon"></i> Google Sheets Templates</h2>
+                <p>Free, ready-to-use templates to streamline your tasks</p>
+            </div>
+            <div class="categories">
+                <div class="category-card" data-category="productivity">
+                    <div class="category-card__header">
+                        <h3><i class="fas fa-briefcase"></i> Productivity & Work</h3>
+                        <span class="category-card__count">8 templates</span>
+                    </div>
+                    <p>Organize tasks and automate workflows effortlessly</p>
+                    <div id="productivity-items" class="category-card__items"></div>
+                    <button onclick="toggleCategory('productivity')" class="btn btn--secondary category-card__toggle">View All</button>
+                </div>
+                <div class="category-card" data-category="business">
+                    <div class="category-card__header">
+                        <h3><i class="fas fa-chart-line"></i> Business & Finance</h3>
+                        <span class="category-card__count">7 templates</span>
+                    </div>
+                    <p>Manage finances and grow your business efficiently</p>
+                    <div id="business-items" class="category-card__items"></div>
+                    <button onclick="toggleCategory('business')" class="btn btn--secondary category-card__toggle">View All</button>
+                </div>
+                <div class="category-card" data-category="personal">
+                    <div class="category-card__header">
+                        <h3><i class="fas fa-user"></i> Personal & Communication</h3>
+                        <span class="category-card__count">4 templates</span>
+                    </div>
+                    <p>Simplify personal tasks and communication</p>
+                    <div id="personal-items" class="category-card__items"></div>
+                    <button onclick="toggleCategory('personal')" class="btn btn--secondary category-card__toggle">View All</button>
+                </div>
+                <div class="category-card" data-category="education">
+                    <div class="category-card__header">
+                        <h3><i class="fas fa-graduation-cap"></i> Education & Career</h3>
+                        <span class="category-card__count">2 templates</span>
+                    </div>
+                    <p>Support your learning and career goals</p>
+                    <div id="education-items" class="category-card__items"></div>
+                    <button onclick="toggleCategory('education')" class="btn btn--secondary category-card__toggle">View All</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section id="tools" class="section">
+        <div class="container">
+            <div class="section__header">
+                <h2><i class="fas fa-tools icon"></i> Web Applications</h2>
+                <p>Powerful tools for documents, productivity, and more</p>
+            </div>
+            <div class="categories">
+                <div class="category-card" data-category="file-tools">
+                    <div class="category-card__header">
+                        <h3><i class="fas fa-file"></i> File & Document Tools</h3>
+                        <span class="category-card__count">4 tools</span>
+                    </div>
+                    <p>Edit, combine, and optimize your files</p>
+                    <div id="file-tools-items" class="category-card__items"></div>
+                    <button onclick="toggleCategory('file-tools')" class="btn btn--secondary category-card__toggle">View All</button>
+                </div>
+                <div class="category-card" data-category="business-tools">
+                    <div class="category-card__header">
+                        <h3><i class="fas fa-building"></i> Business & Productivity</h3>
+                        <span class="category-card__count">6 tools</span>
+                    </div>
+                    <p>Boost efficiency with smart business tools</p>
+                    <div id="business-tools-items" class="category-card__items"></div>
+                    <button onclick="toggleCategory('business-tools')" class="btn btn--secondary category-card__toggle">View All</button>
+                </div>
+                <div class="category-card" data-category="lifestyle-tools">
+                    <div class="category-card__header">
+                        <h3><i class="fas fa-heart"></i> Personal & Lifestyle</h3>
+                        <span class="category-card__count">4 tools</span>
+                    </div>
+                    <p>Enhance your daily life with practical tools</p>
+                    <div id="lifestyle-tools-items" class="category-card__items"></div>
+                    <button onclick="toggleCategory('lifestyle-tools')" class="btn btn--secondary category-card__toggle">View All</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Games Section -->
+    <section id="games" class="section">
+        <div class="container">
+            <div class="section__header">
+                <h2><i class="fas fa-gamepad icon"></i> Browser Games</h2>
+                <p>Fun, quick games to unwind and recharge</p>
+            </div>
+            <div class="categories">
+                <div class="category-card" data-category="puzzle-games">
+                    <div class="category-card__header">
+                        <h3><i class="fas fa-puzzle-piece"></i> Puzzle & Brain Games</h3>
+                        <span class="category-card__count">3 games</span>
+                    </div>
+                    <p>Challenge your mind with engaging puzzles</p>
+                    <div id="puzzle-games-items" class="category-card__items"></div>
+                    <button onclick="toggleCategory('puzzle-games')" class="btn btn--secondary category-card__toggle">View All</button>
+                </div>
+                <div class="category-card" data-category="arcade-games">
+                    <div class="category-card__header">
+                        <h3><i class="fas fa-joystick"></i> Action & Arcade</h3>
+                        <span class="category-card__count">2 games</span>
+                    </div>
+                    <p>Fast-paced fun for quick breaks</p>
+                    <div id="arcade-games-items" class="category-card__items"></div>
+                    <button onclick="toggleCategory('arcade-games')" class="btn btn--secondary category-card__toggle">View All</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section about">
+        <div class="container about__content">
+            <h2>About EffortlesslyDone</h2>
+            <p>EffortlesslyDone is your go-to platform for free productivity tools, Google Sheets templates, and browser games designed to simplify your work and add fun to your breaks.</p>
+            <div class="about__features">
+                <div class="feature">
+                    <i class="fas fa-gift large-icon"></i>
+                    <h4>100% Free</h4>
+                    <p>Access all templates and tools at no cost</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-bolt large-icon"></i>
+                    <h4>Instant Access</h4>
+                    <p>Click and use—no setup required</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-sync-alt large-icon"></i>
+                    <h4>Fresh Content</h4>
+                    <p>Regular updates with new tools and templates</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer__content">
+            <div class="footer__section footer__branding">
+                <h1><i class="fas fa-rocket"></i> EffortlesslyDone</h1>
+                <p>Free tools and games to make your day easier.</p>
+            </div>
+            <div class="footer__section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#templates">Templates</a></li>
+                    <li><a href="#tools">Tools</a></li>
+                    <li><a href="#games">Games</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </div>
+            <div class="footer__section">
+                <h4>Stay Updated</h4>
+                <form id="newsletterForm" class="newsletter-form">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit" class="btn btn--primary">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>© 2025 EffortlesslyDone - All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <!-- Search Modal -->
+    <div id="searchModal" class="modal hidden">
+        <div class="modal__overlay" onclick="closeSearchModal()"></div>
+        <div class="modal__content">
+            <div class="modal__header">
+                <h3>Search Results</h3>
+                <button class="modal__close" onclick="closeSearchModal()">×</button>
+            </div>
+            <div class="modal__body" id="searchResults"></div>
+        </div>
+    </div>
+
+   </body>
+</html>

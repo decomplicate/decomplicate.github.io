@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Task Tracker with Email Reminders – Stay on Top of What Matters Most</title>
+<meta name="description" content="Free Google Sheets Task Tracker to assign tasks, highlight urgency, and send email reminders. Perfect for teams, freelancers, educators, and startups." />
+<link rel="canonical" href="https://effortlesslydone.com/task-tracker" />
+<meta name="author" content="EffortlesslyDone" />
+<meta name="keywords" content="task tracker, google sheets task management, email reminders, project management sheet, free task template" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="Task Tracker with Email Reminders – Stay on Top of What Matters Most" />
+<meta property="og:description" content="Assign tasks, track deadlines, and send automated email reminders — all from Google Sheets." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://effortlesslydone.com/task-tracker" />
+<meta property="og:image" content="https://effortlesslydone.com/images/task-tracker.jpg" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Task Tracker with Email Reminders – Stay on Top of What Matters Most" />
+<meta name="twitter:description" content="Google Sheets template to manage tasks, highlight urgency, and send email reminders automatically." />
+<meta name="twitter:image" content="https://effortlesslydone.com/images/task-tracker.jpg" />
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet" />
+
+<style>
+:root{
+  --color-bg:#FAFAFB;
+  --color-surface:#FFFFFF;
+  --color-text:#213248;
+  --color-muted:#65738a;
+  --color-primary:#FF6F61;
+
+  --color-primary-600:#3949AB;
+  --color-accent:#FF6B5E;
+  --radius-md:12px;
+  --radius-lg:16px;
+  --shadow-sm:0 2px 8px rgba(18,30,50,.06);
+  --shadow-md:0 8px 24px rgba(18,30,50,.10);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--color-bg); color:var(--color-text);
+  font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;
+  line-height:1.6;
+}
+header.hero{
+  background:linear-gradient(90deg,var(--color-primary),var(--color-primary-600));
+  color:#fff; padding:28px 0; text-align:center;
+  border-radius:0 0 var(--radius-lg) var(--radius-lg); box-shadow:var(--shadow-md);
+}
+.hero h1{font-family:'Poppins',sans-serif;margin:0 0 6px;font-size:2rem}
+.hero p{margin:.25rem 0 0;opacity:.95}
+.container{max-width:1100px;margin:1.75rem auto;padding:0 1rem}
+.card{
+  background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-md);
+  padding:1.25rem; margin-bottom:1rem;
+}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);color:#fff;padding:4px 10px;border-radius:999px;font-size:.85rem}
+h2{font-family:'Poppins',sans-serif;color:var(--color-primary);margin:0 0 .5rem;font-size:1.25rem}
+.lead{font-size:1.05rem;color:var(--color-text)}
+ul{padding-left:1.2rem;margin:.25rem 0}
+.note{font-size:.95rem;color:var(--color-muted)}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:.75rem}
+.btn{
+  display:inline-block;text-decoration:none;font-weight:700;border-radius:10px;padding:12px 18px;
+  box-shadow:var(--shadow-sm);transition:transform .08s ease,opacity .2s ease;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--color-accent);color:#fff}
+.btn-primary:hover{opacity:.95}
+.btn-ghost{background:#fff;color:var(--color-primary);border:1px solid #e7e8f3}
+.table-wrap{overflow:auto;border-radius:10px;border:1px solid #e9ecfb}
+table{width:100%;border-collapse:collapse;min-width:500px}
+th, td{padding:10px 12px;border-bottom:1px solid #eef2fb;text-align:left}
+th{background:#f6f8fe;color:#2a3e85;font-weight:700}
+.callout{
+  background:linear-gradient(180deg,rgba(63,81,181,.06),rgba(255,107,94,.06));
+  border:1px solid #e9ecfb;border-radius:14px;padding:14px
+}
+footer{text-align:center;color:var(--color-muted);padding:1.25rem 0;margin-top:.5rem}
+</style>
+</head>
+<body>
+
+<header class="hero" role="banner">
+  <h1>Task Tracker with Email Reminders – Stay on Top of What Matters Most</h1>
+  <p>Assign tasks, track deadlines, and send automated reminders — all from Google Sheets.</p>
+  </header>
+
+<main class="container" role="main">
+  <!-- Intro -->
+  <section class="card">
+    <p class="lead">
+      Need a simple way to manage tasks, highlight what’s urgent, and send automated email reminders to your team — all from Google Sheets?
+      The <strong>Task Tracker with Email Reminders</strong> gives you a quick productivity boost with clear assignments, automatic highlights, and built-in email nudges.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" target="_blank" rel="noopener noreferrer"
+         href="https://docs.google.com/spreadsheets/d/14-IlqaXgeOVQDgLG6_gXva6rVO36z8tene6y8nQoMPI/copy">📥 Open the Task Tracker Sheet</a>
+      <a class="btn btn-ghost" href="https://effortlesslydone.com/">⬅ Back to Home</a>
+    </div>
+  </section>
+
+  <!-- What it does -->
+  <section class="card">
+    <h2>🚀 What This Tool Does</h2>
+    <ul>
+      <li>📋 Create and assign tasks to teammates</li>
+      <li>⏰ Track deadlines and overdue items</li>
+      <li>🎯 Automatically highlight tasks based on urgency</li>
+      <li>📧 Email reminders only to those who need it</li>
+      <li>🧠 Keep everything simple, inside Google Sheets</li>
+    </ul>
+  </section>
+
+  <!-- Use cases -->
+  <section class="card">
+    <h2>🧩 Use Cases &amp; Benefits</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Use Cases</th><th>Key Features &amp; Benefits</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>👨‍💼 Project Managers</td><td>Track who’s doing what, what’s overdue, and who needs reminding — all in one sheet.</td></tr>
+          <tr><td>🧑‍🏫 Teachers &amp; Educators</td><td>Assign projects to students with due dates and auto-reminders to maintain accountability.</td></tr>
+          <tr><td>🧑‍💻 Freelancers &amp; VAs</td><td>Organize client deliverables, keep clients updated, and meet deadlines.</td></tr>
+          <tr><td>🧾 HR &amp; Admin Teams</td><td>Assign onboarding steps or internal tasks with built-in follow-up reminders.</td></tr>
+          <tr><td>🧪 Small Teams &amp; Startups</td><td>Lightweight alternative to complex project management tools.</td></tr>
+          <tr><td>🛠 Process-Driven Departments</td><td>Create recurring task templates and automate workflows.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>💬 Need Custom Features?</h2>
+    <p>Want to add charts, auto-purchase orders, barcode support, or mobile entry? We help businesses build automated Google Sheet dashboards for logistics, finance, and operations.</p>
+  </section>
+</main>
+
+<footer>
+  © 2025 EffortlesslyDone — Google Sheets Automation Tools
+</footer>
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"SoftwareApplication",
+  "name":"Task Tracker with Email Reminders (Google Sheets Tool)",
+  "applicationCategory":"ProductivityApplication",
+  "operatingSystem":"Web",
+  "description":"Free Google Sheets template to assign tasks, highlight urgency, and send email reminders. Perfect for teams, freelancers, educators, and startups.",
+  "author":{"@type":"Organization","name":"EffortlesslyDone"},
+  "publisher":{"@type":"Organization","name":"EffortlesslyDone"},
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+  "url":"https://effortlesslydone.com/task-tracker",
+  "image":"https://effortlesslydone.com/images/task-tracker.jpg",
+  "keywords":"task tracker, google sheets task management, email reminders, project management sheet, free task template"
+}
+</script>
+
+</body>
+</html>
