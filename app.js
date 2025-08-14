@@ -7,37 +7,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Your actual data structure with real URLs
 const data = {
-    templates: {
-        productivity: [
-            {"name": "Drive Folder/File Listing Tool", "description": "List All Files from Any Folder in Seconds!", "url": "./template/filelister.html"},
-            {"name": "Task Tracker Reminder", "description": "Organize daily tasks with time tracking", "url": "./template/tasktracker.html"},
-            {"name": "Change Log Tracker", "description": "Monitor Cell-Level Edits Automatically!", "url": "./template/changelog.html"},
-            {"name": "Gmail Search & Organize Tool", "description": "Search, Export, and Clean Your Inbox in One Click!", "url": "./template/gmailsearch.html"},
-            {"name": "Gmail To Sheet Extractor Tool", "description": "Filter, Search & Export Emails in Seconds!", "url": "./template/gmailtosheet.html"},
-            {"name": "Send Email from Sheet", "description": "Personalized Emails Directly from Google Sheets", "url": "./template/sendmail.html"},
-            {"name": "GSheet Keywords Search", "description": "Search Made Easy", "url": "https://docs.google.com/spreadsheets/d/1fcBaqxUPFsEfkw8dJWv_jdIArzBsBsYLeb0KwOTdBUc/copy"},
-            {"name": "Pre-Filled GForm", "description": "Create Prefilled Google Form Links in Bulk","url": "./template/gform.html"}
-        ],
-        business: [
-            {"name": "Precious Metal Transaction Sheet", "description": "Aggregation for a combined invoice", "url": "./template/preciousmetal.html"},
-            {"name": "Real-Time NSE Dashboard", "description": "Easy way to Track your Stock Portfolio", "url": "https://docs.google.com/spreadsheets/d/170G-ir3p0u3LYGcjCf0f_HPxDgn7CwFrGfMfhhZcNIs/copy"},
-            {"name": "Inventory Management System with Reminder", "description": "Smart Inventory Management with Daily Alerts", "url": "./template/inventory.html"},
-            {"name": "Bulk Invoice Generator", "description": "Generative Invoices in a Click!", "url": "https://docs.google.com/spreadsheets/d/1hQnOOubhbWVSGcJ_6RAao7aBSZugitMmzubGMxwMO50/copy"},
-            {"name": "Smart Tab Generator", "description": "Instantly Split Data by Column Values in Google Sheets", "url": "./template/smarttab.html"},
-            {"name": "Shared Materials Tracker", "description": "Manage and Track Shared Resources with Ease", "url": "./template/sharedmaterial.html"},
-            {"name": "YouTube Link Generator", "description": "Get Bulk Youtube Links at a GO!!", "url": "https://docs.google.com/spreadsheets/d/1EC_j8F0TtvgbLCrvPlasmllI8Dgo2-2MP0too_2hgQM/copy"}
-        ],
-        personal: [
-            {"name": "WhatsApp Messaging Tool", "description": "Reminders to send messages/ wishes to friends and family", "url": "./template/whatsapp.html"},
-            {"name": "BarCode & QRCode Generator", "description": "Create Barcodes or QR codes for your Products", "url": "./template/barcode.html"},
-            {"name": "Change Font Template", "description": "Change Fonts Across Multiple Sheets in One Click!", "url": "./template/changefont.html"},
-            {"name": "Conditional Formatting", "description": "Simple way to format your Sheets", "url": "https://docs.google.com/spreadsheets/d/10YbpPdUNXxFRTSPUOwERzFX7_4hRdTVd9SbBqLhNKOw/copy"}
-        ],
-        education: [
-            {"name": "Student Progress Tracker", "description": "Plan and Track my progress "url": "https://docs.google.com/spreadsheets/d/1gMUTkvIuvqs4CDsOeldcvbnoGwEPKdrSJLoRHcdYgCo/copy"},
-            {"name": "Resume Template Builder", "description": "Entry Level Resumes for Free", "url": "https://docs.google.com/spreadsheets/d/1laxbDjTNP5JEdxvJtBgMnJyHai3nChMl1Py-mgqSUeA/copy"}
-        ]
-    },
+    templates: {
+        productivity: [
+            {"name": "Drive Folder/File Listing Tool", "description": "List All Files from Any Folder in Seconds!", "url": "./template/filelister.html"},
+            {"name": "Task Tracker Reminder", "description": "Organize daily tasks with time tracking", "url": "./template/tasktracker.html"},
+            {"name": "Change Log Tracker", "description": "Monitor Cell-Level Edits Automatically!", "url": "./template/changelog.html"},
+            {"name": "Gmail Search & Organize Tool", "description": "Search, Export, and Clean Your Inbox in One Click!", "url": "./template/gmailsearch.html"},
+            {"name": "Gmail To Sheet Extractor Tool", "description": "Filter, Search & Export Emails in Seconds!", "url": "./template/gmailtosheet.html"},
+            {"name": "Send Email from Sheet", "description": "Personalized Emails Directly from Google Sheets", "url": "./template/sendmail.html"},
+            {"name": "GSheet Keywords Search", "description": "Search Made Easy", "url": "https://docs.google.com/spreadsheets/d/1fcBaqxUPFsEfkw8dJWv_jdIArzBsBsYLeb0KwOTdBUc/copy"},
+            {"name": "Pre-Filled GForm", "description": "Create Prefilled Google Form Links in Bulk","url": "./template/gform.html"}
+        ],
+        business: [
+            {"name": "Precious Metal Transaction Sheet", "description": "Aggregation for a combined invoice", "url": "./template/preciousmetal.html"},
+            {"name": "Real-Time NSE Dashboard", "description": "Easy way to Track your Stock Portfolio", "url": "https://docs.google.com/spreadsheets/d/170G-ir3p0u3LYGcjCf0f_HPxDgn7CwFrGfMfhhZcNIs/copy"},
+            {"name": "Inventory Management System with Reminder", "description": "Smart Inventory Management with Daily Alerts", "url": "./template/inventory.html"},
+            {"name": "Bulk Invoice Generator", "description": "Generative Invoices in a Click!", "url": "https://docs.google.com/spreadsheets/d/1hQnOOubhbWVSGcJ_6RAao7aBSZugitMmzubGMxwMO50/copy"},
+            {"name": "Smart Tab Generator", "description": "Instantly Split Data by Column Values in Google Sheets", "url": "./template/smarttab.html"},
+            {"name": "Shared Materials Tracker", "description": "Manage and Track Shared Resources with Ease", "url": "./template/sharedmaterial.html"},
+            {"name": "YouTube Link Generator", "description": "Get Bulk Youtube Links at a GO!!", "url": "https://docs.google.com/spreadsheets/d/1EC_j8F0TtvgbLCrvPlasmllI8Dgo2-2MP0too_2hgQM/copy"}
+        ],
+        personal: [
+            {"name": "WhatsApp Messaging Tool", "description": "Reminders to send messages/ wishes to friends and family", "url": "./template/whatsapp.html"},
+            {"name": "BarCode & QRCode Generator", "description": "Create Barcodes or QR codes for your Products", "url": "./template/barcode.html"},
+            {"name": "Change Font Template", "description": "Change Fonts Across Multiple Sheets in One Click!", "url": "./template/changefont.html"},
+            {"name": "Conditional Formatting", "description": "Simple way to format your Sheets", "url": "https://docs.google.com/spreadsheets/d/10YbpPdUNXxFRTSPUOwERzFX7_4hRdTVd9SbBqLhNKOw/copy"}
+        ],
+        education: [
+            {"name": "Student Progress Tracker", "description": "Plan and Track my progress", "url": "https://docs.google.com/spreadsheets/d/1gMUTkvIuvqs4CDsOeldcvbnoGwEPKdrSJLoRHcdYgCo/copy"},
+            {"name": "Resume Template Builder", "description": "Entry Level Resumes for Free", "url": "https://docs.google.com/spreadsheets/d/1laxbDjTNP5JEdxvJtBgMnJyHai3nChMl1Py-mgqSUeA/copy"}
+        ]
+    },
     tools: {
         'file-tools': [
             {"name": "PDF Combiner & Extractor", "description": "Merge multiple PDF files into one", "url": "./tools/pdfmerge/index.html"},
@@ -58,8 +58,7 @@ const data = {
             {"name": "Meal Idea", "description": "Get daily meal suggestions", "url": "./tools/mealapp/index.html"},
             {"name": "Habit Tracker", "description": "Build your Habits for better Lifestyle", "url": "./tools/habittracker/index.html"},
             {"name": "Experienced Resume Builder", "description": "Experienced Resumes for Free", "url": "./tools/experiencedresumebuilder/index.html"},
-
- {"name": "Best Deals", "description": "Top 5 Amazon Deals of the Day", "url": "./tools/amazon.html"}
+	    {"name": "Best Deals", "description": "Top 5 Amazon Deals of the Day", "url": "./tools/amazon.html"}
         ]
     },
     games: {
