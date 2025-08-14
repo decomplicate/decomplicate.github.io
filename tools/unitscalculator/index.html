@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Enhanced Unit Converter Calculator</title>
+  <style>
+    body {
+      background: #f6f8fa;
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #ccc;
+      width: 380px;
+      padding: 30px;
+      box-sizing: border-box;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 12px;
+    }
+    select,
+    input {
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+      margin-top: 5px;
+      box-sizing: border-box;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      transition: border-color 0.2s;
+    }
+    select:focus,
+    input:focus {
+      border-color: #66aaff;
+      outline: none;
+    }
+    .buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    button {
+      flex: 1;
+      padding: 10px 0;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background-color: #66aaff;
+      color: white;
+      transition: background-color 0.2s;
+    }
+    button:hover {
+      background-color: #4a8de8;
+    }
+    .result {
+      margin-top: 25px;
+      background: #f3f7fa;
+      padding: 14px;
+      border-radius: 7px;
+      font-size: 18px;
+      text-align: center;
+      min-height: 46px;
+      user-select: all;
+      white-space: nowrap;
+      overflow-x: auto;
+    }
+    @media (max-width: 420px) {
+      body {
+        padding: 20px;
+      }
+      .container {
+        width: 100%;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Unit Converter</h2>
+    <label for="type">Unit Type:</label>
+    <select id="type" onchange="updateUnits()">
+      <option value="length">Length</option>
+      <option value="weight">Weight</option>
+      <option value="temperature">Temperature</option>
+      <option value="time">Time</option>
+      <option value="volume">Volume</option>
+      <option value="area">Area</option>
+      <option value="speed">Speed</option>
+    </select>
+
+    <label for="inputValue">Value:</label>
+    <input type="number" id="inputValue" placeholder="Enter value" oninput="convert()" />
+
+    <label for="fromUnit">From:</label>
+    <select id="fromUnit" onchange="convert()"></select>
+
+    <label for="toUnit">To:</label>
+    <select id="toUnit" onchange="convert()"></select>
+
+    <div class="buttons">
+      <button type="button" onclick="swapUnits()">Swap Units ↔</button>
+      <button type="button" onclick="copyResult()">Copy Result</button>
+    </div>
+
+    <div class="result" id="result"></div>
+ <div class="info-text">
+      <h3>Contact: decomplicate001@gmail.com</h3>
+ <h4>For more automations visit and follow: <a href="https://effortlessautomation.wordpress.com/" target="_blank" rel="noopener noreferrer">https://effortlessautomation.wordpress.com/</a></h4>
+
+    </div>
+  </div>
+
+  <script>
+    const units = {
+      length: [
+        { name: "Meters", value: "m" },
+        { name: "Feet", value: "ft" },
+        { name: "Kilometers", value: "km" },
+        { name: "Miles", value: "mi" }
+      ],
+      weight: [
+        { name: "Kilograms", value: "kg" },
+        { name: "Pounds", value: "lb" },
+        { name: "Grams", value: "g" },
+        { name: "Ounces", value: "oz" }
+      ],
+      temperature: [
+        { name: "Celsius", value: "c" },
+        { name: "Fahrenheit", value: "f" },
+        { name: "Kelvin", value: "k" }
+      ],
+      time: [
+        { name: "Seconds", value: "s" },
+        { name: "Minutes", value: "min" },
+        { name: "Hours", value: "h" },
+        { name: "Days", value: "d" },
+        { name: "Weeks", value: "wk" }
+      ],
+      volume: [
+        { name: "Liters", value: "l" },
+        { name: "Milliliters", value: "ml" },
+        { name: "Gallons", value: "gal" },
+        { name: "Cups", value: "cup" },
+        { name: "Ounces", value: "oz" }
+      ],
+      area: [
+        { name: "Square meters", value: "sqm" },
+        { name: "Square feet", value: "sqft" },
+        { name: "Acres", value: "acre" },
+        { name: "Hectares", value: "ha" }
+      ],
+      speed: [
+        { name: "Kilometers/hour", value: "kmh" },
+        { name: "Miles/hour", value: "mph" },
+        { name: "Meters/second", value: "ms" }
+      ]
+    };
+
+    function updateUnits() {
+      const type = document.getElementById("type").value;
+      const from = document.getElementById("fromUnit");
+      const to = document.getElementById("toUnit");
+      from.innerHTML = "";
+      to.innerHTML = "";
+
+      units[type].forEach(unit => {
+        const optionFrom = document.createElement("option");
+        optionFrom.value = unit.value;
+        optionFrom.textContent = unit.name;
+        from.appendChild(optionFrom);
+
+        const optionTo = document.createElement("option");
+        optionTo.value = unit.value;
+        optionTo.textContent = unit.name;
+        to.appendChild(optionTo);
+      });
+
+      to.selectedIndex = 1;
+      convert();
+    }
+
+    function swapUnits() {
+      const from = document.getElementById("fromUnit");
+      const to = document.getElementById("toUnit");
+      const temp = from.value;
+      from.value = to.value;
+      to.value = temp;
+      convert();
+    }
+
+    function copyResult() {
+      const resultEl = document.getElementById("result");
+      if (resultEl.textContent.trim() !== "") {
+        navigator.clipboard.writeText(resultEl.textContent).then(() => {
+          alert("Result copied to clipboard!");
+        }, () => {
+          alert("Failed to copy.");
+        });
+      }
+    }
+
+    function convert() {
+      const type = document.getElementById("type").value;
+      const inputValue = parseFloat(document.getElementById("inputValue").value);
+      const fromUnit = document.getElementById("fromUnit").value;
+      const toUnit = document.getElementById("toUnit").value;
+      const resultEl = document.getElementById("result");
+
+      if (isNaN(inputValue)) {
+        resultEl.textContent = "";
+        return;
+      }
+
+      let result = null;
+
+      switch (type) {
+        case "length":
+          result = convertLength(inputValue, fromUnit, toUnit);
+          break;
+        case "weight":
+          result = convertWeight(inputValue, fromUnit, toUnit);
+          break;
+        case "temperature":
+          result = convertTemperature(inputValue, fromUnit, toUnit);
+          break;
+        case "time":
+          result = convertTime(inputValue, fromUnit, toUnit);
+          break;
+        case "volume":
+          result = convertVolume(inputValue, fromUnit, toUnit);
+          break;
+        case "area":
+          result = convertArea(inputValue, fromUnit, toUnit);
+          break;
+        case "speed":
+          result = convertSpeed(inputValue, fromUnit, toUnit);
+          break;
+        default:
+          result = NaN;
+      }
+
+      if (result === null || isNaN(result)) {
+        resultEl.textContent = "Conversion not supported.";
+      } else {
+        resultEl.textContent = `${inputValue} ${getUnitLabel(type, fromUnit)} = ${Number(result.toFixed(5))} ${getUnitLabel(type, toUnit)}`;
+      }
+    }
+
+    // Conversion helpers
+
+    // Length in meters
+    function convertLength(value, from, to) {
+      const toMeters = {
+        m: 1,
+        ft: 0.3048,
+        km: 1000,
+        mi: 1609.34
+      };
+      return (value * toMeters[from]) / toMeters[to];
+    }
+
+    // Weight in kilograms
+    function convertWeight(value, from, to) {
+      const toKg = {
+        kg: 1,
+        lb: 0.453592,
+        g: 0.001,
+        oz: 0.0283495
+      };
+      return (value * toKg[from]) / toKg[to];
+    }
+
+    // Temperature conversion (to Celsius)
+    function convertTemperature(value, from, to) {
+      let celsius;
+      // to celsius
+      switch (from) {
+        case "c":
+          celsius = value;
+          break;
+        case "f":
+          celsius = (value - 32) * 5/9;
+          break;
+        case "k":
+          celsius = value - 273.15;
+          break;
+        default:
+          return NaN;
+      }
+      // from celsius
+      switch (to) {
+        case "c":
+          return celsius;
+        case "f":
+          return celsius * 9/5 + 32;
+        case "k":
+          return celsius + 273.15;
+        default:
+          return NaN;
+      }
+    }
+
+    // Time in seconds
+    function convertTime(value, from, to) {
+      const toSeconds = {
+        s: 1,
+        min: 60,
+        h: 3600,
+        d: 86400,
+        wk: 604800
+      };
+      return (value * toSeconds[from]) / toSeconds[to];
+    }
+
+    // Volume in liters
+    function convertVolume(value, from, to) {
+      const toLiters = {
+        l: 1,
+        ml: 0.001,
+        gal: 3.78541,
+        cup: 0.236588,
+        oz: 0.0295735
+      };
+      return (value * toLiters[from]) / toLiters[to];
+    }
+
+    // Area in square meters
+    function convertArea(value, from, to) {
+      const toSqMeters = {
+        sqm: 1,
+        sqft: 0.092903,
+        acre: 4046.86,
+        ha: 10000
+      };
+      return (value * toSqMeters[from]) / toSqMeters[to];
+    }
+
+    // Speed in meters per second
+    function convertSpeed(value, from, to) {
+      const toMetersPerSec = {
+        ms: 1,
+        kmh: 1000/3600,
+        mph: 1609.34/3600
+      };
+      return (value * toMetersPerSec[from]) / toMetersPerSec[to];
+    }
+
+    function getUnitLabel(type, value) {
+      const unit = units[type].find(u => u.value === value);
+      return unit ? unit.name : "";
+    }
+
+    // Initialize units on page load
+    window.onload = updateUnits;
+  </script>
+</body>
+</html>

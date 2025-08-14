@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Free Modern Resume Builder — Create & Download Your Resume</title>
+  <meta name="description" content="Create a professional modern resume online with our free resume builder. Add your skills, languages, experience and education, preview instantly, and export to PDF." />
+  <meta name="keywords" content="resume builder, cv creator, free resume maker, modern resume, online cv generator" />
+  <meta name="author" content="EffortlesslyDone / Decomplicate" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Free Modern Resume Builder — Create & Download Your Resume" />
+  <meta property="og:description" content="Create a professional modern resume online. Add details, preview instantly, and download as PDF." />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free Modern Resume Builder — Create & Download Your Resume" />
+  <meta name="twitter:description" content="Create your resume online for free. Add skills, experience, and download as PDF instantly." />
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "EffortlesslyDone Resume Builder",
+    "url": "https://yourdomain.example/resume-builder",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "description": "Free resume builder to create, preview, and download your modern CV.",
+    "author": {
+      "@type": "Organization",
+      "name": "EffortlesslyDone"
+    }
+  }
+  </script>
+<!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- html2pdf -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
+
+
+  <style>
+  :root{
+    --font-base: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    --font-heading: 'Poppins', var(--font-base);
+    --space-xs:.25rem; --space-sm:.5rem; --space-md:1rem; --space-lg:1.5rem; --space-xl:2rem;
+    --radius-sm:6px; --radius-md:12px;
+    /* Branding colors (matching homepage) */
+    --color-bg:#FAFAFB;
+    --color-surface:#FFFFFF;
+    --color-text:#213248;
+    --color-muted:#65738a;
+    --color-primary:#3F51B5; /* Indigo */
+    --color-primary-600:#3949AB;
+    --color-accent:#FF6B5E;  /* Coral */
+    --color-teal:#26A69A;
+    --shadow-sm: 0 2px 8px rgba(18,30,50,0.06);
+    --shadow-md: 0 8px 24px rgba(18,30,50,0.10);
+  }
+
+  /* Page baseline */
+  html,body { height:100%; }
+  body{
+    margin:0;
+    font-family:var(--font-base);
+    background:var(--color-bg);
+    color:var(--color-text);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.45;
+    padding: 0 1rem 2rem;
+  }
+
+  /* Header */
+  header.site-header{
+    background:linear-gradient(90deg,var(--color-primary),var(--color-primary-600));
+    color:#fff;
+    padding:14px 0;
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+    margin: 1rem 0;
+  }
+  .site-header .container {
+    max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:12px; justify-content:space-between; padding:0 1rem;
+  }
+  .brand-title { font-family:var(--font-heading); font-weight:700; font-size:1.125rem; letter-spacing:0.4px; }
+  .brand-sub { font-size:0.9rem; opacity:0.95; }
+
+  /* Main layout */
+  main.container {
+    max-width:1100px;
+    margin: 1rem auto 0;
+    display:flex;
+    gap: 28px;
+    align-items:flex-start;
+  }
+
+  /* Form card */
+  .panel {
+    background:var(--color-surface);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: 20px;
+    width: 360px;
+    max-width: 100%;
+  }
+  .panel h2 { margin:0 0 12px; font-family:var(--font-heading); font-size:1.05rem; color:var(--color-primary); }
+  .field { margin-top:10px; display:flex; flex-direction:column; gap:6px; }
+  label { font-weight:600; color:var(--color-text); font-size:0.95rem; }
+  input[type="text"], input[type="email"], input[type="tel"], textarea, select {
+    border:1px solid #d7dfe9; background:#fbfdff;
+    padding:8px 10px; border-radius:8px; font-size:0.95rem; color:var(--color-text);
+  }
+  textarea { min-height:64px; resize:vertical; }
+  input[type="file"] { font-size:0.9rem; }
+
+  .btn {
+    display:inline-flex; align-items:center; gap:8px; border:0; cursor:pointer; border-radius:8px; padding:9px 14px;
+    font-weight:700; font-family:var(--font-heading);
+  }
+  .btn-primary { background:var(--color-primary); color:#fff; }
+  .btn-secondary { background:var(--color-accent); color:#fff; }
+  .btn-ghost { background:transparent; color:var(--color-primary); border:1px solid rgba(0,0,0,0.06); }
+  .btn:focus { outline:3px solid rgba(63,81,181,0.12); }
+
+  .small-list { list-style:none; padding:0; margin:8px 0 0;}
+  .small-list li { display:flex; justify-content:space-between; gap:6px; align-items:center; margin-bottom:8px; }
+
+  /* Resume preview */
+  #resumePreview {
+    width: 710px;
+    min-height: 900px;
+    background:var(--color-surface);
+    border-radius: 14px;
+    box-shadow: var(--shadow-md);
+    display:flex;
+    overflow:hidden;
+    font-size: 0.98rem;
+  }
+  .preview-left {
+    width:220px; background:linear-gradient(180deg, rgba(63,81,181,0.06), rgba(38,166,154,0.04));
+    padding:28px 18px; display:flex; flex-direction:column; gap:20px; color:var(--color-primary);
+    flex-shrink:0;
+  }
+  .preview-photo { width:72px; height:72px; border-radius:50%; object-fit:cover; border:2px solid var(--color-primary); background:#e6eefc; margin:0 auto; display:block; }
+  .preview-name { text-align:center; font-weight:700; color:var(--color-primary); font-size:1.15rem; }
+  .preview-job { text-align:center; color:var(--color-muted); margin-bottom:6px; }
+
+  .preview-left .label { font-weight:700; color:#34507a; margin-top:8px; font-size:0.95rem; }
+  .preview-left ul { list-style:none; padding:0; margin:6px 0 0; color:var(--color-text); }
+  .skill-bar { height:8px; background:#e9f0ff; border-radius:5px; overflow:hidden; margin-top:4px; }
+  .skill-bar > span { display:block; height:100%; background:var(--color-primary); }
+
+  .preview-main { flex:1; padding:28px; color:var(--color-text); }
+  .preview-title { font-size:1.18rem; font-weight:700; color:var(--color-primary); margin-bottom:6px; }
+  .preview-summary { font-style:italic; color:var(--color-muted); margin-bottom:10px; }
+
+  .section-divider { border-bottom:2px solid #eff4fb; margin:12px 0; }
+
+  .section-title { color:var(--color-teal); font-weight:700; margin-bottom:8px; font-size:1rem; }
+
+  .exp-item, .edu-item { margin-bottom:14px; }
+  .exp-role { font-weight:700; color:#12324a; }
+  .exp-org { color:#18507a; margin-bottom:2px; }
+  .exp-dates { color: #567199; font-size:0.92rem; margin-bottom:6px; }
+
+  /* Responsive */
+  @media (max-width:1100px){
+    main.container { flex-direction:column; padding:0; align-items:center; }
+    #resumePreview { width:98vw; min-width:0; }
+    .preview-left { width:100%; flex-direction:row; justify-content:space-between; padding:14px; }
+    .preview-main { padding:18px; }
+    .panel { width:100%; }
+  }
+
+  /* small helper */
+  .muted { color:var(--color-muted); font-size:0.92rem; }
+  .visually-hidden { position:absolute !important; height:1px; width:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap; }
+  </style>
+</head>
+
+<body>
+  <header class="site-header" role="banner">
+    <div class="container">
+      <div>
+        <div class="brand-title">EffortlesslyDone</div>
+        <div class="brand-sub">Free Modern Resume Builder</div>
+      </div>
+      <div class="muted">Make a resume. Download PDF. Free.</div>
+    </div>
+  </header>
+
+  <main class="container" role="main" aria-labelledby="pageTitle">
+    <h1 id="pageTitle" class="visually-hidden">Create your modern resume</h1>
+
+    <!-- Left: Form -->
+    <form id="resumeForm" class="panel" autocomplete="off" novalidate aria-describedby="formHelp" onsubmit="return false;">
+      <h2>Personal Info</h2>
+
+      <div id="formHelp" class="muted">Fill details and see live preview. Use the export button to download PDF.</div>
+
+      <div class="field">
+        <label for="fullName">Full name</label>
+        <input id="fullName" type="text" placeholder="e.g. Diya Agarwal" />
+      </div>
+
+      <div class="field">
+        <label for="jobTitle">Job title</label>
+        <input id="jobTitle" type="text" placeholder="e.g. Retail Sales Associate" />
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" type="email" inputmode="email" placeholder="you@example.com" />
+      </div>
+
+      <div class="field">
+        <label for="phone">Phone</label>
+        <input id="phone" type="tel" inputmode="tel" placeholder="+91 12345 67890" />
+      </div>
+
+      <div class="field">
+        <label for="location">Location (city, country)</label>
+        <input id="location" type="text" placeholder="Mumbai, India" />
+      </div>
+
+      <div class="field">
+        <label for="photoUpload">Profile photo (optional)</label>
+        <input id="photoUpload" type="file" accept="image/*" aria-label="Upload profile photo" />
+      </div>
+
+      <hr style="margin:12px 0;border:none;border-top:1px solid #eef4fb;">
+
+      <h2>Skills</h2>
+      <div class="field" style="flex-direction:row;gap:8px;align-items:center;">
+        <input id="skillInput" type="text" placeholder="Skill name (e.g. Excel)" style="flex:1;" />
+        <select id="skillLevel" aria-label="skill level">
+          <option value="100">Expert</option>
+          <option value="80">Proficient</option>
+          <option value="55">Intermediate</option>
+          <option value="30">Basic</option>
+        </select>
+      </div>
+      <div style="margin-top:8px;">
+        <button id="addSkillBtn" type="button" class="btn btn-primary">Add skill</button>
+      </div>
+      <ul id="skillsList" class="small-list" aria-live="polite"></ul>
+
+      <h2>Languages</h2>
+      <div class="field" style="flex-direction:row;gap:8px;align-items:center;">
+        <input id="languageInput" type="text" placeholder="Language (e.g. English)" style="flex:1;" />
+        <select id="langLevel" aria-label="language level">
+          <option value="C2">Proficient</option>
+          <option value="C1">Advanced</option>
+          <option value="B2">Upper-intermediate</option>
+          <option value="B1">Intermediate</option>
+          <option value="A2">Basic</option>
+          <option value="A1">Beginner</option>
+        </select>
+      </div>
+      <div style="margin-top:8px;">
+        <button id="addLangBtn" type="button" class="btn btn-ghost">Add language</button>
+      </div>
+      <ul id="langsList" class="small-list" aria-live="polite"></ul>
+
+      <hr style="margin:12px 0;border:none;border-top:1px solid #eef4fb;">
+
+      <h2>Experience</h2>
+      <div id="expFields" aria-live="polite"></div>
+      <div style="margin-top:8px;">
+        <button id="addExpBtn" type="button" class="btn btn-primary">+ Add experience</button>
+      </div>
+
+      <h2 style="margin-top:18px;">Education</h2>
+      <div id="eduFields" aria-live="polite"></div>
+      <div style="margin-top:8px;">
+        <button id="addEduBtn" type="button" class="btn btn-primary">+ Add education</button>
+      </div>
+
+      <h2 style="margin-top:18px;">Summary</h2>
+      <div class="field">
+        <label for="summary">Short professional summary</label>
+        <textarea id="summary" placeholder="2–4 lines highlighting strengths and skills"></textarea>
+      </div>
+
+      <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+        <button id="exportPDF" type="button" class="btn btn-secondary" aria-label="Export resume as PDF">Export as PDF</button>
+        <a href="https://effortlesslydone.com/" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">More tools</a>
+      </div>
+
+      <div style="margin-top:12px; font-size:0.9rem;" class="muted">
+        Contact: <a href="mailto:decomplicate001@gmail.com">decomplicate001@gmail.com</a>
+      </div>
+
+ 
+
+    </form>
+
+    <!-- Right: Live Resume Preview -->
+    <aside id="resumePreview" class="panel" role="region" aria-label="Live resume preview" aria-live="polite">
+      <div class="preview-left" id="previewLeft">
+        <img id="previewPhoto" class="preview-photo" alt="Profile photo" style="display:none;" />
+        <div>
+          <div id="previewName" class="preview-name">Your Name</div>
+          <div id="previewJob" class="preview-job">Job Title</div>
+        </div>
+
+        <div>
+          <div class="label">CONTACT</div>
+          <ul id="previewContact" aria-hidden="false" style="margin-top:6px;"></ul>
+        </div>
+
+        <div>
+          <div class="label">SKILLS</div>
+          <ul id="previewSkills" style="margin-top:6px;"></ul>
+        </div>
+
+        <div>
+          <div class="label">LANGUAGES</div>
+          <ul id="previewLangs" style="margin-top:6px;"></ul>
+        </div>
+      </div>
+
+      <div class="preview-main">
+        <div>
+          <div id="previewTitle" class="preview-title">SUMMARY</div>
+          <div id="previewSummary" class="preview-summary">A dedicated professional with relevant experience. Fill in your summary to personalize this section.</div>
+        </div>
+
+        <div class="section-divider" role="separator" aria-hidden="true"></div>
+
+        <div>
+          <div class="section-title">EXPERIENCE</div>
+          <div id="previewExp"></div>
+        </div>
+
+        <div class="section-divider" role="separator" aria-hidden="true"></div>
+
+        <div>
+          <div class="section-title">EDUCATION</div>
+          <div id="previewEdu"></div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+  // ------- Utility shortcuts -------
+  const $ = (s, root = document) => root.querySelector(s);
+  const $$ = (s, root = document) => Array.from(root.querySelectorAll(s));
+
+  // ------- Data stores -------
+  let skillsArr = [];
+  let langsArr = [];
+  let expArr = [];
+  let eduArr = [];
+
+  // ------- DOM refs -------
+  const refs = {
+    fullName: $('#fullName'),
+    jobTitle: $('#jobTitle'),
+    email: $('#email'),
+    phone: $('#phone'),
+    location: $('#location'),
+    photoUpload: $('#photoUpload'),
+    previewPhoto: $('#previewPhoto'),
+    previewName: $('#previewName'),
+    previewJob: $('#previewJob'),
+    previewContact: $('#previewContact'),
+    previewSkills: $('#previewSkills'),
+    previewLangs: $('#previewLangs'),
+    previewSummary: $('#previewSummary'),
+    previewTitle: $('#previewTitle'),
+    previewExp: $('#previewExp'),
+    previewEdu: $('#previewEdu'),
+    summary: $('#summary'),
+    skillsList: $('#skillsList'),
+    langsList: $('#langsList'),
+    addSkillBtn: $('#addSkillBtn'),
+    skillInput: $('#skillInput'),
+    skillLevel: $('#skillLevel'),
+    addLangBtn: $('#addLangBtn'),
+    languageInput: $('#languageInput'),
+    langLevel: $('#langLevel'),
+    expFields: $('#expFields'),
+    eduFields: $('#eduFields'),
+    addExpBtn: $('#addExpBtn'),
+    addEduBtn: $('#addEduBtn'),
+    exportPDF: $('#exportPDF')
+  };
+
+  // ------- Helpers -------
+  function sanitizeText(s){ return String(s || '').trim(); }
+  function setText(el, text){
+    if(!el) return;
+    el.textContent = sanitizeText(text) || '';
+  }
+
+  // ------- Update preview functions -------
+  function updateSidebar(){
+    setText(refs.previewName, refs.fullName.value || 'Your Name');
+    setText(refs.previewJob, refs.jobTitle.value || 'Job Title');
+
+    // contact
+    refs.previewContact.innerHTML = '';
+    if(refs.email.value){ refs.previewContact.innerHTML += `<li>${refs.email.value}</li>`; }
+    if(refs.phone.value){ refs.previewContact.innerHTML += `<li>${refs.phone.value}</li>`; }
+    if(refs.location.value){ refs.previewContact.innerHTML += `<li>${refs.location.value}</li>`; }
+
+    // skills
+    refs.previewSkills.innerHTML = '';
+    skillsArr.forEach(s => {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <div style="font-weight:600;">${s.name}</div>
+        <div class="skill-bar" aria-hidden="true"><span style="width:${s.level}%"></span></div>
+      `;
+      refs.previewSkills.appendChild(li);
+    });
+
+    // languages
+    refs.previewLangs.innerHTML = '';
+    langsArr.forEach(l => {
+      const li = document.createElement('li');
+      li.innerHTML = `${l.lang} <span style="color:var(--color-primary); font-size:0.92em;">(${l.level})</span>`;
+      refs.previewLangs.appendChild(li);
+    });
+  }
+
+  function updateSummary(){
+    refs.previewSummary.textContent = refs.summary.value.trim() || 'A dedicated professional with relevant experience. Fill in your summary to personalize this section.';
+    refs.previewTitle.textContent = 'SUMMARY';
+  }
+
+  function updateExperience(){
+    refs.previewExp.innerHTML = '';
+    expArr.forEach(x => {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'exp-item';
+      wrapper.innerHTML = `
+        <div class="exp-role">${x.position || ''}</div>
+        <div class="exp-org">${x.company || ''}</div>
+        <div class="exp-dates">${x.dates || ''}</div>
+        <div>${x.desc || ''}</div>
+      `;
+      refs.previewExp.appendChild(wrapper);
+    });
+  }
+
+  function updateEducation(){
+    refs.previewEdu.innerHTML = '';
+    eduArr.forEach(e => {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'edu-item';
+      wrapper.innerHTML = `
+        <div class="exp-role">${e.degree || ''}</div>
+        <div class="exp-org">${e.school || ''}</div>
+        <div class="exp-dates">${e.dates || ''}</div>
+      `;
+      refs.previewEdu.appendChild(wrapper);
+    });
+  }
+
+  // ------- Skills -------
+  function renderSkillList(){
+    refs.skillsList.innerHTML = '';
+    skillsArr.forEach((s, idx) => {
+      const li = document.createElement('li');
+      li.innerHTML = `${s.name} <button type="button" class="remove-btn" data-idx="${idx}">Remove</button>`;
+      refs.skillsList.appendChild(li);
+    });
+    // attach remove handlers
+    $$('button.remove-btn', refs.skillsList).forEach(btn => {
+      btn.addEventListener('click', (ev) => {
+        const i = Number(ev.currentTarget.dataset.idx);
+        skillsArr.splice(i,1); renderSkillList(); updateSidebar();
+      });
+    });
+  }
+
+  refs.addSkillBtn.addEventListener('click', () => {
+    const name = sanitizeText(refs.skillInput.value);
+    const level = Number(refs.skillLevel.value);
+    if(!name) return;
+    skillsArr.push({name, level});
+    refs.skillInput.value = '';
+    renderSkillList(); updateSidebar();
+  });
+
+  // ------- Languages -------
+  function renderLangList(){
+    refs.langsList.innerHTML = '';
+    langsArr.forEach((l, idx) => {
+      const li = document.createElement('li');
+      li.innerHTML = `${l.lang} (${l.level}) <button type="button" class="remove-btn" data-idx="${idx}">Remove</button>`;
+      refs.langsList.appendChild(li);
+    });
+    $$('button.remove-btn', refs.langsList).forEach(btn => {
+      btn.addEventListener('click', (ev) => {
+        const i = Number(ev.currentTarget.dataset.idx);
+        langsArr.splice(i,1); renderLangList(); updateSidebar();
+      });
+    });
+  }
+
+  refs.addLangBtn.addEventListener('click', () => {
+    const lang = sanitizeText(refs.languageInput.value);
+    const level = refs.langLevel.selectedOptions[0].text;
+    if(!lang) return;
+    langsArr.push({lang, level});
+    refs.languageInput.value = '';
+    renderLangList(); updateSidebar();
+  });
+
+  // ------- Experience fields management -------
+  function addExpFields(obj = {}){
+    const cont = document.createElement('div');
+    cont.className = 'exp-entry';
+    cont.innerHTML = `
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <div style="flex:1">
+          <label>Position</label><input class="expPosition" type="text" value="${obj.position||''}" />
+        </div>
+        <div style="width:160px">
+          <label>Dates</label><input class="expDates" type="text" value="${obj.dates||''}" placeholder="e.g. Feb 2017 - Current" />
+        </div>
+      </div>
+      <label>Company</label><input class="expCompany" type="text" value="${obj.company||''}" />
+      <label>Description</label><textarea class="expDesc">${obj.desc||''}</textarea>
+      <div style="margin-top:8px;"><button type="button" class="btn btn-ghost remove-exp">Remove</button></div>
+      <hr style="border:none;border-top:1px solid #eef4fb;margin:12px 0;">
+    `;
+    cont.querySelector('.remove-exp').addEventListener('click', () => { cont.remove(); pullExpArr(); });
+    refs.expFields.appendChild(cont);
+  }
+
+  function pullExpArr(){
+    expArr = [];
+    $$('.exp-entry', refs.expFields).forEach(el => {
+      expArr.push({
+        position: el.querySelector('.expPosition').value,
+        company: el.querySelector('.expCompany').value,
+        dates: el.querySelector('.expDates').value,
+        desc: el.querySelector('.expDesc').value
+      });
+    });
+    updateExperience();
+  }
+
+  refs.addExpBtn.addEventListener('click', () => { addExpFields(); });
+
+  // ------- Education fields management -------
+  function addEduFields(obj = {}){
+    const cont = document.createElement('div');
+    cont.className = 'edu-entry';
+    cont.innerHTML = `
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <div style="flex:1">
+          <label>Degree</label><input class="eduDegree" type="text" value="${obj.degree||''}" />
+        </div>
+        <div style="width:160px">
+          <label>Dates</label><input class="eduDates" type="text" value="${obj.dates||''}" placeholder="e.g. 2016" />
+        </div>
+      </div>
+      <label>School</label><input class="eduSchool" type="text" value="${obj.school||''}" />
+      <div style="margin-top:8px;"><button type="button" class="btn btn-ghost remove-edu">Remove</button></div>
+      <hr style="border:none;border-top:1px solid #eef4fb;margin:12px 0;">
+    `;
+    cont.querySelector('.remove-edu').addEventListener('click', () => { cont.remove(); pullEduArr(); });
+    refs.eduFields.appendChild(cont);
+  }
+
+  function pullEduArr(){
+    eduArr = [];
+    $$('.edu-entry', refs.eduFields).forEach(el => {
+      eduArr.push({
+        degree: el.querySelector('.eduDegree').value,
+        school: el.querySelector('.eduSchool').value,
+        dates: el.querySelector('.eduDates').value
+      });
+    });
+    updateEducation();
+  }
+
+  refs.addEduBtn.addEventListener('click', () => { addEduFields(); });
+
+  // ------- Photo preview -------
+  refs.photoUpload.addEventListener('change', (ev) => {
+    const file = ev.target.files[0];
+    if(!file){ refs.previewPhoto.style.display='none'; return; }
+    const reader = new FileReader();
+    reader.onload = e => { refs.previewPhoto.src = e.target.result; refs.previewPhoto.style.display='block'; };
+    reader.readAsDataURL(file);
+  });
+
+  // ------- Global update triggers -------
+  function globalUpdate(){
+    pullExpArr(); pullEduArr();
+    updateSidebar(); updateSummary(); updateExperience(); updateEducation();
+  }
+
+  // update on input fields
+  ['input','change'].forEach(evt => {
+    $('#resumeForm').addEventListener(evt, () => { globalUpdate(); });
+  });
+
+  // ------- Export PDF -------
+  refs.exportPDF.addEventListener('click', () => {
+    // choose the preview element
+    const element = document.getElementById('resumePreview');
+    // filename fallback
+    const filename = (refs.fullName.value.trim() || 'resume').replace(/\s+/g,'_').toLowerCase() + '.pdf';
+    html2pdf().set({
+      margin: 10,
+      filename,
+      html2canvas: { scale: 2, letterRendering: true, backgroundColor: "#ffffff" },
+      jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' }
+    }).from(element).save();
+  });
+
+  // ------- Init with one blank exp/edu -------
+  addExpFields();
+  addEduFields();
+  updateSidebar();
+  updateSummary();
+  updateExperience();
+  updateEducation();
+  </script>
+</body>
+</html>

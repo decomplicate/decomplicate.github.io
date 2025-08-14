@@ -40,24 +40,24 @@ const data = {
     },
     tools: {
         'file-tools': [
-            {"name": "PDF Combiner & Extractor", "description": "Merge multiple PDF files into one", "url": "./tools/pdf-merge/index.html"},
-            {"name": "Excel Converter", "description": "Extract specific pages from PDF files", "url": "./tools/excel-converter/index.html"},
+            {"name": "PDF Combiner & Extractor", "description": "Merge multiple PDF files into one", "url": "./tools/pdfmerge/index.html"},
+            {"name": "Excel Converter", "description": "Extract specific pages from PDF files", "url": "./tools/excelconverter/index.html"},
             {"name": "Text Cleaner", "description": "Split PDF files into separate documents", "url": "./tools/cleaner/index.html"},
-            {"name": "File Rename and Organizer", "description": "Reduce PDF file size while maintaining quality", "url": "./tools/file-rename-and-organizer/index.html"}
+            {"name": "File Rename and Organizer", "description": "Reduce PDF file size while maintaining quality", "url": "./tools/filerenameandorganizer/index.html"}
         ],
         'business-tools': [
-            {"name": "Image Resizer", "description": "Convert text to natural speech audio", "url": "./tools/image-resizer/index.html"},
-            {"name": "Units Converter", "description": "Generate QR codes for text, URLs, and data", "url": "./tools/units-converter/index.html"},
+            {"name": "Image Resizer", "description": "Convert text to natural speech audio", "url": "./tools/imageresizer/index.html"},
+            {"name": "Units Converter", "description": "Generate QR codes for text, URLs, and data", "url": "./tools/unitsconverter/index.html"},
             {"name": "Data Extractor", "description": "Create secure passwords with custom options", "url": "./tools/extraction/index.html"},
-            {"name": "Finance Resume Parser", "description": "Generate color schemes for design projects", "url": "./tools/finance-job-match/index.html"},
-            {"name": "Hotel Guest Management", "description": "Convert between different units of measurement", "url": "./tools/hotel-guest-management/index.html"},
+            {"name": "Finance Resume Parser", "description": "Generate color schemes for design projects", "url": "./tools/financejobmatch/index.html"},
+            {"name": "Hotel Guest Management", "description": "Convert between different units of measurement", "url": "./tools/hotelguestmanagement/index.html"},
             {"name": "Smartsheet Guard", "description": "Protect Your Data", "url": "./tools/smartsheet.html"}
         ],
         'lifestyle-tools': [
-            {"name": "Password Remover", "description": "Convert files between different formats", "url": "./tools/password-remover/index.html"},
-            {"name": "Meal Idea", "description": "Remove backgrounds from images automatically", "url": "./tools/meal-idea/index.html"},
-            {"name": "Habit Tracker", "description": "Create short links for long URLs", "url": "./tools/habit-tracker/index.html"},
-            {"name": "Experienced Resume Builder", "description": "Generate various types of barcodes", "url": "./tools/experienced-resume-builder/index.html"}
+            {"name": "Password Remover", "description": "Convert files between different formats", "url": "./tools/passwordremover/index.html"},
+            {"name": "Meal Idea", "description": "Remove backgrounds from images automatically", "url": "./tools/mealapp/index.html"},
+            {"name": "Habit Tracker", "description": "Create short links for long URLs", "url": "./tools/habittracker/index.html"},
+            {"name": "Experienced Resume Builder", "description": "Generate various types of barcodes", "url": "./tools/experiencedresumebuilder/index.html"}
         ]
     },
     games: {
