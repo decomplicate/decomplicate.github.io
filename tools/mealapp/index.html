@@ -3,680 +3,527 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MyMealApp</title>
+  <title>Meal Suggestion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-* { box-sizing: border-box; }
+   *  {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-html, body {  margin: 0;  padding: 0;  width: 100%;  height: 100%;  font-family: 'Segoe UI', sans-serif;  background: #fff9f0;  overflow: hidden;}
-
-body {  display: flex;  height: 100vh;}
-
-nav.sidebar {  background: #ff8800;  color: white;  position: absolute;  z-index: 1000;  height: 100%;  width: 180px;  transition: width 0.3s ease;  overflow: hidden;}
-
-nav.sidebar.collapsed {  width: 0;  min-width: 0;}
-
-nav.sidebar.post-login.collapsed {  width: 60px;  min-width: 60px;  overflow: visible;}
-
-nav.sidebar ul {  list-style: none;  padding: 0;  margin: 0;}
-
-nav.sidebar ul li {  display: flex;  align-items: center;  gap: 12px;  margin-bottom: 1rem;}
-
-nav.sidebar ul li a {  display: block;  color: white;  text-decoration: none;  padding: 1rem;}
-
-nav.sidebar .label {  font-size: 0.9rem;  margin-left: 0.5rem;}
-
-nav.sidebar.post-login.collapsed ul li .label {  display: none;}
-
-nav.sidebar.post-login.collapsed ul li .emoji {  display: inline-block;  font-size: 1.5rem;  text-align: center;  width: 100%;  padding-left: 0;}
-
-nav.sidebar .toggle-btn {  background: #ff8800;  color: white;  font-size: 22px;  border: none;  cursor: pointer;  padding: 1rem;  width: 100%;  text-align: left;}
-
-main {  flex-grow: 1;  padding-top: 0.5rem;  height: 100vh;  overflow-y: auto;  transition: all 0.3s ease;  margin-left: 0;  display: flex;  justify-content: flex-start;  align-items: flex-start;}
-
-nav.sidebar.collapsed + main,nav.sidebar.post-login.collapsed + main {  justify-content: center;  align-items: center;}
-
-.center-content {  width: 100%;  max-width: 600px;  text-align: center;}
-
-section {  display: none;}
-
-section.active {  display: block;}
-
-.meal-card {  background: white;  border-radius: 12px;  box-shadow: 0 2px 6px rgba(0,0,0,0.1);  display: flex;  flex-wrap: wrap;  align-items: center;  padding: 1rem;  margin-bottom: 1rem;
-  gap: 1rem;}
-
-.meal-card img {  width: 100px;  height: 100px;  border-radius: 8px;  object-fit: cover;  flex-shrink: 0;}
-
-.meal-card-content {  flex: 1;}
-
-.meal-card-content h3 {  margin: 0;  font-size: 1.1rem;}
-
-.meal-card-content p {  margin: 0.3rem 0;  font-size: 0.9rem;}
-
-.btn, .btn-secondary {  padding: 0.4rem 0.8rem;  margin-right: 0.5rem;  border: none;  border-radius: 6px;  cursor: pointer;  font-size: 0.85rem;}
-
-.btn {  background: #ff8800;  color: white;}
-
-.btn-secondary {  background: #eee;  color: #333;}
-
-.ingredient-list li {  margin: 0.3rem 0;  cursor: pointer;}
-
-.ingredient-list li:hover {  background: #f1f1f1;  padding-left: 0.3rem;}
-
-.cart-item {  background: white;  border-radius: 8px;  padding: 0.5rem;  margin-bottom: 0.5rem;}
-
-form label {  font-weight: 600;  display: block;  margin-top: 0.5rem;}
-
-form input, form textarea, form select {  width: 100%;  padding: 0.5rem;  margin-bottom: 0.5rem;  border-radius: 6px;  border: 1px solid #ccc;}
-
-form button {  background: #ff6600;  color: white;  padding: 0.8rem;  border: none;  border-radius: 8px;  width: 100%;  font-size: 1.1rem;  cursor: pointer;}
-
-.topbar {  background: #ff8800;  color: white;  padding: 0.8rem 1rem;  font-size: 1.1rem;  display: none;  align-items: center;  justify-content: space-between;}
-
-.topbar button {  background: transparent;  color: white;  border: none;  font-size: 1.4rem;  cursor: pointer;}
-
-input[type="date"] {  padding: 0.7rem 1rem;  border-radius: 8px;  border: 1px solid #ccc;  background: white;  font-size: 1rem;  margin: 1rem 0;  box-shadow: 0 1px 4px rgba(0,0,0,0.05);}
-
-.date-picker-container {  display: flex;  justify-content: center;  align-items: center;  gap: 0.25rem;  margin-top: 0rem;}
-
-.date-picker-container input[type="date"] {  padding: 0.6rem 1rem;  border-radius: 10px;}
-
-.go-btn {  padding: 0.6rem 1rem;  background: #ff8800;  color: white;  border: none;  border-radius: 8px;  cursor: pointer;  font-weight: bold;  transition: background 0.2s ease;}
-
-.go-btn:hover {  background: #ff6600;}
-
-#cuisineButtons {  display: flex;  flex-wrap: wrap;  gap: 0.6rem;  margin-top: 1rem;}
-
-#cuisineButtons .btn {  border-radius: 20px;  background: #fff;  border: 1px solid #ff8800;  color: #ff8800;  transition: all 0.2s ease;}
-
-#cuisineButtons .btn:hover {  background: #ff8800;  color: white;  box-shadow: 0 2px 8px rgba(255, 136, 0, 0.2);}
-
-.checkbox-group {  display: flex;  gap: 1.5rem;  justify-content: center;  margin-top: 0.5rem;}
-
-.checkbox-item {  display: flex;  align-items: center;  gap: 0.4rem;  font-size: 1rem;}
-
-@media (max-width: 600px) {
-
-  .meal-card {    flex-direction: row;    padding: 0.5rem;  }
-
-  .meal-card img {    width: 90px;    height: 90px;  }
-
-  .meal-card-content h3 {    font-size: 1rem;  }
-
-  .meal-card-content p {    font-size: 0.8rem;  }
-
-  .btn, .btn-secondary {    font-size: 0.75rem;    padding: 0.3rem 0.6rem;  }
- body {    flex-direction: column;  }
-
-  main {    padding: 0.5rem;    margin-left: 0;  }
-
-  nav.sidebar {    position: fixed;    left: 0;    top: 0;    height: 100%;    width: 180px;    background: #ff8800;    transform: translateX(-100%);    transition: transform 0.3s ease;    z-index: 1001;  }
-
-  nav.sidebar.expanded {    transform: translateX(0);  }
-
-  .topbar {    display: flex;    position: sticky;    top: 0;    left: 0;    right: 0;    z-index: 1002;    background: #ff8800;    padding: 0.8rem 1rem;    font-size: 1.1rem;    justify-content: space-between;    align-items: center;  }
-
-  .topbar button {    background: transparent;    color: white;    border: none;    font-size: 1.4rem;    cursor: pointer;  }
+   html, body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Avoid horizontal overflow */
+  overflow-y: auto;   /* Allow vertical scroll */
+  font-family: 'Poppins', sans-serif;
+  background: #fefefe;
 }
 
-</style>
+    #cover-page {
+      height: 100vh;
+      width: 100vw;
+      background: linear-gradient(135deg, #D4FC79, #96E6A1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: black;
+      text-align: center;
+      padding: 2rem;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 100;
+      transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+    }
 
+    #cover-page.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .logo-cover-text {
+      font-size: 2rem;
+      background: black;
+      color: #43cea2;
+      padding: 1rem 1.75rem;
+      border-radius: 50px;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      margin-bottom: 2rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      user-select: none;
+      justify-content: center;
+      letter-spacing: 1px;
+    }
+
+    .logo-emoji {
+      font-size: 1.8rem;
+    }
+
+    #cover-page h1 {
+      font-size: 2.7rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .tagline {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .about-text {
+      max-width: 500px;
+      font-size: 1rem;
+      line-height: 1.6;
+      opacity: 0.95;
+      margin: 1rem auto;
+    }
+
+    .contact-text {
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-text a {
+      color: red;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .contact-text a:hover {
+      text-decoration: underline;
+    }
+
+    #cover-page button {
+      padding: 1rem 2.2rem;
+      background: #ffd369;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 1.5rem;
+      color: #222;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    #cover-page button:hover {
+      background-color: #ffe492;
+      transform: scale(1.03);
+    }
+
+    #app-content {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      width: 100vw;
+      background: #ffffff;
+    }
+
+    .header-nav {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background: #000000;
+  color: white;
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Ensures items don’t overflow */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 50;
+}
+
+.header-nav .logo-text {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-right: auto; /* Pushes the nav-buttons to the right */
+}
+
+.nav-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.nav-button {
+  background: #ffd369;
+  color: #222;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  min-width: 80px;
+}
+
+.nav-button:hover {
+  background-color: #ffe492;
+  transform: scale(1.03);
+}
+
+    .tab-content {
+      display: none;
+      flex-direction: column;
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 60px;
+    }
+
+    .tab-content.active {
+      display: flex;
+    }
+
+    .tab-content h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #185a9d;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    iframe {
+      width: 100%;
+      height: 30vh;
+      border: none;
+      border-radius: 12px;
+      margin-bottom: 0.75rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    #tab-history iframe,
+    #tab-feedback iframe,
+    #tab-cuisine iframe {
+      height: 80vh;
+    }
+
+    .subscribe-section {
+      margin: 1rem auto;
+      text-align: center;
+    }
+
+    .subscribe-section button {
+      background: #ffd369;
+      border: none;
+      color: #333;
+      font-size: 1.1rem;
+      padding: 1rem 2rem;
+      border-radius: 30px;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .subscribe-section button:hover {
+      background-color: #ffe492;
+      transform: scale(1.02);
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      height: 55px;
+      background: #f9f9f9;
+      display: flex;
+      justify-content: space-around;
+      border-top: 1px solid #ddd;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+      z-index: 100;
+    }
+
+    .tab-btn {
+      flex-grow: 1;
+      text-align: center;
+      background: none;
+      border: none;
+      padding: 0.6rem 0;
+      font-size: 0.95rem;
+      color: #185a9d;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tab-btn.active {
+      background: #000000;
+      color: white;
+    }
+
+@media (max-width: 480px) {
+  .header-nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-buttons {
+    justify-content: flex-start;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+}
+#gamePopup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+  z-index: 200;
+  width: 90%;
+  max-width: 400px;
+  transition: all 0.3s ease-in-out;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+#gamePopup h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+#gameSelect {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  margin: 1.5rem 0;
+  transition: border-color 0.2s ease;
+}
+
+#gameSelect:focus {
+  outline: none;
+  border-color: #ffb703;
+  box-shadow: 0 0 0 2px rgba(255, 183, 3, 0.2);
+}
+
+#gamePopup .popup-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+#gamePopup button {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#gameCancelBtn {
+  background-color: #ccc;
+  color: #333;
+}
+
+#gameGoBtn {
+  background-color: #ffd369;
+  color: #222;
+}
+
+#gamePopup button:hover {
+  transform: scale(1.03);
+}
+
+#gameGoBtn:hover {
+  background-color: #ffe492;
+}
+
+#gameCancelBtn:hover {
+  background-color: #bcbcbc;
+}
+
+
+  </style>
 </head>
 <body>
-<div class="topbar">
-  <button onclick="toggleSidebar()">☰</button>
-  <span>MyMealApp</span>
-</div>
-<!-- Sidebar -->
-<nav class="sidebar collapsed" id="sidebar">
-  <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
-  <ul id="navMenu">
-  <li><a href="#" onclick="showSection('daily')"><span class="emoji">📝</span><span class="label">Daily Plan</span></a></li>
-  <li><a href="#" onclick="showSection('cuisine')"><span class="emoji">🍽️</span><span class="label">All Meals</span></a></li>
-  <li><a href="#" onclick="showSection('ingredients')"><span class="emoji">🥕</span><span class="label">Ingredients</span></a></li>
-  <li><a href="#" onclick="showSection('checkout')"><span class="emoji">🛒</span><span class="label">Checkout</span></a></li>
-  <li><a href="#" onclick="logout()"><span class="emoji">🚪</span><span class="label">Logout</span></a></li>
-  <li><a href="#" onclick="showProfile()"><span class="emoji">👤</span><span class="label">Profile</span></a></li>
-</ul>
-</nav>
 
-<!-- Main App -->
-<main>
-<!-- WELCOME PAGE -->
-<section id="welcome" class="active">
-  <div style="text-align:center; margin-top: 20vh;">
-    <h1 style="font-size:2.5rem; font-weight:bold;">Welcome to <span style="color:#ff8800;">MyMealApp</span></h1>
-    <p style="font-size:1.2rem; margin-top:1rem;">Your personal assistant for delicious meals and easy meal planning.</p>
-    <button class="btn" style="margin-top:2rem; font-size:1rem;" onclick="startApp()">Get Started</button>
+  <div id="cover-page">
+    <div class="logo-cover-text"><span class="logo-emoji">👨‍🍳</span></div>
+    <h1>Your Meal Idea</h1>
+    <p class="tagline">Plan. Innovate. Enjoy.</p>
+    <p class="about-text">
+      Bringing ease to your daily cooking decisions with diverse vegetarian Indian recipes—from North to South, East to West. One goal — Ease Life! 🌱
+    </p>
+    <p class="contact-text">
+      Contact us at: <a href="mailto:decomplicate001@gmail.com">decomplicate001@gmail.com</a>
+    </p>
+    <button id="enterAppBtn">Open</button>
   </div>
-</section>
 
-<!-- LOGIN PAGE -->
-<section id="login">
-  <div style="max-width: 320px; margin: 10vh auto; text-align: center;">
-    <h2 style="font-size: 1.8rem; font-weight: bold;">Login</h2>
-    <form onsubmit="return handleLogin(event)">
-      <label style="display:block; text-align:left; margin-top:1rem;">Email</label>
-      <input type="email" id="loginEmail" required placeholder="you@example.com" style="width:100%; padding:0.6rem; border-radius:6px; border:1px solid #ccc;" />
-
-      <label style="display:block; text-align:left; margin-top:1rem;">Password</label>
-      <input type="password" id="loginPassword" required placeholder="••••••••" style="width:100%; padding:0.6rem; border-radius:6px; border:1px solid #ccc;" />
-
-      <button type="submit" style="margin-top:1.5rem; width:100%; background:#ff8800; color:white; padding:0.8rem; font-size:1rem; border:none; border-radius:8px;">Sign In</button>
-    </form>
-
-    <p style="margin-top:1rem;"><a href="#" style="color:purple;" onclick="showSection('signup')">Don’t have an account? Sign up</a></p>
-
-    <button onclick="skipLogin()" style="margin-top:1rem; padding:0.6rem 1rem; background:#eee; border:none; border-radius:6px;">Continue as Guest</button>
+  <div id="app-content">
+    <div class="header-nav">
+  <span class="logo-text">Suggested Meal Plan</span>
+  <div class="nav-buttons">
+    <button id="homeButton" class="nav-button">🏠Home</button>
+<button id="gameButton" class="nav-button">🎮Game</button>
+    <a href="https://www.amazon.com/alm/storefront?almBrandId=QW1hem9uIEZyZXNo" target="_blank" class="nav-button">🛒 Store</a>
   </div>
-</section>
-<!-- SIGNUP PAGE -->
-<section id="signup">
-  <div style="max-width: 360px; margin: 8vh auto; text-align: center;">
-    <h2 style="font-size: 1.8rem; font-weight: bold;">Create Account</h2>
-    <form onsubmit="return handleSignup(event)">
-      <label>Name (optional)</label>
-      <input type="text" id="signupName" placeholder="Your Name" />
-
-     <label>Email or Phone</label>
-<input type="text" id="signupEmail" required placeholder="you@example.com or 9876543210" />
-
-      <label>Password</label>
-      <input type="password" id="signupPassword" required placeholder="••••••••" />
-
-      <label>Preferences</label>
-<div class="checkbox-group">
-  <label class="checkbox-item">
-    <input type="checkbox" id="prefVeg" />
-    Veg
-  </label>
-  <label class="checkbox-item">
-    <input type="checkbox" id="prefJain" />
-    Jain
-  </label>
 </div>
 
-
-      <button type="submit" class="btn" style="margin-top: 1rem;">Sign Up</button>
-    </form>
-
-    <p style="margin-top:1rem;"><a href="#" onclick="showSection('login')" style="color:blue;">Already have an account? Login</a></p>
-  </div>
-</section>
-
-  <!-- DAILY PLAN -->
-  <section id="daily">
-    
-   <div class="date-picker-container">
-  <input type="date" id="mealDate" />
-  <button class="go-btn" onclick="fetchDaily(document.getElementById('mealDate').value)">Go</button>
-</div>
-    <div id="dailyMeals"></div>
-  </section>
-
-  <!-- CUISINE -->
-  <section id="cuisine">
-    <h2>Choose Cuisine</h2>
-    <div id="cuisineButtons"></div>
-    <div id="randomMealCard" style="display:none;"></div>
-  </section>
-
-  <!-- INGREDIENTS -->
-  <section id="ingredients">
-    <h2 id="ingredientMealTitle">Ingredients</h2>
-    <ul class="ingredient-list" id="ingredientList"></ul>
-    <button class="btn" id="addIngredientBtn">Add to Cart</button>
-  </section>
-
-  <!-- CHECKOUT -->
-  <section id="checkout">
-    <h2>Shopping Cart</h2>
-    <div id="cartItems"></div>
-    <div class="total" id="cartTotal"></div>
-    <form id="checkoutForm">
-      <label>Full Name</label><input type="text" id="fullName" required />
-      <label>Email</label><input type="email" id="email" required />
-      <label>Address</label><textarea id="address" rows="3" required></textarea>
-      <label>Payment Method</label>
-      <select id="paymentMethod" required>
-        <option value="">Select</option>
-        <option value="card">Card</option>
-        <option value="paypal">PayPal</option>
-        <option value="cod">COD</option>
-      </select>
-      <button type="submit">Place Order</button>
-    </form>
-  </section>
-<section id="profile">
-  <h2>User Profile</h2>
-  <div id="profileContent">
-    <!-- Filled dynamically -->
-  </div>
-  <button class="btn" onclick="logout()">Logout</button>
-</section>
-<section id="editProfile">
-  <h2>Edit Profile</h2>
-  <form id="editProfileForm" onsubmit="return handleProfileUpdate(event)">
-    <label>Name</label>
-    <input type="text" id="editName" />
-
-    <label>Email</label>
-    <input type="email" id="editEmail" disabled />
-
-    <label>Phone</label>
-    <input type="text" id="editPhone" disabled />
-
-    <label>Preferences</label>
-    <div class="checkbox-group">
-      <label class="checkbox-item">
-        <input type="checkbox" id="editPrefVeg" /> Veg
-      </label>
-      <label class="checkbox-item">
-        <input type="checkbox" id="editPrefJain" /> Jain
-      </label>
+    <div class="tab-content active" id="tab-meals">
+      <h2>Today's Meals</h2>
+      <iframe src="https://script.google.com/macros/s/AKfycbx-APEkUYNS3YxOIG1OcIX32nCBAnYd2mmVh0ADrV51me9G8iJnAqxg65ETsEsJhEAHCw/exec"></iframe>
+      <iframe src="https://script.google.com/macros/s/AKfycbxeBNiaKdEXr0LilVuCXi0Q9_6BGwVZ-HlIxLOBH7ml1h6vqlND-cGE6GeIxoUq6Ttv/exec"></iframe>
+      <iframe src="https://script.google.com/macros/s/AKfycbyLG9ZOI4G84_bGrLe9I9UQeuNCYjziAQwQvtjKtU0tq3ZhuOHQpazO_ay75l3esY57/exec"></iframe>
     </div>
 
-    <button type="submit" class="btn">Save Changes</button>
-    <button type="button" onclick="showProfile()" class="btn-secondary">Cancel</button>
-  </form>
-</section>
+    <div class="tab-content" id="tab-history">
+      <h2>Previous Date Meal Plan</h2>
+      <iframe src="https://script.google.com/macros/s/AKfycbzR6ngzyaxIZWTaCqq9F2aIc-qtqamve8JsGG4sslLYJfrHvASdA2w4lH0eRqeSNZHarg/exec"></iframe>
+    </div>
 
-</main>
-
-<!-- Script -->
-<script>
-  const API = 'https://script.google.com/macros/s/AKfycbwb2X_rKOB-DHBMISMbjE6V9eIX5wcW4ENgyJjpxD-YEwEcgeOJ6EkVwzmIGny2qJ-Mjg/exec';
-const USER_API = 'https://script.google.com/macros/s/AKfycbxRpk_QcgvRUSBEZ4Uackj7vJDYuCvqEHvDIQvI96cJncLSvxcHMeGthm5E06AYpgU_/exec';
-
-  let meals = [], filteredCuisineMeals = [], currentMealForIngredients = null, cart = [];
-
-function toggleSidebar() {
-  const sidebar = document.getElementById('sidebar');
-  const isMobile = window.innerWidth <= 600;
-
-  if (isMobile) {
-    // On mobile, toggle 'expanded' class
-    sidebar.classList.toggle('expanded');
-  } else {
-    // On desktop, toggle 'collapsed' class only if post-login
-    if (sidebar.classList.contains('post-login')) {
-      sidebar.classList.toggle('collapsed');
-    }
-  }
-}
-
-  document.getElementById('mealDate').addEventListener('change', e => fetchDaily(e.target.value));
-window.addEventListener('load', () => {
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('mealDate').value = today;
-
-  showSection('welcome');
-
-  fetchDaily(today);
-  fetchMeals();
-  loadCart();
-});
-
-
-  async function fetchDaily(date) {
-    try {
-      const res = await fetch(`${API}?action=getDailyMealPlan&date=${date}`);
-      const data = await res.json();
-      const container = document.getElementById('dailyMeals');
-      container.innerHTML = '';
-      ['Breakfast','Lunch','Dinner'].forEach(type => {
-        const m = data[type];
-        if (m && m.MealName) {
-          container.innerHTML += mealCard(type, m);
-        }
-      });
-    } catch(err){ console.error(err); }
-  }
-
-  async function fetchMeals() {
-    try {
-      const res = await fetch(`${API}?action=getAllFoodItems`);
-      meals = await res.json();
-      renderCuisineButtons();
-    } catch(err){ console.error(err); }
-  }
-
-  function mealCard(label, m) {
-    const vid = getVideoId(m.YouTubeLink);
-    return `<div class="meal-card">
-      <img src="https://img.youtube.com/vi/${vid}/hqdefault.jpg" alt="${m.MealName}" />
-      <div class="meal-card-content">
-        <h3>${label}: ${m.MealName}</h3>
-        <p><strong>Nutrients:</strong> ${m.Nutrients || 'N/A'}</p>
-        <p><strong>Calories:</strong> ${m.Calories || 'N/A'}</p>
-        <button class="btn" onclick="location.href='${m.RecipeLink}'">Recipe</button>
-        <button class="btn-secondary" onclick="openIngredients('${m.MealName}')">Ingredients</button>
+    <div class="tab-content" id="tab-feedback">
+      <h2>Your Feedback</h2>
+      <iframe src="https://script.google.com/macros/s/AKfycbzA9Kp00Hr_7NghuLx4NoCL-sM81-Ar6Y_FMvhrqrsklKca1JZXF1BZjmXDN9-a9uVoVw/exec"></iframe>
+      <div class="subscribe-section">
+        <button onclick="window.open('https://forms.gle/PqhH5FhmSLpBxvxR9', '_blank')">🔔 Subscribe Now</button>
       </div>
-    </div>`;
+    </div>
+
+    <div class="tab-content" id="tab-cuisine">
+           <iframe id="cuisineFrame" src="https://script.google.com/macros/s/AKfycby3txPr89nUfxrOcRSose8F4ud6cGiGT5gX0DntnG_dpYKXDz9ptyLnBtkWYdubiKnt/exec"></iframe>
+    </div>
+
+    <nav class="bottom-nav">
+      <button class="tab-btn active" data-tab="tab-meals">🍽 Today's Plan</button>
+      <button class="tab-btn" data-tab="tab-history">📜 Another Plan</button>
+      <button class="tab-btn" data-tab="tab-feedback">💬 Feedback</button>
+      <button class="tab-btn" data-tab="tab-cuisine">🍛 Your Choice</button>
+    </nav>
+  </div>
+
+<div id="gamePopup" style="display:none; position:fixed; top:50%; left:50%; transform: translate(-50%, -50%);
+  background:white; padding: 1rem 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border-radius:12px; z-index:200;">
+  <h3>Choose Your Game</h3>
+  <select id="gameSelect" style="width: 100%; padding: 0.5rem; margin: 1rem 0;">
+    <option value="" disabled selected>Select a game</option>
+    <option value="game.html">Hungry Snake</option>
+    <option value="punch.html">Punch Me</option>
+    
+  </select>
+  <div style="text-align: right;">
+    <button id="gameCancelBtn" style="margin-right:1rem; padding:0.5rem 1rem;">Cancel</button>
+    <button id="gameGoBtn" style="padding:0.5rem 1rem;">Play</button>
+  </div>
+</div>
+
+  <script>
+    const enterBtn = document.getElementById('enterAppBtn');
+  const coverPage = document.getElementById('cover-page');
+  const appContent = document.getElementById('app-content');
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
+  const homeButton = document.getElementById('homeButton');
+
+    function showTab(tabId) {
+    tabButtons.forEach(b => b.classList.remove('active'));
+    tabContents.forEach(tc => tc.classList.remove('active'));
+
+    const newActiveButton = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
+    if (newActiveButton) newActiveButton.classList.add('active');
+
+    document.getElementById(tabId).classList.add('active');
+    localStorage.setItem('activeTab', tabId);
   }
 
-  function renderCuisineButtons() {
-    const set = new Set(meals.map(m => m.Cuisine).filter(c => c));
-    const parent = document.getElementById('cuisineButtons');
-    parent.innerHTML = '';
-    set.forEach(c => {
-      parent.innerHTML += `<button class="btn" onclick="chooseCuisine('${c}')">${c}</button>`;
-    });
-  }
-
-  function chooseCuisine(cuisine) {
-    filteredCuisineMeals = meals.filter(m => m.Cuisine === cuisine);
-    showSection('cuisine');
-    showRandomCuisineMeal();
-  }
-
-  function showRandomCuisineMeal() {
-    if (!filteredCuisineMeals.length) return alert('No meals for this cuisine.');
-    const m = filteredCuisineMeals[Math.floor(Math.random()*filteredCuisineMeals.length)];
-    currentMealForIngredients = m.MealName;
-    document.getElementById('randomMealCard').style.display = 'block';
-    document.getElementById('randomMealCard').innerHTML = mealCard('', m);
-  }
-
-  function openIngredients(mealName) {
-    currentMealForIngredients = mealName;
-    document.getElementById('ingredientMealTitle').textContent = `Ingredients for ${mealName}`;
-    const list = document.getElementById('ingredientList');
-    list.innerHTML = '';
-    const m = meals.find(x => x.MealName === mealName);
-    if (m && m.Ingredients) {
-      m.Ingredients.split(',').map(i => i.trim()).forEach(ing => {
-        const li = document.createElement('li');
-        li.textContent = ing;
-        li.onclick = () => addToCart({name: ing, quantity:1, price:0});
-        list.appendChild(li);
-      });
-    }
-    showSection('ingredients');
-  }
-
-  document.getElementById('addIngredientBtn').onclick = () => {
-    const ing = currentMealForIngredients;
-    if (!ing) return;
-    addToCart({name: ing, quantity:1, price:0});
-  };
-
-  function addToCart(item) {
-    cart.push(item); saveCart(); loadCart();
-  }
-
-  function loadCart() {
-    cart = JSON.parse(localStorage.getItem('shoppingCart') || '[]');
-    const container = document.getElementById('cartItems');
-    container.innerHTML = '';
-    cart.forEach((i, idx) => container.innerHTML += `<div class="cart-item">${idx+1}. ${i.name} x${i.quantity}</div>`);
-    document.getElementById('cartTotal').textContent = `Total items: ${cart.length}`;
-    document.getElementById('checkoutForm').style.display = cart.length ? 'block' : 'none';
-  }
-
-  function saveCart() {
-    localStorage.setItem('shoppingCart', JSON.stringify(cart));
-  }
-
-  document.getElementById('checkoutForm').addEventListener('submit', e => {
-    e.preventDefault();
-    alert(`Thank you! Order placed for ${document.getElementById('fullName').value}`);
-    cart = [];
-    saveCart();
-    loadCart();
+  // Handle enter app (from cover page)
+  enterBtn.addEventListener('click', () => {
+    coverPage.classList.add('hidden');
+    localStorage.setItem('enteredApp', 'true');
+    localStorage.setItem('activeTab', 'tab-meals');
   });
 
-  function getVideoId(url) {
-    const m = url.match(/v=([^&]+)/); return m ? m[1] : '';
+  // Handle tab button clicks
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetTabId = btn.getAttribute('data-tab');
+      showTab(targetTabId);
+    });
+  });
+
+  // Home button returns to cover page
+  homeButton.addEventListener('click', () => {
+    coverPage.classList.remove('hidden');
+    localStorage.removeItem('enteredApp'); // Optional: clear so next refresh shows welcome
+  });
+
+  // On page load: restore state
+  window.addEventListener('DOMContentLoaded', () => {
+    const enteredApp = localStorage.getItem('enteredApp');
+    const activeTab = localStorage.getItem('activeTab') || 'tab-meals';
+
+    if (enteredApp === 'true') {
+      coverPage.classList.add('hidden');
+      showTab(activeTab);
+    } else {
+      coverPage.classList.remove('hidden');
+    }
+  });
+
+  function reloadCuisineFrame() {
+    const frame = document.getElementById('cuisineFrame');
+    const src = frame.src;
+    frame.src = '';
+    setTimeout(() => frame.src = src, 100);
   }
-function showSection(id) {
-  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-const navLinks = document.querySelectorAll('#navMenu a');
-navLinks.forEach(link => {
-  link.classList.remove('active');
-  const targetId = link.getAttribute('onclick')?.match(/showSection\('(.+)'\)/);
-  if (targetId && targetId[1] === id) {
-    link.classList.add('active');
+const gameButton = document.getElementById('gameButton');
+const gamePopup = document.getElementById('gamePopup');
+const gameSelect = document.getElementById('gameSelect');
+const gameCancelBtn = document.getElementById('gameCancelBtn');
+const gameGoBtn = document.getElementById('gameGoBtn');
+
+// Show popup on clicking Game button
+gameButton.addEventListener('click', () => {
+  gameSelect.value = "";
+  gamePopup.style.display = 'block';
+});
+
+// Cancel closes popup
+gameCancelBtn.addEventListener('click', () => {
+  gamePopup.style.display = 'none';
+});
+
+// Play button opens selected game html page
+gameGoBtn.addEventListener('click', () => {
+  const selectedGame = gameSelect.value;
+  if (selectedGame) {
+    window.location.href = selectedGame;
+  } else {
+    alert("Please select a game to play.");
   }
 });
-  const hideSidebar = ['welcome', 'login', 'signup'];
-  const sidebar = document.getElementById('sidebar');
-  if (hideSidebar.includes(id)) {
-    sidebar.classList.add('collapsed');
-  } else {
-    sidebar.classList.remove('collapsed');
-  }
-}
-
-function startApp() {
-  showSection('login');
-}
-
-
-async function handleLogin(e) {
-  e.preventDefault();
-
-  const input = document.getElementById('loginEmail').value.trim().toLowerCase();
-  const password = document.getElementById('loginPassword').value.trim();
-
-try {
-  const res = await fetch(`${USER_API}?action=getUsers`);
-  const data = await res.json();
-
-  const matchedUser = data.find(user =>
-    ((user.email && user.email.toLowerCase() === input) || (user.phone === input)) &&
-    user.password === password
-  );
-
-  if (matchedUser) {
-    localStorage.setItem('userEmail', matchedUser.email || matchedUser.phone);
-    document.getElementById('sidebar').classList.add('post-login'); 
-    showSection('daily');
-  } else {
-    alert('Invalid credentials. Please try again.');
-  }
-} catch (err) {
-  console.error(err);
-  alert('Login failed. Try again later.');
-}
-}
-
-function skipLogin() {
- localStorage.setItem('userEmail', 'guest');
-  document.getElementById('sidebar').classList.add('post-login');   showSection('daily');
-}
-
-function showSignup() {
-  showSection('signup');
-}
-
-async function handleSignup(e) {
-  e.preventDefault();
-
-  const contact = document.getElementById('signupEmail').value.trim();
-  const password = document.getElementById('signupPassword').value.trim();
-  const name = document.getElementById('signupName').value.trim();
-
-  const prefs = [];
-  if (document.getElementById('prefVeg').checked) prefs.push('Veg');
-  if (document.getElementById('prefJain').checked) prefs.push('Jain');
-
-  const isEmail = contact.includes('@');
-  const payload = {
-    action: 'registerUser',
-    name,
-    password,
-    preferences: prefs.join(', ')
-  };
-
-  if (isEmail) {
-    payload.email = contact;
-  } else {
-    payload.phone = contact;
-  }
-
-  try {
-    const res = await fetch(USER_API, {
-      method: 'POST',
-      body: JSON.stringify(payload),
-      headers: { 'Content-Type': 'application/json' }
-    });
-
-    const data = await res.json();
-
-    if (data.success) {
-      localStorage.setItem('userEmail', contact);
-      showSection('daily');
-    } else {
-      alert('Signup failed: ' + data.message);
-    }
-  } catch (err) {
-    console.error(err);
-    alert('Something went wrong during signup.');
-  }
-
-  return false;
-}
-
-function logout() {
-  localStorage.removeItem('userEmail');
-  showSection('login');
-}
-async function editProfile() {
-  const userEmail = localStorage.getItem('userEmail');
-  if (!userEmail || userEmail === 'guest') {
-    alert('Please login to edit profile');
-    showSection('login');
-    return;
-  }
-
-  try {
-    const res = await fetch(`${USER_API}?action=getUsers`);
-    const users = await res.json();
-    const user = users.find(u => (u.email && u.email.toLowerCase() === userEmail.toLowerCase()) || u.phone === userEmail);
-    if (!user) {
-      alert('User not found');
-      showSection('login');
-      return;
-    }
-
-    // Prefill form
-    document.getElementById('editName').value = user.name || '';
-    document.getElementById('editEmail').value = user.email || '';
-    document.getElementById('editPhone').value = user.phone || '';
-
-    document.getElementById('editPrefVeg').checked = (user.preferences || '').includes('Veg');
-    document.getElementById('editPrefJain').checked = (user.preferences || '').includes('Jain');
-
-    showSection('editProfile');
-  } catch (err) {
-    console.error(err);
-    alert('Failed to load profile for editing.');
-  }
-}
-
-async function handleProfileUpdate(event) {
-  event.preventDefault();
-
-  const name = document.getElementById('editName').value.trim();
-  const email = document.getElementById('editEmail').value.trim();
-  // phone is disabled but you can get it if needed
-  const phone = document.getElementById('editPhone').value.trim();
-
-  const prefs = [];
-  if (document.getElementById('editPrefVeg').checked) prefs.push('Veg');
-  if (document.getElementById('editPrefJain').checked) prefs.push('Jain');
-
-  // Prepare update payload - you will need to implement API to update user data
-  const payload = {
-    action: 'updateUser',
-    email,
-    name,
-    preferences: prefs.join(', ')
-  };
-
-  try {
-    const res = await fetch(USER_API, {
-      method: 'POST',
-      body: JSON.stringify(payload),
-      headers: { 'Content-Type': 'application/json' }
-    });
-    const data = await res.json();
-
-    if (data.success) {
-      alert('Profile updated successfully');
-      showProfile();
-    } else {
-      alert('Failed to update profile: ' + data.message);
-    }
-  } catch (err) {
-    console.error(err);
-    alert('Error updating profile');
-  }
-
-  return false;
-}
-
-async function showProfile() {
-  const userEmail = localStorage.getItem('userEmail');
-  if (!userEmail || userEmail === 'guest') {
-    alert('Please login to see profile');
-    showSection('login');
-    return;
-  }
-
-  try {
-    const res = await fetch(`${USER_API}?action=getUsers`);
-    const users = await res.json();
-
-    const user = users.find(u => (u.email && u.email.toLowerCase() === userEmail.toLowerCase()) || u.phone === userEmail);
-
-    if (!user) {
-      alert('User not found');
-      showSection('login');
-      return;
-    }
-
-    // Render profile info
-    const container = document.getElementById('profileContent');
-    container.innerHTML = `
-      <p><strong>Name:</strong> ${user.name || 'N/A'}</p>
-      <p><strong>Email:</strong> ${user.email || 'N/A'}</p>
-      <p><strong>Phone:</strong> ${user.phone || 'N/A'}</p>
-      <p><strong>Preferences:</strong> ${user.preferences || 'None'}</p>
-      <button class="btn" onclick="editProfile()">Edit Profile</button>
-    `;
-
-    showSection('profile');
-  } catch (err) {
-    console.error(err);
-    alert('Failed to load profile.');
-  }
-}
-function loadUsers() {
-    google.script.run.withSuccessHandler(users => {
-      console.log('Users:', users);
-          }).getUsers();
-  }
-
-   function registerUser(userData) {
-    google.script.run.withSuccessHandler(response => {
-      if (response.success) {
-        alert('User registered!');
-      } else {
-        alert('Error: ' + response.message);
-      }
-    }).registerUser(userData);
-  }
-
-function afterLogin() {
-  const sidebar = document.getElementById('sidebar');
-  sidebar.classList.remove('collapsed');
-  sidebar.classList.add('post-login');   
-
-  showSection('daily'); 
-}
-</script>
-
+  </script>
 </body>
 </html>
