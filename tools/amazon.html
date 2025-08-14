@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Top 5 Amazon Deals</title>
+</head>
+<body>
+  <h1>Top 5 Amazon Deals (Auto-refresh Daily)</h1>
+  <div id="deals">Loading...</div>
+
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbzHesLtvYgKRSJqg8Hc7g6GqMrKfsXLA9C65fPteRE2iacv3GZs2ZwSIYth9bTIl2MKpA/exec";
+
+    fetch(API_URL)
+      .then(res => res.json())
+      .then(data => {
+        if (!data.success) {
+          document.getElementById('deals').innerText = "No deals found.";
+          return;
+        }
+        let html = "<ul>";
+        data.items.forEach(d => {
+          html += `<li><a href="${d.link}" target="_blank">${d.title}</a></li>`;
+        });
+        html += "</ul>";
+        document.getElementById('deals').innerHTML = html;
+      })
+      .catch(err => {
+        document.getElementById('deals').innerText = "Error loading deals.";
+        console.error(err);
+      });
+  </script>
+</body>
+</html>
