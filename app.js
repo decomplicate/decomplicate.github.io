@@ -58,6 +58,8 @@ const data = {
             {"name": "Meal Idea", "description": "Get daily meal suggestions", "url": "./tools/mealapp/index.html"},
             {"name": "Habit Tracker", "description": "Build your Habits for better Lifestyle", "url": "./tools/habittracker/index.html"},
             {"name": "Experienced Resume Builder", "description": "Experienced Resumes for Free", "url": "./tools/experiencedresumebuilder/index.html"}
+
+ {"name": "Best Deals", "description": "Top 5 Amazon Deals of the Day", "url": "./tools/amazon.html"}
         ]
     },
     games: {
