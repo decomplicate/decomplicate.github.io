@@ -12,16 +12,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Generate sitemap from files
+        uses: jakejarvis/sitemap-generator@v2
         with:
-          node-version: '18'
-
-      - name: Install sitemap-generator tool
-        run: npm install sitemap-generator
-
-      - name: Generate sitemap from command line
-        run: ./node_modules/.bin/sitemap-generator https://decomplicate.github.io --filepath ./sitemap.xml
+          base_url: 'https://decomplicate.github.io/'
 
       - name: Commit and push sitemap
         uses: stefanzweifel/git-auto-commit-action@v5
