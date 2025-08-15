@@ -12,11 +12,30 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Generate sitemap from files
-        uses: jakejarvis/sitemap-generator@v2
-        with:
-          base_url: 'https://decomplicate.github.io/'
+      - name: Generate sitemap with a shell script
+        run: |
+          # Generate sitemap with a shell script
+          echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" > sitemap.xml
+          echo "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">" >> sitemap.xml
+          
+          # Add the base URL
+          echo "  <url>" >> sitemap.xml
+          echo "    <loc>https://decomplicate.github.io/</loc>" >> sitemap.xml
+          echo "    <changefreq>weekly</changefreq>" >> sitemap.xml
+          echo "    <priority>1.0</priority>" >> sitemap.xml
+          echo "  </url>" >> sitemap.xml
+          
+          # Add a simple example page
+          echo "  <url>" >> sitemap.xml
+          echo "    <loc>https://decomplicate.github.io/about.html</loc>" >> sitemap.xml
+          echo "    <changefreq>monthly</changefreq>" >> sitemap.xml
+          echo "    <priority>0.8</priority>" >> sitemap.xml
+          echo "  </url>" >> sitemap.xml
 
+          # Add more pages here
+          
+          echo "</urlset>" >> sitemap.xml
+      
       - name: Commit and push sitemap
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
