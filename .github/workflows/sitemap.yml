@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Generate sitemap with sitemap-generator-action
-        uses: axel-op/sitemap-generator-action@v2
+        uses: axel-op/github-action-sitemap@v2 # Corrected action name
         with:
           base-url: 'https://decomplicate.github.io'
           ignore: '.github/*'
