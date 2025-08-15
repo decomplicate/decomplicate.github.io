@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Finance Resume Parser & Job Match Tool | EffortlesslyDone</title>
+  <meta name="description" content="Instantly extract key information from finance résumés and see job matches—no typing or upload required. All parsing is private and in-browser." />
+  <meta name="keywords" content="finance resume parser, finance job matcher, resume analysis, financial career, resume builder" />
+  <meta name="author" content="EffortlesslyDone" />
+
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Ensure fixed header stays constant and content doesn't overlap */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 70px; /* lock header height */
+      background-color: var(--color-surface);
+      box-shadow: var(--shadow-sm);
+      z-index: 1000;
+    }
+
+    main {
+      padding-top: 90px; /* a bit more than header height for breathing room */
+    }
+
+    /* Tool-specific overrides inside main theme */
+    .tool-container {
+      background: var(--color-surface);
+      border-radius: var(--radius-base);
+      box-shadow: var(--shadow-md);
+      padding: var(--space-24);
+      margin-top: var(--space-48);
+      max-width: 570px; /* Match the original design's width */
+      width: 99vw;
+    }
+    .tool-title {
+        text-align: center;
+        margin: 0;
+        color: var(--color-primary);
+        font-size: var(--font-size-2xl);
+    }
+    .tool-desc {
+      text-align: center;
+      color: var(--color-text);
+      font-size: var(--font-size-md);
+      margin-bottom: var(--space-8);
+      font-weight: var(--font-weight-medium);
+    }
+    .tool-how {
+        text-align: center;
+        font-size: var(--font-size-sm);
+        color: var(--color-text-secondary);
+        font-style: italic;
+        margin-bottom: var(--space-24);
+    }
+    #drop-area {
+      border: 2px dashed var(--color-border);
+      border-radius: var(--radius-sm);
+      background: var(--color-background);
+      width: 100%;
+      min-height: 70px;
+      padding: var(--space-16) 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-16);
+      text-align: center;
+      font-size: var(--font-size-base);
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-standard);
+      user-select: none;
+    }
+    #drop-area.highlight { border-color: var(--color-primary); color: var(--color-primary); background: var(--color-gray-100);}
+    input[type=file] { display: none; }
+    textarea {
+      width: 97%;
+      min-height: 95px;
+      font-family: var(--font-family-base);
+      font-size: var(--font-size-base);
+      margin-bottom: var(--space-16);
+      border-radius: var(--radius-sm);
+      border: 1.3px solid var(--color-border);
+      box-sizing: border-box;
+      padding: var(--space-8);
+      background: var(--color-surface);
+      color: var(--color-text);
+      outline-color: var(--color-primary);
+    }
+    .btn-row { text-align: center; margin: var(--space-8) 0 var(--space-16);}
+    button.tool-btn {
+      width: auto;
+      margin: var(--space-4) var(--space-8);
+      padding: var(--space-12) var(--space-24);
+      font-weight: var(--font-weight-bold);
+      font-family: var(--font-family-heading);
+    }
+    .section-title {
+      color: var(--color-primary);
+      font-weight: var(--font-weight-bold);
+      font-size: var(--font-size-md);
+      margin: var(--space-24) 0 var(--space-8) 0;
+    }
+    .infobox {
+      background: var(--color-background);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-sm);
+      padding: var(--space-16);
+      margin-bottom: var(--space-16);
+      line-height: 1.6;
+      font-size: var(--font-size-base);
+      color: var(--color-text);
+    }
+    .matchlist { margin: 0 0 var(--space-16) 0; padding: 0; font-size: var(--font-size-base); list-style-type: none; }
+    .matchlist li { margin-bottom: var(--space-4); }
+    .label { font-size: var(--font-size-sm); color: var(--color-text-secondary); }
+    .promo {
+      margin-top: var(--space-32);
+      text-align: center;
+      background: var(--color-background);
+      padding: var(--space-16);
+      border-radius: var(--radius-sm);
+    }
+    .promo a {
+      color: var(--color-primary);
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      .mainbox { padding: 9px 3vw 20px 3vw; }
+      textarea { font-size: 0.99em; }
+    }
+  </style>
+</head>
+<body>
+  
+  <header class="header">
+    <div class="container header__content">
+      <div class="header__logo">
+        <h1><i class="fas fa-rocket"></i> EffortlesslyDone</h1>
+      </div>
+      <nav class="header__nav" id="nav">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="../index.html#templates" class="nav-link">Templates</a>
+        <a href="../index.html#tools" class="nav-link active">Tools</a>
+        <a href="../index.html#games" class="nav-link">Games</a>
+        <a href="../index.html#about" class="nav-link">About</a>
+      </nav>
+      <div class="header__search">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search...">
+        <button id="searchBtn" class="btn btn--primary search-btn"><i class="fas fa-search"></i></button>
+      </div>
+      <button id="mobileMenuBtn" class="mobile-menu-btn">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="tool-container">
+      <h2 class="tool-title"><i class="fas fa-file-invoice-dollar"></i> Finance Resume Parser & Job Matcher</h2>
+      <div class="tool-desc">Instantly extract key information from finance résumés and see job matches—no typing or upload required.</div>
+      <div class="tool-how">Drag & drop a PDF, DOCX, or paste résumé text below. All parsing is private and in-browser.<br />Review, edit, or copy/download structured results for HR or your own career search.</div>
+      
+      <div id="drop-area">Drop a resume or <label for="fileElem" style="color:var(--color-primary);cursor:pointer;">browse</label> <input type="file" id="fileElem" accept=".pdf,.txt,.doc,.docx,text/*" /></div>
+      <label class="label">Or paste resume text here:</label>
+      <textarea id="resumeInput" placeholder="Paste complete finance resume text here..."></textarea>
+      <div class="btn-row">
+        <button id="parseBtn" class="btn btn--primary tool-btn" disabled>Extract & Match</button>
+        <button id="clearBtn" class="btn btn--secondary tool-btn">Clear</button>
+      </div>
+      <div id="results"></div>
+
+      <div class="promo">
+        More automation tools on <a href="../index.html">← Back to Home</a><br>
+        Contact: <a href="mailto:decomplicate001@gmail.com">decomplicate001@gmail.com</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__content">
+      <div class="footer__section">
+        <h3>EffortlesslyDone</h3>
+        <p>Simplifying your digital life, one tool at a time.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../app.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+  <script>
+    const dropArea = document.getElementById('drop-area');
+    const fileElem = document.getElementById('fileElem');
+    const resumeInput = document.getElementById('resumeInput');
+    const parseBtn = document.getElementById('parseBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const results = document.getElementById('results');
+
+    // ---- UI Events ----
+    dropArea.addEventListener('dragover', e => {e.preventDefault();dropArea.classList.add('highlight');});
+    dropArea.addEventListener('dragleave',()=>dropArea.classList.remove('highlight'));
+    dropArea.addEventListener('drop', e => {
+      e.preventDefault(); dropArea.classList.remove('highlight');
+      if (e.dataTransfer.files && e.dataTransfer.files.length) handleFiles(e.dataTransfer.files[0]);
+    });
+    dropArea.addEventListener('click',()=>fileElem.click());
+    fileElem.addEventListener('change',()=>handleFiles(fileElem.files[0]));
+
+    resumeInput.addEventListener('input',()=>parseBtn.disabled=!resumeInput.value.trim());
+    parseBtn.addEventListener('click',()=>parseResume(resumeInput.value));
+    clearBtn.addEventListener('click',()=>{
+      resumeInput.value = ''; parseBtn.disabled = true; results.innerHTML = '';
+    });
+
+    // ---- Handle file reading (PDF basic only) ----
+    async function handleFiles(file) {
+      results.innerHTML = '';
+      if (file.type === "application/pdf") {
+        results.innerHTML = '<div class="infobox">Extracting text from PDF, please wait...</div>';
+        const pdf = await pdfjsLib.getDocument(await file.arrayBuffer()).promise;
+        let text = '';
+        for (let i=1;i<=pdf.numPages;i++){
+          const pg = await pdf.getPage(i);
+          const content = await pg.getTextContent();
+          text += content.items.map(item=>item.str).join(' ')+'\n';
+        }
+        resumeInput.value = text.trim();
+      } else {
+        const reader = new FileReader();
+        reader.onload = e => resumeInput.value = e.target.result;
+        reader.readAsText(file);
+      }
+      parseBtn.disabled = false;
+    }
+
+    // ---- Parsing & Job Matching Heuristics ----
+    const FINANCE_JOBS = [
+      "Accountant","Financial Analyst","Investment Banker","Finance Manager","Controller",
+      "Financial Planner","Credit Analyst","Risk Analyst","Treasury Analyst","Audit Associate",
+      "Tax Consultant","Corporate Finance Associate","Accounts Payable/Receivable","FP&A Analyst",
+      "Compliance Officer","Equity Research Analyst","Portfolio Manager","Wealth Advisor",
+      "Loan Officer","Quantitative Analyst","Budget Analyst","Finance Project Manager"
+    ];
+    const SKILLS = [
+      "accounting","excel","erp","audit","financial modeling","valuation","tax",
+      "ledger","GAAP","IFRS","SAP","QuickBooks","reconciliation","forecasting",
+      "reporting","compliance","payroll","budgeting","analysis","cash flow",
+      "investment","banking","mergers","due diligence","risk management"
+    ];
+    const CERTS = [
+      "CA","CPA","CMA","CFA","ACCA","MBA","FRM","CISA","CFE"
+    ];
+    function parseResume(text) {
+      results.innerHTML = '';
+      let obj = { name:'', email:'', phone:'', skills:[], jobs:[], certs:[], experience:'', summary:'' };
+      // Name: first non-empty line, unless it has "Email" or "Phone" or @
+      let lines = text.split('\n').map(l=>l.trim()).filter(l=>l);
+      obj.name = (lines.find(l=>l && !/email|phone|@/i.test(l))||'').replace(/\d+/g,'').trim().split(' ').slice(0,4).join(' ');
+
+      // Email
+      let m = text.match(/[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+      obj.email = m ? m[0] : '';
+      // Phone
+      m = text.match(/(\+?\d[\d .-]{9,15}\d)/);
+      obj.phone = m ? m[0] : '';
+      // Skills
+      let ltext = text.toLowerCase();
+      obj.skills = SKILLS.filter(s=>ltext.includes(s)).map(capitalize);
+      // Experience (years)
+      m = text.match(/(\d+)[ ]*(?:\+|plus)?[ ]*(?:years|yrs)[ ]+(?:experience|exp)/i);
+      if (!m) m = text.match(/experience(?:\:|\s)(\d{1,2})/i);
+      obj.experience = m ? m[1] + " years" : '';
+      // Certifications
+      obj.certs = CERTS.filter(c => new RegExp(`\\b${c}\\b`).test(text.toUpperCase()));
+      // Job Roles
+      obj.jobs = FINANCE_JOBS.filter(j => new RegExp(j,"i").test(text));
+      // Summary - first big paragraph or "Summary" section
+      let idx = ltext.indexOf('summary');
+      if (idx!==-1) {
+        let chunk = text.slice(idx,idx+400).split('\n').slice(1,5).join(' ');
+        obj.summary = chunk.replace(/[^a-zA-Z0-9.,\-\' ]/g,'').trim().slice(0,250);
+      }
+      // If not, use top lines
+      if (!obj.summary) obj.summary = lines.slice(0,8).join(' ').replace(/[^a-zA-Z0-9.,\-\' ]/g,'').trim().slice(0,200);
+
+      let matches = jobMatches(obj);
+
+      // Display output
+      results.innerHTML = `
+        <div class="section-title">Extracted Profile Info</div>
+        <div class="infobox">
+          <b>Name:</b> ${obj.name||'-'}<br>
+          <b>Email:</b> ${obj.email||'-'}<br>
+          <b>Phone:</b> ${obj.phone||'-'}<br>
+          <b>Certifications:</b> ${obj.certs.join(', ')||'-'}<br>
+          <b>Skills:</b> ${obj.skills.join(', ')||'-'}<br>
+          <b>Years Experience:</b> ${obj.experience||'-'}<br>
+          <b>Summary:</b> <span style="color:var(--color-text-secondary);">${obj.summary||'-'}</span>
+        </div>
+        <div class="section-title">Finance Job Role Matches</div>
+        <ul class="matchlist">${matches.map(m=>`<li>• <b>${m}</b></li>`).join('')}</ul>
+        <div style="margin:7px 0 0 0;text-align:center;">
+          <button class="btn btn--primary tool-btn" onclick="copyStructuredData()">Copy Extracted Data</button>
+        </div>
+      `;
+      window.lastExtractedData = obj;
+    }
+
+    function jobMatches(obj){
+      // Match: if role/skill/cert detected in resume.
+      let arr = [];
+      for (const job of FINANCE_JOBS) {
+        if ((obj.jobs||[]).some(j=>j===job)) {arr.push(job); continue;}
+        if ((obj.skills||[]).some(s => job.toLowerCase().includes(s.toLowerCase()))) {arr.push(job);}
+        if ((obj.certs||[]).length && ['Accountant','Audit Associate','Tax Consultant','Finance Manager','FP&A Analyst'].includes(job)) arr.push(job);
+      }
+      if (!arr.length && (obj.skills||[]).length>0) arr.push('Finance / Accounts Executive');
+      return Array.from(new Set(arr));
+    }
+    function capitalize(s){return s.charAt(0).toUpperCase()+s.slice(1);}
+    window.copyStructuredData = function() {
+      const d = window.lastExtractedData;
+      if (!d) return;
+      const txt =
+        `Name: ${d.name}\nEmail: ${d.email}\nPhone: ${d.phone}\nCertifications: ${d.certs.join(', ')}\nSkills: ${d.skills.join(', ')}\nYears Experience: ${d.experience}\nSummary: ${d.summary}`;
+      navigator.clipboard.writeText(txt).then(()=>alert('Extracted data copied!'));
+    };
+  </script>
+</body>
+</html>

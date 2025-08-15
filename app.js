@@ -40,34 +40,34 @@ const data = {
     },
     tools: {
         'file-tools': [
-            {"name": "PDF Combiner & Extractor", "description": "Merge multiple PDF files into one", "url": "./tools/pdfmerge/index.html"},
-            {"name": "Excel Converter", "description": "Convert to .xlsx format", "url": "./tools/excelconverter/index.html"},
-            {"name": "Text Cleaner", "description": "Get formatted text", "url": "./tools/cleaner/index.html"},
-            {"name": "File Rename and Organizer", "description": "Bulk rename all files in your Folder", "url": "./tools/filerenameandorganizer/index.html"}
+            {"name": "PDF Combiner & Extractor", "description": "Merge multiple PDF files into one", "url": "./tools/pdfmerge.html"},
+            {"name": "Excel Converter", "description": "Convert to .xlsx format", "url": "./tools/excelconverter.html"},
+            {"name": "Text Cleaner", "description": "Get formatted text", "url": "./tools/cleaner.html"},
+            {"name": "File Rename and Organizer", "description": "Bulk rename all files in your Folder", "url": "./tools/filerenameandorganizer.html"}
         ],
         'business-tools': [
-            {"name": "Image Resizer", "description": "Resize any Image for Free!!", "url": "./tools/imageresizer/index.html"},
-            {"name": "Units Converter", "description": "Convert Units easily", "url": "./tools/unitsconverter/index.html"},
-            {"name": "Data Extractor", "description": "Extract specific information from Text", "url": "./tools/extraction/index.html"},
-            {"name": "Finance Resume Parser", "description": "Generate color schemes for design projects", "url": "./tools/financejobmatch/index.html"},
-            {"name": "Hotel Guest Management", "description": "Template to manage Hotel Room Booking", "url": "./tools/hotelguestmanagement/index.html"},
+            {"name": "Image Resizer", "description": "Resize any Image for Free!!", "url": "./tools/imageresizer.html"},
+            {"name": "Units Converter", "description": "Convert Units easily", "url": "./tools/unitsconverter.html"},
+            {"name": "Data Extractor", "description": "Extract specific information from Text", "url": "./tools/extraction.html"},
+            {"name": "Finance Resume Parser", "description": "Generate color schemes for design projects", "url": "./tools/financejobmatch.html"},
+            {"name": "Hotel Guest Management", "description": "Template to manage Hotel Room Booking", "url": "./tools/hotelguestmanagement.html"},
             {"name": "Smartsheet Guard", "description": "Protect Your Data", "url": "./tools/smartsheet.html"}
         ],
         'lifestyle-tools': [
-            {"name": "Password Remover", "description": "Remove passwords from multiple files in Bulk", "url": "./tools/passwordremover/index.html"},
-            {"name": "Meal Idea", "description": "Get daily meal suggestions", "url": "./tools/mealapp/index.html"},
-            {"name": "Habit Tracker", "description": "Build your Habits for better Lifestyle", "url": "./tools/habittracker/index.html"},
-            {"name": "Experienced Resume Builder", "description": "Experienced Resumes for Free", "url": "./tools/experiencedresumebuilder/index.html"}        ]
+            {"name": "Password Remover", "description": "Remove passwords from multiple files in Bulk", "url": "./tools/passwordremover.html"},
+            {"name": "Meal Idea", "description": "Get daily meal suggestions", "url": "./tools/mealapp.html"},
+            {"name": "Habit Tracker", "description": "Build your Habits for better Lifestyle", "url": "./tools/habittracker.html"},
+            {"name": "Experienced Resume Builder", "description": "Experienced Resumes for Free", "url": "./tools/experiencedresumebuilder.html"}        ]
     },
     games: {
         'puzzle-games': [
             {"name": "Wordle Game", "description": "Test your Words Power", "url": "https://docs.google.com/spreadsheets/d/1r8gBRx5Prm-du-VoMfOaW06oCghy8o10G6bMY9FDmEQ/copy"},
-            {"name": "Memory Game", "description": "Test your Memory", "url": "./games/memory-game/index.html"},
-            {"name": "Tic Tac Toe", "description": "Multiple Level Grid Play", "url": "./games/tic-tac-toe/index.html"}
+            {"name": "Memory Game", "description": "Test your Memory", "url": "./games/memory-game.html"},
+            {"name": "Tic Tac Toe", "description": "Multiple Level Grid Play", "url": "./games/tic-tac-toe.html"}
         ],
         'arcade-games': [
-            {"name": "Blocks Game", "description": "Building Bricks", "url": "./games/blocks-game/index.html"},
-            {"name": "Billiards Game", "description": "Classic arcade Game", "url": "./games/billiards-game/index.html"}
+            {"name": "Blocks Game", "description": "Building Bricks", "url": "./games/blocks-game.html"},
+            {"name": "Billiards Game", "description": "Classic arcade Game", "url": "./games/billiard.html"}
         ]
     }
 };
@@ -153,270 +153,196 @@ function setupEventListeners() {
     setupSmoothScroll();
 }
 
-// Search functionality
-function performSearch(query) {
-    if (!query.trim()) {
-        closeSearchModal();
-        return;
-    }
-
-    currentSearch = query.toLowerCase();
-    const results = [];
-
-    // Search through all categories
-    Object.keys(data.templates).forEach(category => {
-        data.templates[category].forEach(item => {
-            if (item.name.toLowerCase().includes(currentSearch) || 
-                item.description.toLowerCase().includes(currentSearch)) {
-                results.push({
-                    ...item,
-                    category: 'Templates',
-                    subcategory: category
-                });
+function setupSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId) {
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
             }
         });
     });
-
-    Object.keys(data.tools).forEach(category => {
-        data.tools[category].forEach(item => {
-            if (item.name.toLowerCase().includes(currentSearch) || 
-                item.description.toLowerCase().includes(currentSearch)) {
-                results.push({
-                    ...item,
-                    category: 'Tools',
-                    subcategory: category
-                });
-            }
-        });
-    });
-
-    Object.keys(data.games).forEach(category => {
-        data.games[category].forEach(item => {
-            if (item.name.toLowerCase().includes(currentSearch) || 
-                item.description.toLowerCase().includes(currentSearch)) {
-                results.push({
-                    ...item,
-                    category: 'Games',
-                    subcategory: category
-                });
-            }
-        });
-    });
-
-    displaySearchResults(results, query);
 }
 
-function displaySearchResults(results, query) {
-    const modal = document.getElementById('searchModal');
-    const resultsContainer = document.getElementById('searchResults');
+// Mobile menu toggle
+function setupMobileMenu() {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const nav = document.getElementById('nav');
+    const navLinks = nav.querySelectorAll('.nav-link');
 
-    if (results.length === 0) {
-        resultsContainer.innerHTML = `
-            <div class="no-results">
-                <h4>No results found for "${query}"</h4>
-                <p>Try searching with different keywords.</p>
-            </div>
-        `;
-    } else {
-        resultsContainer.innerHTML = results.map(item => `
-            <div class="search-result" onclick="openItemFromSearch('${item.url}', '${item.name}', '${item.category}')">
-                <div class="search-result__title">${item.name}</div>
-                <div class="search-result__category">${item.category} - ${item.subcategory}</div>
-                <div class="search-result__description">${item.description}</div>
-            </div>
-        `).join('');
-    }
+    mobileMenuBtn.addEventListener('click', () => {
+        nav.classList.toggle('mobile-open');
+    });
 
-    modal.classList.remove('hidden');
+    // Close menu when a link is clicked
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            nav.classList.remove('mobile-open');
+        });
+    });
 }
 
-// Category toggle functionality
-function toggleCategory(categoryId) {
-    const container = document.getElementById(`${categoryId}-items`);
-    const button = document.querySelector(`[data-category="${categoryId}"] .category-card__toggle`);
+// Function to handle opening an item
+function openItem(item, type) {
+    console.log(`Opening ${type}: ${item.name}`);
+    // For now, we'll just open the URL.
+    // In a more complex app, this might open a modal or navigate to a dedicated page.
+    window.open(item.url, '_blank');
+}
 
-    if (!container || !button) return;
-
+// Category toggling
+window.toggleCategory = function(categoryId) {
+    const itemsContainer = document.getElementById(categoryId + '-items');
+    const toggleButton = itemsContainer.nextElementSibling;
+    
     if (expandedCategories.has(categoryId)) {
-        container.classList.remove('expanded');
-        button.textContent = 'View All';
+        itemsContainer.classList.remove('expanded');
+        toggleButton.textContent = 'View All';
         expandedCategories.delete(categoryId);
     } else {
-        container.classList.add('expanded');
-        button.textContent = 'Hide';
+        itemsContainer.classList.add('expanded');
+        toggleButton.textContent = 'View Less';
         expandedCategories.add(categoryId);
     }
-}
+};
 
-// Item opening functionality
-function openItem(item, type) {
-    showLoadingOverlay(`Opening ${item.name}...`);
+// Search functionality
+function performSearch(query) {
+    if (query.length < 3) {
+        alert('Please enter at least 3 characters to search.');
+        return;
+    }
+    
+    showLoadingOverlay();
 
-    setTimeout(() => {
-        hideLoadingOverlay();
+    // Clear previous results
+    const searchResultsContainer = document.getElementById('searchResultsContainer');
+    searchResultsContainer.innerHTML = '';
+    currentSearch = query;
 
-        if (item.url.includes('docs.google.com')) {
-            // Open Google Sheets template
-            window.open(item.url, '_blank');
-        } else if (item.url.startsWith('./')) {
-            // Open local webapp/game
-            window.location.href = item.url;
-        } else {
-            // Handle other URLs
-            window.open(item.url, '_blank');
-        }
-    }, 1000);
-}
-
-function openItemFromSearch(url, name, category) {
-    closeSearchModal();
-    showLoadingOverlay(`Opening ${name}...`);
+    const results = findResults(query);
 
     setTimeout(() => {
         hideLoadingOverlay();
+        displayResults(results);
+        showSearchModal();
+    }, 1000); // Simulate network delay
+}
 
-        if (url.includes('docs.google.com')) {
-            window.open(url, '_blank');
-        } else if (url.startsWith('./')) {
-            window.location.href = url;
-        } else {
-            window.open(url, '_blank');
+function findResults(query) {
+    const lowerQuery = query.toLowerCase();
+    const results = [];
+
+    function searchInObject(obj, type) {
+        for (const category in obj) {
+            obj[category].forEach(item => {
+                if (item.name.toLowerCase().includes(lowerQuery) || item.description.toLowerCase().includes(lowerQuery)) {
+                    results.push({ ...item, type: type, category: category });
+                }
+            });
         }
-    }, 1000);
+    }
+
+    searchInObject(data.templates, 'Template');
+    searchInObject(data.tools, 'Tool');
+    searchInObject(data.games, 'Game');
+
+    return results;
+}
+
+function displayResults(results) {
+    const container = document.getElementById('searchResultsContainer');
+    if (results.length === 0) {
+        container.innerHTML = `<p>No results found for "${currentSearch}".</p>`;
+    } else {
+        results.forEach(item => {
+            const resultElement = document.createElement('div');
+            resultElement.className = 'search-result';
+            resultElement.innerHTML = `
+                <h4>${item.name} <small>(${item.type})</small></h4>
+                <p>${item.description}</p>
+            `;
+            resultElement.addEventListener('click', () => {
+                openItem(item, item.type);
+                hideSearchModal();
+            });
+            container.appendChild(resultElement);
+        });
+    }
 }
 
 // Modal functionality
-function closeSearchModal() {
-    const modal = document.getElementById('searchModal');
-    if (modal) {
-        modal.classList.add('hidden');
-    }
+const searchModal = document.getElementById('searchModal');
+const closeModalBtn = document.getElementById('closeModalBtn');
+const loadingOverlay = document.getElementById('loadingOverlay');
+
+if (closeModalBtn) {
+    closeModalBtn.addEventListener('click', hideSearchModal);
 }
 
-// Loading overlay
-function showLoadingOverlay(message = 'Loading...') {
-    const overlay = document.getElementById('loadingOverlay');
-    if (overlay) {
-        overlay.querySelector('p').textContent = message;
-        overlay.classList.remove('hidden');
-    }
-}
-
-function hideLoadingOverlay() {
-    const overlay = document.getElementById('loadingOverlay');
-    if (overlay) {
-        overlay.classList.add('hidden');
-    }
-}
-
-// Smooth scroll functionality
-function setupSmoothScroll() {
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetId = link.getAttribute('href').substring(1);
-            scrollToSection(targetId);
-        });
-    });
-}
-
-function scrollToSection(sectionId) {
-    const element = document.getElementById(sectionId);
-    if (element) {
-        const headerHeight = document.querySelector('.header').offsetHeight;
-        const targetPosition = element.offsetTop - headerHeight - 20;
-
-        window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
-        });
-
-        // Update active nav link
-        updateActiveNavLink(sectionId);
-    }
-}
-
-function updateActiveNavLink(activeId) {
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${activeId}`) {
-            link.classList.add('active');
+if (searchModal) {
+    searchModal.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal__overlay')) {
+            hideSearchModal();
         }
     });
 }
 
-// Scroll spy functionality
+function showSearchModal() {
+    searchModal.classList.remove('hidden');
+}
+
+function hideSearchModal() {
+    searchModal.classList.add('hidden');
+}
+
+function showLoadingOverlay() {
+    loadingOverlay.classList.remove('hidden');
+}
+
+function hideLoadingOverlay() {
+    loadingOverlay.classList.add('hidden');
+}
+
+
+// Newsletter form submission handler
+function handleNewsletterSubmit(event) {
+    event.preventDefault();
+    alert('Thank you for subscribing to our newsletter!');
+}
+
+// A generic function for smooth scrolling, used by the CTA buttons
+function scrollToSection(id) {
+    const section = document.getElementById(id);
+    if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+// Scroll spy for navigation
 function setupScrollSpy() {
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.header__nav .nav-link');
 
-    const observerOptions = {
-        rootMargin: '-20% 0px -80% 0px',
-        threshold: 0
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const id = entry.target.getAttribute('id');
-                updateActiveNavLink(id);
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (pageYOffset >= sectionTop - 100) {
+                current = section.getAttribute('id');
             }
         });
-    }, observerOptions);
 
-    sections.forEach(section => observer.observe(section));
-}
-
-// Mobile menu functionality
-function setupMobileMenu() {
-    const mobileBtn = document.getElementById('mobileMenuBtn');
-    const nav = document.getElementById('nav');
-
-    if (mobileBtn && nav) {
-        mobileBtn.addEventListener('click', () => {
-            nav.classList.toggle('mobile-open');
-            mobileBtn.classList.toggle('active');
-        });
-
-        // Close mobile menu when clicking on nav links
-        const navLinks = nav.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                nav.classList.remove('mobile-open');
-                mobileBtn.classList.remove('active');
-            });
+            link.classList.remove('active');
+            if (link.href.includes(current)) {
+                link.classList.add('active');
+            }
         });
-    }
-}
-
-// Newsletter functionality
-function handleNewsletterSubmit(e) {
-    e.preventDefault();
-    const email = e.target.querySelector('input[type="email"]').value;
-
-    if (email) {
-        showLoadingOverlay('Subscribing...');
-
-        // Simulate API call
-        setTimeout(() => {
-            hideLoadingOverlay();
-            alert('Thank you for subscribing! You will receive updates about new templates and tools.');
-            e.target.reset();
-        }, 2000);
-    }
-}
-
-// Global functions for onclick handlers
-window.toggleCategory = toggleCategory;
-window.scrollToSection = scrollToSection;
-window.closeSearchModal = closeSearchModal;
-window.openItemFromSearch = openItemFromSearch;
-
-// Initialize when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeApp);
-} else {
-    initializeApp();
+    });
 }

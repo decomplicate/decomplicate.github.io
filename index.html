@@ -11,7 +11,6 @@
     <script src="app.js" defer></script>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="container header__content">
             <div class="header__logo">
@@ -40,7 +39,6 @@
     </header>
 
 
-    <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="container hero__content">
             <h2>Simplify Your Life with Free Tools & Games</h2>
@@ -57,7 +55,6 @@
         </div>
     </section>
 
-    <!-- Templates Section -->
     <section id="templates" class="section">
         <div class="container">
             <div class="section__header">
@@ -105,7 +102,6 @@
         </div>
     </section>
 
-    <!-- Tools Section -->
     <section id="tools" class="section">
         <div class="container">
             <div class="section__header">
@@ -133,10 +129,10 @@
                 </div>
                 <div class="category-card" data-category="lifestyle-tools">
                     <div class="category-card__header">
-                        <h3><i class="fas fa-heart"></i> Personal & Lifestyle</h3>
+                        <h3><i class="fas fa-heart"></i> Lifestyle & Personal</h3>
                         <span class="category-card__count">4 tools</span>
                     </div>
-                    <p>Enhance your daily life with practical tools</p>
+                    <p>Tools for your daily life and hobbies</p>
                     <div id="lifestyle-tools-items" class="category-card__items"></div>
                     <button onclick="toggleCategory('lifestyle-tools')" class="btn btn--secondary category-card__toggle">View All</button>
                 </div>
@@ -144,29 +140,28 @@
         </div>
     </section>
 
-    <!-- Games Section -->
     <section id="games" class="section">
         <div class="container">
             <div class="section__header">
                 <h2><i class="fas fa-gamepad icon"></i> Browser Games</h2>
-                <p>Fun, quick games to unwind and recharge</p>
+                <p>Enjoy a break with these simple and fun games</p>
             </div>
             <div class="categories">
                 <div class="category-card" data-category="puzzle-games">
                     <div class="category-card__header">
-                        <h3><i class="fas fa-puzzle-piece"></i> Puzzle & Brain Games</h3>
+                        <h3><i class="fas fa-puzzle-piece"></i> Puzzle Games</h3>
                         <span class="category-card__count">3 games</span>
                     </div>
-                    <p>Challenge your mind with engaging puzzles</p>
+                    <p>Challenge your mind with logic and word games</p>
                     <div id="puzzle-games-items" class="category-card__items"></div>
                     <button onclick="toggleCategory('puzzle-games')" class="btn btn--secondary category-card__toggle">View All</button>
                 </div>
                 <div class="category-card" data-category="arcade-games">
                     <div class="category-card__header">
-                        <h3><i class="fas fa-joystick"></i> Action & Arcade</h3>
+                        <h3><i class="fas fa-ghost"></i> Arcade Games</h3>
                         <span class="category-card__count">2 games</span>
                     </div>
-                    <p>Fast-paced fun for quick breaks</p>
+                    <p>Classic arcade fun for a quick break</p>
                     <div id="arcade-games-items" class="category-card__items"></div>
                     <button onclick="toggleCategory('arcade-games')" class="btn btn--secondary category-card__toggle">View All</button>
                 </div>
@@ -174,49 +169,48 @@
         </div>
     </section>
 
-    <!-- About Section -->
-<section id="about" class="section about">
-    <div class="container about__content">
-        <h2>About EffortlesslyDone</h2>
-        <p>
-            EffortlesslyDone is your go-to platform for free productivity tools, Google Sheets templates, and browser games designed to simplify your work and add fun to your breaks. 
-            Every asset is built to save you time, reduce complexity, and help you work smarter.
-        </p>
-        <p>
-            Need something tailored to your unique workflow? We also offer <strong>customization</strong> and <strong>consultation</strong> services — whether it’s tweaking one of our tools, integrating with your existing systems, or building a solution from scratch. 
-            <a href="mailto:decomplicate001@gmail.com" class="underline">Contact us</a> to discuss your needs, and we’ll help you turn your idea into an effortless solution.
-        </p>
-        <div class="about__features">
-            <div class="feature">
-                <i class="fas fa-gift large-icon"></i>
-                <h4>100% Free</h4>
-                <p>Access all templates and tools at no cost</p>
+    <section id="about" class="section">
+        <div class="container about__content">
+            <div class="section__header">
+                <h2>About EffortlesslyDone</h2>
+                <p>We are dedicated to providing simple, powerful, and free tools to help you be more productive and efficient in your daily life and work.</p>
             </div>
-            <div class="feature">
-                <i class="fas fa-bolt large-icon"></i>
-                <h4>Instant Access</h4>
-                <p>Click and use—no setup required</p>
-            </div>
-            <div class="feature">
-                <i class="fas fa-sync-alt large-icon"></i>
-                <h4>Fresh Content</h4>
-                <p>Regular updates with new tools and templates</p>
+            <div class="about__features">
+                <div class="feature">
+                    <i class="fas fa-lightbulb large-icon"></i>
+                    <h3>Innovative Solutions</h3>
+                    <p>Continuously building new tools and templates to meet your evolving needs.</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-hand-holding-heart large-icon"></i>
+                    <h3>Completely Free</h3>
+                    <p>All our resources are free to use, no strings attached.</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-users large-icon"></i>
+                    <h3>Community-Driven</h3>
+                    <p>We listen to your feedback to create the tools you truly need.</p>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-
-    <!-- Footer -->
     <footer class="footer">
         <div class="container footer__content">
-            <div class="footer__section footer__branding">
-                <h1><i class="fas fa-rocket"></i> EffortlesslyDone</h1>
-                <p>Free tools and games to make your day easier.</p>
+            <div class="footer__section">
+                <h3>EffortlesslyDone</h3>
+                <p>Simplifying your digital life, one tool at a time.</p>
+                <div class="footer__social">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
             </div>
             <div class="footer__section">
-                <h4>Quick Links</h4>
+                <h4>Site Links</h4>
                 <ul>
+                    <li><a href="#home">Home</a></li>
                     <li><a href="#templates">Templates</a></li>
                     <li><a href="#tools">Tools</a></li>
                     <li><a href="#games">Games</a></li>
@@ -224,35 +218,41 @@
                 </ul>
             </div>
             <div class="footer__section">
-                <h4>Stay Updated</h4>
+                <h4>Contact Us</h4>
+                <ul>
+                    <li><a href="mailto:support@effortlesslydone.com">support@effortlesslydone.com</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer__section">
+                <h4>Newsletter</h4>
+                <p>Subscribe to get the latest updates.</p>
                 <form id="newsletterForm" class="newsletter-form">
-                    <input type="email" placeholder="Enter your email" required>
+                    <input type="email" placeholder="Your Email" required>
                     <button type="submit" class="btn btn--primary">Subscribe</button>
                 </form>
             </div>
         </div>
-<nav class="footer__nav">
-    <a href="privacy-policy.html">Privacy Policy</a>
-    <a href="terms-of-service.html">Terms of Service</a>
-   <a href="blog/task-tracker-guide.html">Blog</a>
-
-    </nav>
-        <div class="footer__bottom">
-            <p>© 2025 EffortlesslyDone - All Rights Reserved</p>
-        </div>
     </footer>
 
-    <!-- Search Modal -->
     <div id="searchModal" class="modal hidden">
-        <div class="modal__overlay" onclick="closeSearchModal()"></div>
+        <div class="modal__overlay"></div>
         <div class="modal__content">
             <div class="modal__header">
-                <h3>Search Results</h3>
-                <button class="modal__close" onclick="closeSearchModal()">×</button>
+                <h2>Search Results</h2>
+                <button id="closeModalBtn" class="modal__close">&times;</button>
             </div>
-            <div class="modal__body" id="searchResults"></div>
+            <div class="modal__body">
+                <div id="searchResultsContainer"></div>
+            </div>
         </div>
     </div>
 
-   </body>
+    <div id="loadingOverlay" class="modal hidden loading-overlay">
+        <div class="loading-spinner"></div>
+        <p>Searching...</p>
+    </div>
+
+</body>
 </html>
