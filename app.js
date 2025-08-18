@@ -40,18 +40,18 @@ const data = {
     },
     tools: {
         'file-tools': [
-            {"name": "PDF Combiner & Extractor", "description": "Merge multiple PDF files into one", "url": "./tools/pdfmerge.html"},
-            {"name": "Excel Converter", "description": "Convert to .xlsx format", "url": "./tools/excelconverter.html"},
-            {"name": "Text Cleaner", "description": "Get formatted text", "url": "./tools/cleaner.html"},
+            {"name": "PDF Combiner & Extractor", "description": "Merge multiple PDF files into one", "url": "https://decomplicate.github.io/tools/pdfmerge.html"},
+            {"name": "Excel Converter", "description": "Convert to .xlsx format", "url": "https://decomplicate.github.io/tools/excelconverter.html"},
+            {"name": "Text Cleaner", "description": "Get formatted text", "url": "https://decomplicate.github.io/tools/cleaner.html"},
             {"name": "File Rename and Organizer", "description": "Bulk rename all files in your Folder", "url": "./tools/filerenameandorganizer.html"}
         ],
         'business-tools': [
-            {"name": "Image Resizer", "description": "Resize any Image for Free!!", "url": "./tools/imageresizer.html"},
-            {"name": "Units Converter", "description": "Convert Units easily", "url": "./tools/unitsconverter.html"},
-            {"name": "Data Extractor", "description": "Extract specific information from Text", "url": "./tools/extraction.html"},
-            {"name": "Finance Resume Parser", "description": "Generate color schemes for design projects", "url": "./tools/financejobmatch.html"},
-            {"name": "Hotel Guest Management", "description": "Template to manage Hotel Room Booking", "url": "./tools/hotelguestmanagement.html"},
-            {"name": "Smartsheet Guard", "description": "Protect Your Data", "url": "./tools/smartsheet.html"}
+            {"name": "Image Resizer", "description": "Resize any Image for Free!!", "url": "https://decomplicate.github.io/tools/imageresizer.html"},
+            {"name": "Units Converter", "description": "Convert Units easily", "url": "https://decomplicate.github.io/tools/unitsconverter.html"},
+            {"name": "Data Extractor", "description": "Extract specific information from Text", "url": "https://decomplicate.github.io/tools/extraction.html"},
+            {"name": "Finance Resume Parser", "description": "Generate color schemes for design projects", "url": "https://decomplicate.github.io/tools/financejobmatch.html"},
+            {"name": "Hotel Guest Management", "description": "Template to manage Hotel Room Booking", "url": "https://decomplicate.github.io/tools/hotelguestmanagement.html"},
+            {"name": "Smartsheet Guard", "description": "Protect Your Data", "url": "https://decomplicate.github.io/tools/smartsheet.html"}
         ],
         'lifestyle-tools': [
             {"name": "Password Remover", "description": "Remove passwords from multiple files in Bulk", "url": "./tools/passwordremover.html"},
