@@ -46,7 +46,7 @@ const data = {
             {"name": "File Rename and Organizer", "description": "Bulk rename all files in your Folder", "url": "https://decomplicate.github.io/decomplicate.github.io/tools/filerenameandorganizer.html"}
         ],
         'business-tools': [
-            {"name": "Image Resizer", "description": "Resize any Image for Free!!", "url": "https://decomplicate.github.io/tools/imageresizer.html"},
+            {"name": "Image Resizer", "description": "Resize any Image for Free!!", "url": "./tools/imageresizer.html"},
             {"name": "Units Converter", "description": "Convert Units easily", "url": "https://decomplicate.github.io/tools/unitsconverter.html"},
             {"name": "Data Extractor", "description": "Extract specific information from Text", "url": "https://decomplicate.github.io/tools/extraction.html"},
             {"name": "Finance Resume Parser", "description": "Generate color schemes for design projects", "url": "https://decomplicate.github.io/tools/financejobmatch.html"},
