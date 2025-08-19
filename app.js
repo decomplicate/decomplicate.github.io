@@ -40,34 +40,34 @@ const data = {
     },
     tools: {
         'file-tools': [
-            {"name": "PDF Combiner & Extractor", "description": "Merge multiple PDF files into one", "url": "https://decomplicate.github.io/decomplicate.github.io/tools/pdfmerge.html"},
-            {"name": "Excel Converter", "description": "Convert to .xlsx format", "url": "https://decomplicate.github.io/decomplicate.github.io/tools/excelconverter.html"},
-            {"name": "Text Cleaner", "description": "Get formatted text", "url": "https://decomplicate.github.io/decomplicate.github.io/tools/cleaner.html"},
-            {"name": "File Rename and Organizer", "description": "Bulk rename all files in your Folder", "url": "https://decomplicate.github.io/decomplicate.github.io/tools/filerenameandorganizer.html"}
+            {"name": "PDF Combiner & Extractor", "description": "Merge multiple PDF files into one", "url": "./tools/pdfmerge.html"},
+            {"name": "Excel Converter", "description": "Convert to .xlsx format", "url": "./tools/excelconverter.html"},
+            {"name": "Text Cleaner", "description": "Get formatted text", "url": "./tools/cleaner.html"},
+            {"name": "File Rename and Organizer", "description": "Bulk rename all files in your Folder", "url": "./tools/filerenameandorganizer.html"}
         ],
         'business-tools': [
             {"name": "Image Resizer", "description": "Resize any Image for Free!!", "url": "./tools/imageresizer.html"},
-            {"name": "Units Converter", "description": "Convert Units easily", "url": "https://decomplicate.github.io/tools/unitsconverter.html"},
-            {"name": "Data Extractor", "description": "Extract specific information from Text", "url": "https://decomplicate.github.io/tools/extraction.html"},
-            {"name": "Finance Resume Parser", "description": "Generate color schemes for design projects", "url": "https://decomplicate.github.io/tools/financejobmatch.html"},
-            {"name": "Hotel Guest Management", "description": "Template to manage Hotel Room Booking", "url": "https://decomplicate.github.io/tools/hotelguestmanagement.html"},
-            {"name": "Smartsheet Guard", "description": "Protect Your Data", "url": "https://decomplicate.github.io/tools/smartsheet.html"}
+            {"name": "Units Converter", "description": "Convert Units easily", "url": "./tools/unitsconverter.html"},
+            {"name": "Data Extractor", "description": "Extract specific information from Text", "url": "./tools/extraction.html"},
+            {"name": "Finance Resume Parser", "description": "Generate color schemes for design projects", "url": "./tools/financejobmatch.html"},
+            {"name": "Hotel Guest Management", "description": "Template to manage Hotel Room Booking", "url": "./tools/hotelguestmanagement.html"},
+            {"name": "Smartsheet Guard", "description": "Protect Your Data", "url": "./tools/smartsheet.html"}
         ],
         'lifestyle-tools': [
-            {"name": "Password Remover", "description": "Remove passwords from multiple files in Bulk", "url": "https://decomplicate.github.io/decomplicate.github.io/tools/passwordremover.html"},
-            {"name": "Meal Idea", "description": "Get daily meal suggestions", "url": "https://decomplicate.github.io/tools/mealapp.html"},
-            {"name": "Habit Tracker", "description": "Build your Habits for better Lifestyle", "url": "https://decomplicate.github.io/tools/habittracker.html"},
-            {"name": "Experienced Resume Builder", "description": "Experienced Resumes for Free", "url": "https://decomplicate.github.io/tools/experiencedresumebuilder.html"}        ]
+            {"name": "Password Remover", "description": "Remove passwords from multiple files in Bulk", "url": "./tools/passwordremover.html"},
+            {"name": "Meal Idea", "description": "Get daily meal suggestions", "url": "./tools/mealapp.html"},
+            {"name": "Habit Tracker", "description": "Build your Habits for better Lifestyle", "url": "./tools/habittracker.html"},
+            {"name": "Experienced Resume Builder", "description": "Experienced Resumes for Free", "url": "./tools/experiencedresumebuilder.html"}        ]
     },
     games: {
         'puzzle-games': [
             {"name": "Wordle Game", "description": "Test your Words Power", "url": "https://docs.google.com/spreadsheets/d/1r8gBRx5Prm-du-VoMfOaW06oCghy8o10G6bMY9FDmEQ/copy"},
-            {"name": "Memory Game", "description": "Test your Memory", "url": "https://decomplicate.github.io/games/memory-game.html"},
-            {"name": "Tic Tac Toe", "description": "Multiple Level Grid Play", "url": "https://decomplicate.github.io/games/tic-tac-toe.html"}
+            {"name": "Memory Game", "description": "Test your Memory", "url": "./games/memory-game.html"},
+            {"name": "Tic Tac Toe", "description": "Multiple Level Grid Play", "url": "./games/tic-tac-toe.html"}
         ],
         'arcade-games': [
-            {"name": "Blocks Game", "description": "Building Bricks", "url": "https://decomplicate.github.io/games/blocks-game.html"},
-            {"name": "Billiards Game", "description": "Classic arcade Game", "url": "https://decomplicate.github.io/games/billiard.html"}
+            {"name": "Blocks Game", "description": "Building Bricks", "url": "./games/blocks-game.html"},
+            {"name": "Billiards Game", "description": "Classic arcade Game", "url": "./games/billiard.html"}
         ]
     }
 };
