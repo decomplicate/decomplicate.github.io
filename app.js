@@ -38,26 +38,26 @@ const data = {
             {"name": "Resume Template Builder", "description": "Entry Level Resumes for Free", "url": "https://docs.google.com/spreadsheets/d/1laxbDjTNP5JEdxvJtBgMnJyHai3nChMl1Py-mgqSUeA/copy"}
         ]
     },
-      tools: {
+    tools: {
         'file-tools': [
             {"name": "PDF Combiner & Extractor", "description": "Merge multiple PDF files into one", "url": "./tools/pdfmerge.html"},
-            {"name": "Excel Converter", "description": "Convert to .xlsx format", "url": "./tools/excelconverter.html"},
+            {"name": "Excel Converter", "description": "Convert to .xlsx format", "url": "./tools/xlsconvert.html"},
             {"name": "Text Cleaner", "description": "Get formatted text", "url": "./tools/cleaner.html"},
-            {"name": "File Rename and Organizer", "description": "Bulk rename all files in your Folder", "url": "./tools/filerenameandorganizer.html"}
+            {"name": "File Rename and Organizer", "description": "Bulk rename all files in your Folder", "url": "./tools/fileorg.html"}
         ],
         'business-tools': [
             {"name": "Image Resizer", "description": "Resize any Image for Free!!", "url": "./tools/imageresizer.html"},
-            {"name": "Units Converter", "description": "Convert Units easily", "url": "./tools/unitsconverter.html"},
-            {"name": "Data Extractor", "description": "Extract specific information from Text", "url": "./tools/extraction.html"},
-            {"name": "Finance Resume Parser", "description": "Generate color schemes for design projects", "url": "./tools/financejobmatch.html"},
-            {"name": "Hotel Guest Management", "description": "Template to manage Hotel Room Booking", "url": "./tools/hotelguestmanagement.html"},
+            {"name": "Units Converter", "description": "Convert Units easily", "url": "./tools/unitscalc.html"},
+            {"name": "Data Extractor", "description": "Extract specific information from Text", "url": "./tools/extract.html"},
+            {"name": "Finance Resume Parser", "description": "Generate color schemes for design projects", "url": "./tools/finjob.html"},
+            {"name": "Hotel Guest Management", "description": "Template to manage Hotel Room Booking", "url": "./tools/guestmgt.html"},
             {"name": "Smartsheet Guard", "description": "Protect Your Data", "url": "./tools/smartsheet.html"}
         ],
         'lifestyle-tools': [
             {"name": "Password Remover", "description": "Remove passwords from multiple files in Bulk", "url": "./tools/passwordremover.html"},
             {"name": "Meal Idea", "description": "Get daily meal suggestions", "url": "./tools/mealapp.html"},
             {"name": "Habit Tracker", "description": "Build your Habits for better Lifestyle", "url": "./tools/habittracker.html"},
-            {"name": "Experienced Resume Builder", "description": "Experienced Resumes for Free", "url": "./tools/experiencedresumebuilder.html"}        ]
+            {"name": "Experienced Resume Builder", "description": "Experienced Resumes for Free", "url": "./tools/expresume.html"}        ]
     },
     games: {
         'puzzle-games': [

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Text Analyzer & Cleaner | EffortlesslyDone</title>
+  <meta name="description" content="All-in-one text analyzer and cleaner. Clean text, convert case, and get detailed statistics like word, character, and line counts. All in-browser." />
+  <meta name="keywords" content="text analyzer, text cleaner, word counter, character counter, text case converter, text tool" />
+  <meta name="author" content="EffortlesslyDone" />
+  
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Ensure fixed header stays constant and content doesn't overlap */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 70px; /* lock header height */
+      background-color: var(--color-surface);
+      box-shadow: var(--shadow-sm);
+      z-index: 1000;
+    }
+
+    main {
+      padding-top: 90px; /* a bit more than header height for breathing room */
+    }
+
+    /* Tool-specific overrides inside main theme */
+    .tool-container {
+      background: var(--color-surface);
+      border-radius: var(--radius-base);
+      box-shadow: var(--shadow-md);
+      padding: var(--space-24);
+      margin-top: var(--space-48);
+      max-width: 600px;
+    }
+    .tool-title {
+        text-align: center;
+        margin: 0;
+        color: var(--color-primary);
+        font-size: var(--font-size-2xl);
+    }
+    .tool-desc {
+      font-size: var(--font-size-md);
+      color: var(--color-text);
+      margin-bottom: var(--space-24);
+      text-align: center;
+      font-weight: var(--font-weight-medium);
+    }
+    label, .label {
+      font-weight: var(--font-weight-bold);
+      display: block;
+      margin: var(--space-16) 0 var(--space-8);
+    }
+    textarea {
+      width: 100%;
+      height: 150px;
+      padding: var(--space-12);
+      font-family: inherit;
+      font-size: var(--font-size-base);
+      box-sizing: border-box;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-border);
+      background: var(--color-background);
+      color: var(--color-text);
+      transition: border-color 0.2s;
+    }
+    textarea:focus {
+      border-color: var(--color-primary);
+      outline: none;
+    }
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-8);
+      margin-top: var(--space-8);
+      margin-bottom: var(--space-16);
+    }
+    button.tool-btn {
+      flex: 1 1 auto;
+      min-width: 120px;
+      padding: var(--space-12) var(--space-16);
+      font-weight: var(--font-weight-bold);
+      font-family: var(--font-family-heading);
+    }
+    .output-label {
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--space-8);
+      display: block;
+    }
+    .dashboard {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      padding: var(--space-16);
+      margin-top: var(--space-16);
+      background: var(--color-background);
+      box-shadow: var(--shadow-sm);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-12);
+      font-size: var(--font-size-sm);
+    }
+    .dashboard span {
+        color: var(--color-text-secondary);
+        font-weight: var(--font-weight-medium);
+    }
+    .dashboard b {
+        color: var(--color-primary);
+        font-weight: var(--font-weight-bold);
+    }
+    .promo {
+      margin-top: var(--space-32);
+      text-align: center;
+      background: var(--color-background);
+      padding: var(--space-16);
+      border-radius: var(--radius-sm);
+    }
+    .promo a {
+      color: var(--color-primary);
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header__content">
+      <div class="header__logo">
+        <h1><i class="fas fa-rocket"></i> EffortlesslyDone</h1>
+      </div>
+      <nav class="header__nav" id="nav">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="../index.html#templates" class="nav-link">Templates</a>
+        <a href="../index.html#tools" class="nav-link active">Tools</a>
+        <a href="../index.html#games" class="nav-link">Games</a>
+        <a href="../index.html#about" class="nav-link">About</a>
+      </nav>
+      <div class="header__search">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search...">
+        <button id="searchBtn" class="btn btn--primary search-btn"><i class="fas fa-search"></i></button>
+      </div>
+      <button id="mobileMenuBtn" class="mobile-menu-btn">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="tool-container">
+      <h2 class="tool-title"><i class="fas fa-magic"></i> Text Analyzer & Cleaner</h2>
+      <div class="tool-desc">
+        This tool serves as an all-in-one text analyzer and cleaner, allowing users to clean, convert case, and get detailed statistics like word, character, line, and punctuation counts. It runs entirely in the browser without needing accounts or downloads, making text management quick and easy.
+      </div>
+      
+      <span class="label">Paste or enter your text:</span>
+      <textarea id="input" placeholder="Enter your text here..." spellcheck="true"></textarea>
+      <div class="btn-row">
+        <button onclick="cleanText()" class="btn btn--secondary tool-btn">Clean</button>
+        <button onclick="convertCase('upper')" class="btn btn--secondary tool-btn">UPPER CASE</button>
+        <button onclick="convertCase('lower')" class="btn btn--secondary tool-btn">lower case</button>
+        <button onclick="convertCase('title')" class="btn btn--secondary tool-btn">Title Case</button>
+        <button onclick="convertCase('sentence')" class="btn btn--secondary tool-btn">Sentence case</button>
+      </div>
+      <div class="btn-row">
+        <button onclick="analyzeText()" class="btn btn--primary tool-btn">Analyze Text</button>
+      </div>
+      
+      <div class="output">
+        <span class="output-label">Output:</span>
+        <textarea id="output" readonly></textarea>
+      </div>
+      <div class="dashboard" id="dashboard"></div>
+
+      <div class="promo">
+        More automation tools on <a href="../index.html">← Back to Home</a><br>
+        Contact: <a href="mailto:decomplicate001@gmail.com">decomplicate001@gmail.com</a>
+      </div>
+    </section>
+  </main>
+  
+  <footer class="footer">
+    <div class="container footer__content">
+      <div class="footer__section">
+        <h3>EffortlesslyDone</h3>
+        <p>Simplifying your digital life, one tool at a time.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../app.js" defer></script>
+  <script>
+    function cleanText() {
+      let text = document.getElementById('input').value;
+      let cleaned = text.replace(/[ \t]+/g, ' ')
+                        .replace(/\s*\n\s*/g, '\n')
+                        .replace(/\n{2,}/g, '\n')
+                        .trim();
+      document.getElementById('output').value = cleaned;
+    }
+
+    function convertCase(type) {
+      let text = document.getElementById('input').value;
+      let result = '';
+      if (type === 'upper') result = text.toUpperCase();
+      else if (type === 'lower') result = text.toLowerCase();
+      else if (type === 'title') {
+        result = text.replace(/\w\S*/g, w => w.charAt(0).toUpperCase() + w.substr(1).toLowerCase());
+      } else if (type === 'sentence') {
+        result = text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+      }
+      document.getElementById('output').value = result;
+    }
+
+    function analyzeText() {
+      const text = document.getElementById('input').value;
+      const charCount = text.length;
+      const charNoSpace = text.replace(/\s/g, '').length;
+      const words = (text.trim().match(/\b\w+\b/g) || []);
+      const wordCount = words.length;
+      const punctCount = (text.match(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g) || []).length;
+      const wordWithPunct = (text.trim().split(/\s+/) || []).length;
+      const lines = text.split('\n').length;
+
+      document.getElementById('dashboard').innerHTML =
+        `<span>Words (without punctuation): <b>${wordCount}</b></span>
+         <span>Words (with punctuation): <b>${wordWithPunct}</b></span>
+         <span>Characters: <b>${charCount}</b></span>
+         <span>Characters (no spaces): <b>${charNoSpace}</b></span>
+         <span>Lines: <b>${lines}</b></span>
+         <span>Punctuation marks: <b>${punctCount}</b></span>`;
+    }
+  </script>
+</body>
+</html>

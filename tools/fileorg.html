@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Folder File Renamer Using Excel | EffortlesslyDone</title>
+  <meta name="description" content="Bulk-rename files using an Excel list. Export file names, edit in Excel, then upload to download all renamed files in a secure ZIP file. In-browser processing." />
+  <meta name="keywords" content="bulk file rename, excel file renamer, file organizer, folder file rename, batch rename" />
+  <meta name="author" content="EffortlesslyDone" />
+
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Ensure fixed header stays constant and content doesn't overlap */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 70px; /* lock header height */
+      background-color: var(--color-surface);
+      box-shadow: var(--shadow-sm);
+      z-index: 1000;
+    }
+
+    main {
+      padding-top: 90px; /* a bit more than header height for breathing room */
+    }
+
+    /* Tool-specific overrides inside main theme */
+    .tool-container {
+      background: var(--color-surface);
+      border-radius: var(--radius-base);
+      box-shadow: var(--shadow-md);
+      padding: var(--space-24);
+      margin-top: var(--space-48);
+      max-width: 800px;
+    }
+    .tool-title {
+        text-align: center;
+        margin: 0;
+        color: var(--color-primary);
+        font-size: var(--font-size-2xl);
+    }
+    .tool-desc {
+      font-size: var(--font-size-md);
+      color: var(--color-text);
+      margin-bottom: var(--space-24);
+      text-align: center;
+      font-weight: var(--font-weight-medium);
+    }
+    label {
+      font-weight: var(--font-weight-bold);
+      display: block;
+      margin: var(--space-16) 0 var(--space-8);
+    }
+    input[type="file"] {
+      width: 100%;
+      padding: var(--space-8);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-size: var(--font-size-base);
+    }
+    input[type="file"]:focus {
+      border-color: var(--color-primary);
+      outline: none;
+    }
+    .btn-row {
+      margin-top: var(--space-16);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-12);
+    }
+    button.tool-btn {
+      width: 100%;
+      padding: var(--space-12) var(--space-16);
+    }
+    #fileCount {
+      margin-top: var(--space-16);
+      font-style: italic;
+      color: var(--color-text-secondary);
+      text-align: center;
+    }
+    #fileListTitle {
+      margin-top: var(--space-24);
+      font-weight: var(--font-weight-bold);
+      text-align: center;
+      color: var(--color-text);
+    }
+    #issueLog {
+      margin-top: var(--space-16);
+      font-family: monospace;
+      white-space: pre-wrap;
+      background: var(--color-background);
+      border: 1px solid var(--color-border);
+      padding: var(--space-16);
+      border-radius: var(--radius-sm);
+      max-height: 220px;
+      overflow-y: auto;
+    }
+    #securityNotice {
+      margin-top: var(--space-16);
+      font-size: var(--font-size-sm);
+      color: var(--color-error);
+      background: var(--color-bg-2);
+      border: 1px solid var(--color-error);
+      padding: var(--space-16);
+      border-radius: var(--radius-sm);
+    }
+    .promo {
+      margin-top: var(--space-32);
+      text-align: center;
+      background: var(--color-background);
+      padding: var(--space-16);
+      border-radius: var(--radius-sm);
+    }
+    .promo a {
+      color: var(--color-primary);
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header__content">
+      <div class="header__logo">
+        <h1><i class="fas fa-rocket"></i> EffortlesslyDone</h1>
+      </div>
+      <nav class="header__nav" id="nav">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="../index.html#templates" class="nav-link">Templates</a>
+        <a href="../index.html#tools" class="nav-link active">Tools</a>
+        <a href="../index.html#games" class="nav-link">Games</a>
+        <a href="../index.html#about" class="nav-link">About</a>
+      </nav>
+      <div class="header__search">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search...">
+        <button id="searchBtn" class="btn btn--primary search-btn"><i class="fas fa-search"></i></button>
+      </div>
+      <button id="mobileMenuBtn" class="mobile-menu-btn">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="tool-container">
+      <h2 class="tool-title"><i class="fas fa-file-excel"></i> Folder File Renamer Using Excel</h2>
+      <div class="tool-desc">
+        Bulk-rename files in a selected folder. Export file info to Excel, edit the names, then upload to download all files renamed in a single ZIP.<br>
+        After downloading the ZIP, extract it to recreate your folder structure with new file names safely.
+      </div>
+
+      <label for="folderInput">Select Folder:</label>
+      <input type="file" id="folderInput" webkitdirectory multiple />
+
+      <div class="btn-row">
+        <button id="exportExcelBtn" class="btn btn--primary tool-btn" disabled>Export File List to Excel</button>
+      </div>
+
+      <label for="excelInput" style="margin-top:25px;">Upload Edited Excel with New Names:</label>
+      <input type="file" id="excelInput" accept=".xlsx,.xls" disabled />
+
+      <div class="btn-row">
+        <button id="downloadZipBtn" class="btn btn--primary tool-btn" disabled>Download Renamed Files as ZIP</button>
+      </div>
+
+      <div id="fileCount"></div>
+      <div id="fileListTitle" style="display:none;">Note: Original folder paths are preserved inside ZIP; only file names are changed.</div>
+      <div id="issueLog"></div>
+
+      <div id="securityNotice" style="display:none;">
+        <strong>Important:</strong> Windows or your antivirus may warn about the ZIP file downloaded from the internet.<br>
+        <ul>
+          <li>Right-click the ZIP file, select <em>"Properties"</em>, then check <em>"Unblock"</em> if present, and click OK.</li>
+          <li>Extract the ZIP using your file explorer or tools like 7-Zip or WinRAR.</li>
+          <li>If Windows SmartScreen warns you, click <em>"More Info"</em> &gt; <em>"Run Anyway"</em> if you trust this source.</li>
+        </ul>
+      </div>
+
+      <div class="promo">
+        More automation tools on <a href="../index.html">← Back to Home</a><br>
+        Contact: <a href="mailto:decomplicate001@gmail.com">decomplicate001@gmail.com</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__content">
+      <div class="footer__section">
+        <h3>EffortlesslyDone</h3>
+        <p>Simplifying your digital life, one tool at a time.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../app.js" defer></script>
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+  <script>
+    const folderInput = document.getElementById('folderInput');
+    const exportExcelBtn = document.getElementById('exportExcelBtn');
+    const excelInput = document.getElementById('excelInput');
+    const downloadZipBtn = document.getElementById('downloadZipBtn');
+    const fileCountDiv = document.getElementById('fileCount');
+    const issueLogDiv = document.getElementById('issueLog');
+    const fileListTitle = document.getElementById('fileListTitle');
+    const securityNoticeDiv = document.getElementById('securityNotice');
+
+    let filesMap = new Map(); // key: webkitRelativePath, value: File object
+    let renamedMap = new Map(); // key: webkitRelativePath, value: new filename string
+
+    folderInput.addEventListener('change', () => {
+      issueLogDiv.textContent = "";
+      securityNoticeDiv.style.display = "none";
+      filesMap.clear();
+      renamedMap.clear();
+
+      const files = Array.from(folderInput.files);
+      if (files.length === 0) {
+        exportExcelBtn.disabled = true;
+        excelInput.disabled = true;
+        downloadZipBtn.disabled = true;
+        fileCountDiv.textContent = "No files selected.";
+        fileListTitle.style.display = "none";
+        return;
+      }
+
+      files.forEach(file => {
+        filesMap.set(file.webkitRelativePath, file);
+        renamedMap.set(file.webkitRelativePath, file.name);
+      });
+
+      exportExcelBtn.disabled = false;
+      excelInput.disabled = false;
+      downloadZipBtn.disabled = true;
+
+      fileCountDiv.textContent = `${files.length} file(s) selected in folder.`;
+      fileListTitle.style.display = "block";
+    });
+
+    exportExcelBtn.addEventListener('click', () => {
+      if (filesMap.size === 0) {
+        alert("Please select a folder first.");
+        return;
+      }
+      const data = [];
+      for (const [relPath, file] of filesMap.entries()) {
+        const ext = file.name.includes('.') ? file.name.split('.').pop().toLowerCase() : '';
+        data.push({
+          "Original Name": relPath,
+          "File Type": ext,
+          "New Name": renamedMap.get(relPath) || file.name
+        });
+      }
+
+      const ws = XLSX.utils.json_to_sheet(data, { header: ["Original Name", "File Type", "New Name"] });
+      ws['!cols'] = [{wch: 60}, {wch: 15}, {wch: 40}];
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "FilesToRename");
+
+      XLSX.writeFile(wb, "files_to_rename.xlsx");
+    });
+
+    excelInput.addEventListener('change', e => {
+      issueLogDiv.textContent = "";
+      securityNoticeDiv.style.display = "none";
+
+      if (filesMap.size === 0) {
+        alert("Please select the folder first.");
+        e.target.value = "";
+        return;
+      }
+
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        try {
+          const data = new Uint8Array(evt.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const firstSheetName = workbook.SheetNames[0];
+          const worksheet = workbook.Sheets[firstSheetName];
+          const jsonData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+
+          let updatesCount = 0;
+          let invalidRows = [];
+
+          jsonData.forEach((row, idx) => {
+            const origName = row['Original Name'] || "";
+            const newName = row['New Name'] || "";
+            if (!origName || !newName) {
+              invalidRows.push(idx + 2); // Excel row index (including header)
+              return;
+            }
+            if (filesMap.has(origName)) {
+              // No slashes/backslashes in new name allowed
+              if (newName.includes('/') || newName.includes('\\')) {
+                invalidRows.push(idx + 2);
+                return;
+              }
+              renamedMap.set(origName, newName);
+              updatesCount++;
+            }
+          });
+
+          if (updatesCount === 0) {
+            issueLogDiv.style.color = "var(--color-error)";
+            issueLogDiv.textContent = "No matching original filenames found or no valid new names.";
+            downloadZipBtn.disabled = true;
+            return;
+          }
+
+          issueLogDiv.style.color = "var(--color-success)";
+          issueLogDiv.textContent = `Successfully updated ${updatesCount} file name(s).`;
+          if (invalidRows.length > 0) {
+            issueLogDiv.textContent += "\nWarning: Invalid new names at Excel rows: " + invalidRows.join(", ") + ".\nNew names must not contain slashes.";
+          }
+          downloadZipBtn.disabled = false;
+        } catch (err) {
+          alert("Failed to read Excel file: " + err.message);
+          downloadZipBtn.disabled = true;
+        }
+      };
+      reader.readAsArrayBuffer(file);
+      e.target.value = "";
+    });
+
+    downloadZipBtn.addEventListener('click', async () => {
+      if (filesMap.size === 0) {
+        alert("Please select files first.");
+        return;
+      }
+      issueLogDiv.textContent = "";
+      securityNoticeDiv.style.display = "none";
+
+      const zip = new JSZip();
+      let zipErrorLog = [];
+
+      for (const [relPath, file] of filesMap.entries()) {
+        try {
+          const newName = renamedMap.get(relPath) || file.name;
+          const folderPath = relPath.includes('/') ? relPath.substring(0, relPath.lastIndexOf('/')) : "";
+          const zipPath = folderPath ? `${folderPath}/` : "";
+
+          zip.file(zipPath + newName, await file.arrayBuffer());
+        } catch (err) {
+          zipErrorLog.push(`Failed to process file: ${relPath} - ${err.message}`);
+        }
+      }
+
+      if (zipErrorLog.length > 0) {
+        issueLogDiv.style.color = 'var(--color-error)';
+        issueLogDiv.textContent = "Some files could not be processed:\n" + zipErrorLog.join("\n");
+      } else {
+        issueLogDiv.style.color = 'var(--color-success)';
+        issueLogDiv.textContent = "All files processed and added to ZIP.";
+      }
+
+      zip.generateAsync({ type: "blob" }).then(blob => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "renamed_files.zip";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1500);
+        securityNoticeDiv.style.display = "block";
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      });
+    });
+  </script>
+
+</body>
+</html>

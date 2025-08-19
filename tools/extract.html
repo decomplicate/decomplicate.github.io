@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Table / Invoice Data Extractor | EffortlesslyDone</title>
+  <meta name="description" content="Instantly extract tables, lists, or invoice line-items from images or pasted text. Review, edit, and export to CSV or clipboard, all in your browser." />
+  <meta name="keywords" content="table extractor, invoice data, OCR, image to table, text to table, csv export" />
+  <meta name="author" content="EffortlesslyDone" />
+  
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Ensure fixed header stays constant and content doesn't overlap */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 70px; /* lock header height */
+      background-color: var(--color-surface);
+      box-shadow: var(--shadow-sm);
+      z-index: 1000;
+    }
+
+    main {
+      padding-top: 90px; /* a bit more than header height for breathing room */
+    }
+
+    /* Tool-specific overrides inside main theme */
+    .tool-container {
+      background: var(--color-surface);
+      border-radius: var(--radius-base);
+      box-shadow: var(--shadow-md);
+      padding: var(--space-24);
+      margin-top: var(--space-48);
+      max-width: 700px;
+    }
+    .tool-title {
+        text-align: center;
+        margin: 0;
+        color: var(--color-primary);
+        font-size: var(--font-size-2xl);
+    }
+    .tool-desc {
+      text-align: center;
+      color: var(--color-text);
+      font-size: var(--font-size-md);
+      margin-bottom: var(--space-8);
+      font-weight: var(--font-weight-medium);
+    }
+    .tool-how {
+        text-align: center;
+        font-size: var(--font-size-sm);
+        color: var(--color-text-secondary);
+        font-style: italic;
+        margin-bottom: var(--space-24);
+    }
+    #drop-area {
+      width: 97%;
+      max-width: 420px;
+      margin: 0 auto var(--space-16) auto;
+      min-height: 80px;
+      border: 2px dashed var(--color-border);
+      border-radius: var(--radius-sm);
+      background: var(--color-background);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-base);
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-standard);
+      user-select: none;
+    }
+    #drop-area.highlight {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      background: var(--color-gray-100);
+    }
+    input[type=file] { display: none; }
+    textarea {
+      width: 100%;
+      height: 100px;
+      font-family: inherit;
+      font-size: var(--font-size-base);
+      margin-bottom: var(--space-16);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-border);
+      box-sizing: border-box;
+      padding: var(--space-12);
+      background: var(--color-surface);
+      color: var(--color-text);
+      outline-color: var(--color-primary);
+    }
+    .btn-row {
+      margin: var(--space-12) 0 var(--space-16);
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: var(--space-12);
+    }
+    button.tool-btn {
+      width: auto;
+      padding: var(--space-12) var(--space-24);
+      font-weight: var(--font-weight-bold);
+      font-family: var(--font-family-heading);
+      flex-grow: 1;
+      max-width: 200px;
+    }
+    #table-container {
+      overflow-x: auto;
+      width: 100%;
+      margin-bottom: var(--space-16);
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: var(--font-size-sm);
+      background: var(--color-surface);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-sm);
+    }
+    th, td {
+      padding: var(--space-8) var(--space-12);
+      border: 1px solid var(--color-border);
+      text-align: left;
+      vertical-align: top;
+      min-width: 66px;
+    }
+    th {
+      background: var(--color-primary);
+      color: var(--color-white);
+      user-select: none;
+      font-weight: var(--font-weight-bold);
+    }
+    td[contenteditable="true"]:focus {
+      outline: 2px solid var(--color-primary);
+      background: var(--color-gray-100);
+    }
+    .promo {
+      margin-top: var(--space-32);
+      text-align: center;
+      background: var(--color-background);
+      padding: var(--space-16);
+      border-radius: var(--radius-sm);
+    }
+    .promo a {
+      color: var(--color-primary);
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  
+  <header class="header">
+    <div class="container header__content">
+      <div class="header__logo">
+        <h1><i class="fas fa-rocket"></i> EffortlesslyDone</h1>
+      </div>
+      <nav class="header__nav" id="nav">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="../index.html#templates" class="nav-link">Templates</a>
+        <a href="../index.html#tools" class="nav-link active">Tools</a>
+        <a href="../index.html#games" class="nav-link">Games</a>
+        <a href="../index.html#about" class="nav-link">About</a>
+      </nav>
+      <div class="header__search">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search...">
+        <button id="searchBtn" class="btn btn--primary search-btn"><i class="fas fa-search"></i></button>
+      </div>
+      <button id="mobileMenuBtn" class="mobile-menu-btn">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="tool-container">
+      <h2 class="tool-title"><i class="fas fa-table"></i> Table / Invoice Data Extractor</h2>
+      <div class="tool-desc">
+        Instantly extract tables, lists, or invoice line-items from images or pasted text—no manual typing, no hassle.
+      </div>
+      <div class="tool-how">
+        Upload or paste your data, review and edit the extracted table in-browser, then copy or export as CSV.<br/>
+        <b>All processing is private and local to your browser.</b>
+      </div>
+      <div id="drop-area" tabindex="0" aria-label="File drop area. Click to upload or drag a file">
+        Drag & drop an image here, or <label for="fileElem" style="color: var(--color-primary); cursor:pointer;">browse</label>
+        <input type="file" id="fileElem" accept="image/*" />
+      </div>
+      <textarea id="textInput" placeholder="Or paste your raw table or text here..."></textarea>
+      <div class="btn-row">
+        <button id="extractTextBtn" class="btn btn--primary tool-btn" disabled>Extract Table</button>
+        <button id="clearBtn" class="btn btn--secondary tool-btn">Clear Table</button>
+      </div>
+      <div id="table-container" aria-live="polite"></div>
+      <div class="btn-row">
+        <button id="copyBtn" class="btn btn--primary tool-btn" disabled>Copy Table</button>
+        <button id="exportCsvBtn" class="btn btn--secondary tool-btn" disabled>Export as CSV</button>
+      </div>
+      <div class="promo">
+        More automation tools on <a href="../index.html">← Back to Home</a><br>
+        Contact: <a href="mailto:decomplicate001@gmail.com">decomplicate001@gmail.com</a>
+      </div>
+    </section>
+  </main>
+  
+  <footer class="footer">
+    <div class="container footer__content">
+      <div class="footer__section">
+        <h3>EffortlesslyDone</h3>
+        <p>Simplifying your digital life, one tool at a time.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../app.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.1.1/dist/tesseract.min.js"></script>
+  <script>
+    const dropArea = document.getElementById('drop-area');
+    const fileElem = document.getElementById('fileElem');
+    const textInput = document.getElementById('textInput');
+    const extractTextBtn = document.getElementById('extractTextBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const tableContainer = document.getElementById('table-container');
+    const copyBtn = document.getElementById('copyBtn');
+    const exportCsvBtn = document.getElementById('exportCsvBtn');
+    let lastTableData = null; // stores 2d-array
+
+    dropArea.addEventListener('dragover', e => { e.preventDefault(); dropArea.classList.add('highlight'); });
+    dropArea.addEventListener('dragleave', () => dropArea.classList.remove('highlight'));
+    dropArea.addEventListener('drop', (e) => {
+      e.preventDefault(); dropArea.classList.remove('highlight');
+      handleFiles(e.dataTransfer.files);
+    });
+    dropArea.addEventListener('click', () => fileElem.click());
+    fileElem.addEventListener('change', () => handleFiles(fileElem.files));
+
+    extractTextBtn.addEventListener('click', () => {
+      if (!textInput.value.trim()) return;
+      const table = parseTextTable(textInput.value);
+      renderTable(table);
+    });
+
+    clearBtn.addEventListener('click', () => {
+      tableContainer.innerHTML = '';
+      lastTableData = null;
+      copyBtn.disabled = true;
+      exportCsvBtn.disabled = true;
+      textInput.value = '';
+      extractTextBtn.disabled = true;
+    });
+
+    copyBtn.addEventListener('click', () => {
+      if (!lastTableData) return;
+      navigator.clipboard.writeText(arrayToCSV(lastTableData)).then(() => alert('Table copied!'));
+    });
+
+    exportCsvBtn.addEventListener('click', () => {
+      if (!lastTableData) return;
+      const csv = arrayToCSV(lastTableData);
+      const blob = new Blob([csv], {type: 'text/csv'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'extracted_table.csv';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url), 1000);
+    });
+
+    textInput.addEventListener('input', () => extractTextBtn.disabled = textInput.value.trim() === '');
+
+    async function handleFiles(files) {
+      if (!files.length) return;
+      clearBtn.click();
+      for (const file of files) {
+        if (!file.type.startsWith('image/')) { alert('Only images supported for OCR extraction.'); continue; }
+        tableContainer.innerHTML = `<p style="color:var(--color-primary); text-align:center; padding:15px;">Performing OCR on image: <b>${file.name}</b> ...</p>`;
+        const img = await createImageBitmap(file);
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width; canvas.height = img.height;
+        canvas.getContext('2d').drawImage(img,0,0);
+        try {
+          const { data: { text } } = await Tesseract.recognize(canvas, 'eng', {
+            logger: m => { if(m.status === 'recognizing text') tableContainer.innerHTML = `<p style="text-align:center; padding:15px;">Extracting text (${Math.round(m.progress*100)}%)...</p>`; }
+          });
+          tableContainer.innerHTML = '';
+          const table = parseTextTable(text);
+          renderTable(table);
+          textInput.value = text; extractTextBtn.disabled = false;
+        } catch (err) {
+          tableContainer.innerHTML = `<p style="color:var(--color-error); text-align:center;">OCR failed: ${err.message}</p>`;
+        }
+      }
+    }
+
+    // Simple heuristic: split lines, detect delim
+    function parseTextTable(text) {
+      let lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+      const delimiters = ['\t','|',';',',','  '];
+      let delim = delimiters[delimiters.map(d=>lines.reduce((a,l)=>a+(l.split(d).length-1),0)).indexOf(Math.max(...delimiters.map(d=>lines.reduce((a,l)=>a+(l.split(d).length-1),0))))];
+      if (!delim) delim = /\s{2,}|\s(?=\d)/; // fallback: two+ spaces, or space before digit
+      let table = lines.map(l => typeof delim==='string'?l.split(delim).map(x=>x.trim()):l.split(delim));
+      let maxCols = Math.max(...table.map(r => r.length));
+      table = table.map(r => r.length<maxCols ? r.concat(Array(maxCols-r.length).fill('')) : r);
+      return table;
+    }
+
+    function renderTable(data) {
+      lastTableData = data;
+      if (!data || data.length === 0) { tableContainer.innerHTML = '<p style="text-align:center;">No table detected.</p>'; copyBtn.disabled = exportCsvBtn.disabled = true; return; }
+      const table = document.createElement('table'), thead = document.createElement('thead'), tbody = document.createElement('tbody');
+      table.appendChild(thead); table.appendChild(tbody);
+      const headerRow = document.createElement('tr');
+      data[0].forEach(h => { let th = document.createElement('th'); th.textContent=h||''; headerRow.appendChild(th); });
+      thead.appendChild(headerRow);
+      data.slice(1).forEach((row,ri)=> {
+        let tr = document.createElement('tr');
+        row.forEach((cell,ci)=> {
+          let td = document.createElement('td');
+          td.contentEditable="true"; td.textContent=cell||'';
+          td.addEventListener('input',()=>{lastTableData[ri+1][ci]=td.textContent;});
+          tr.appendChild(td);
+        }); tbody.appendChild(tr);
+      });
+      tableContainer.innerHTML = ''; tableContainer.appendChild(table);
+      copyBtn.disabled = exportCsvBtn.disabled = false;
+    }
+
+    function arrayToCSV(data){
+        return data.map(row => row.map(cell => {
+            cell = (cell || '').toString().replace(/"/g, '""');
+            return cell.search(/("|,|\n)/g) >= 0 ? `"${cell}"` : cell;
+        }).join(',')).join('\n');
+    }
+    
+    window.onload=()=>{extractTextBtn.disabled=true;}
+  </script>
+</body>
+</html>

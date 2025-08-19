@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bulk Image Resizer | EffortlesslyDone</title>
+  <meta name="description" content="Resize images in bulk by size or percentage, with or without locking the aspect ratio. All processing is private and happens in your browser." />
+  <meta name="keywords" content="image resizer, bulk image resize, photo resizer, resize by percentage, resize by dimension, image tool" />
+  <meta name="author" content="EffortlesslyDone" />
+
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Ensure fixed header stays constant and content doesn't overlap */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 70px; /* lock header height */
+      background-color: var(--color-surface);
+      box-shadow: var(--shadow-sm);
+      z-index: 1000;
+    }
+
+    main {
+      padding-top: 90px; /* a bit more than header height for breathing room */
+    }
+
+    /* Tool-specific overrides inside main theme */
+    .tool-container {
+      background: var(--color-surface);
+      border-radius: var(--radius-base);
+      box-shadow: var(--shadow-md);
+      padding: var(--space-24);
+      margin-top: var(--space-48);
+      max-width: 500px;
+    }
+    .tool-title {
+        text-align: center;
+        margin: 0;
+        color: var(--color-primary);
+        font-size: var(--font-size-2xl);
+    }
+    .tool-desc {
+      font-size: var(--font-size-md);
+      color: var(--color-text);
+      margin-bottom: var(--space-24);
+      text-align: center;
+      font-weight: var(--font-weight-medium);
+    }
+    .tool-how {
+        text-align: center;
+        font-size: var(--font-size-sm);
+        color: var(--color-text-secondary);
+        font-style: italic;
+        margin-bottom: var(--space-24);
+    }
+    label {
+      font-weight: var(--font-weight-bold);
+      display: block;
+      margin: var(--space-16) 0 var(--space-8);
+    }
+    input[type="file"] {
+      width: 100%;
+      padding: var(--space-8);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-size: var(--font-size-base);
+    }
+    .tabs {
+      display: flex;
+      margin-bottom: var(--space-16);
+      border-bottom: 2px solid var(--color-border);
+    }
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: var(--space-12) var(--space-8);
+      background: var(--color-background);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      font-weight: var(--font-weight-medium);
+      transition: all var(--duration-fast) var(--ease-standard);
+      border-bottom: 2px solid transparent;
+    }
+    .tab.active {
+      background: var(--color-surface);
+      color: var(--color-primary);
+      border-bottom: 2px solid var(--color-primary);
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+      animation: fadeIn var(--duration-fast) var(--ease-standard);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .input-group {
+      display: flex;
+      gap: var(--space-12);
+      align-items: center;
+    }
+    .input-group input { flex: 1; }
+    .aspect-lock {
+      display: flex;
+      align-items: center;
+      margin-top: var(--space-16);
+    }
+    .aspect-lock input[type="checkbox"] {
+      width: auto;
+      margin-right: var(--space-8);
+    }
+    .btn-row {
+      margin-top: var(--space-24);
+      text-align: center;
+    }
+    button.tool-btn {
+      width: 100%;
+      padding: var(--space-12) var(--space-24);
+    }
+    #status {
+      font-size: var(--font-size-sm);
+      margin-top: var(--space-16);
+      color: var(--color-success);
+      text-align: center;
+    }
+    .promo {
+      margin-top: var(--space-32);
+      text-align: center;
+      background: var(--color-background);
+      padding: var(--space-16);
+      border-radius: var(--radius-sm);
+    }
+    .promo a {
+      color: var(--color-primary);
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header__content">
+      <div class="header__logo">
+        <h1><i class="fas fa-rocket"></i> EffortlesslyDone</h1>
+      </div>
+      <nav class="header__nav" id="nav">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="../index.html#templates" class="nav-link">Templates</a>
+        <a href="../index.html#tools" class="nav-link active">Tools</a>
+        <a href="../index.html#games" class="nav-link">Games</a>
+        <a href="../index.html#about" class="nav-link">About</a>
+      </nav>
+      <div class="header__search">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search...">
+        <button id="searchBtn" class="btn btn--primary search-btn"><i class="fas fa-search"></i></button>
+      </div>
+      <button id="mobileMenuBtn" class="mobile-menu-btn">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="tool-container">
+      <h2 class="tool-title"><i class="fas fa-images"></i> Bulk Image Resizer</h2>
+      <div class="tool-desc">
+        Resize images in bulk by dimension or percentage. Private and secure, all processing happens in your browser.
+      </div>
+
+      <label for="images">Select Images to Resize:</label>
+      <input type="file" id="images" multiple accept="image/*" />
+
+      <div class="tabs">
+        <div class="tab active" data-tab="sizeTab">By Size</div>
+        <div class="tab" data-tab="percentTab">By Percentage</div>
+      </div>
+
+      <div id="sizeTab" class="tab-content active">
+        <label>New Dimensions (px)</label>
+        <div class="input-group">
+          <input type="number" id="widthInput" placeholder="Width" />
+          <input type="number" id="heightInput" placeholder="Height" />
+        </div>
+        <div class="aspect-lock">
+          <input type="checkbox" id="lockAspect" checked />
+          <label for="lockAspect">Lock Aspect Ratio</label>
+        </div>
+      </div>
+
+      <div id="percentTab" class="tab-content">
+        <label>Resize to (%)</label>
+        <input type="number" id="percentInput" placeholder="e.g. 50 for 50%" />
+      </div>
+
+      <div class="btn-row">
+        <button onclick="resizeAndDownload()" class="btn btn--primary tool-btn">Resize & Download</button>
+      </div>
+      <p id="status"></p>
+
+      <div class="promo">
+        More automation tools on <a href="../index.html">← Back to Home</a><br>
+        Contact: <a href="mailto:decomplicate001@gmail.com">decomplicate001@gmail.com</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__content">
+      <div class="footer__section">
+        <h3>EffortlesslyDone</h3>
+        <p>Simplifying your digital life, one tool at a time.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../app.js" defer></script>
+  <script>
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        contents.forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    const widthInput = document.getElementById('widthInput');
+    const heightInput = document.getElementById('heightInput');
+    const lockAspect = document.getElementById('lockAspect');
+    let originalAspect = 1;
+
+    widthInput.addEventListener('input', () => {
+      if (lockAspect.checked && widthInput.value) {
+        heightInput.value = Math.round(widthInput.value / originalAspect);
+      }
+    });
+
+    heightInput.addEventListener('input', () => {
+      if (lockAspect.checked && heightInput.value) {
+        widthInput.value = Math.round(heightInput.value * originalAspect);
+      }
+    });
+
+    function sanitizeFileName(name) {
+      return name.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9._-]/g, '');
+    }
+
+    function loadImage(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          const img = new Image();
+          img.onload = () => resolve(img);
+          img.onerror = reject;
+          img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function resizeAndDownload() {
+      const files = document.getElementById('images').files;
+      const percent = parseInt(document.getElementById('percentInput').value);
+      const mode = document.querySelector('.tab.active').dataset.tab;
+      const status = document.getElementById('status');
+
+      if (!files.length) {
+        alert("Please select images first.");
+        return;
+      }
+
+      status.textContent = "Processing...";
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const img = await loadImage(file);
+
+        if (i === 0) originalAspect = img.width / img.height;
+
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        let newW = img.width;
+        let newH = img.height;
+
+        if (mode === 'percentTab' && percent > 0) {
+          newW = Math.round(img.width * percent / 100);
+          newH = Math.round(img.height * percent / 100);
+        } else if (mode === 'sizeTab') {
+          const wVal = parseInt(widthInput.value);
+          const hVal = parseInt(heightInput.value);
+          if (wVal) {
+            newW = wVal;
+            newH = lockAspect.checked ? Math.round(wVal / originalAspect) : (hVal || img.height);
+          } else if (hVal) {
+            newH = hVal;
+            newW = lockAspect.checked ? Math.round(hVal * originalAspect) : img.width;
+          }
+        }
+
+        canvas.width = newW;
+        canvas.height = newH;
+        ctx.drawImage(img, 0, 0, newW, newH);
+
+        const blob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', 0.9));
+
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'resized_' + sanitizeFileName(file.name);
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(a.href);
+      }
+
+      status.textContent = "All images downloaded!";
+    }
+  </script>
+</body>
+</html>

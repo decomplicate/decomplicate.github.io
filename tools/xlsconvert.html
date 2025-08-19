@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bulk Excel to XLSX Converter | EffortlesslyDone</title>
+  <meta name="description" content="Convert multiple Excel files (.xls, .xlsm, .csv) to the modern .xlsx format at once. Drag, drop, and download a single ZIP file with all conversions." />
+  <meta name="keywords" content="excel converter, xls to xlsx, xlsm to xlsx, csv to xlsx, excel file converter, bulk convert" />
+  <meta name="author" content="EffortlesslyDone" />
+  
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Ensure fixed header stays constant and content doesn't overlap */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 70px; /* lock header height */
+      background-color: var(--color-surface);
+      box-shadow: var(--shadow-sm);
+      z-index: 1000;
+    }
+
+    main {
+      padding-top: 90px; /* a bit more than header height for breathing room */
+    }
+
+    /* Tool-specific overrides inside main theme */
+    .tool-container {
+      background: var(--color-surface);
+      border-radius: var(--radius-base);
+      box-shadow: var(--shadow-md);
+      padding: var(--space-24);
+      margin-top: var(--space-48);
+      max-width: 600px;
+    }
+    .tool-title {
+        text-align: center;
+        margin: 0;
+        color: var(--color-primary);
+        font-size: var(--font-size-2xl);
+    }
+    .tool-desc {
+      font-size: var(--font-size-md);
+      color: var(--color-text);
+      margin-bottom: var(--space-24);
+      text-align: center;
+      font-weight: var(--font-weight-medium);
+    }
+    .drop-area {
+      background-color: var(--color-bg-2);
+      border-radius: var(--radius-md);
+      padding: var(--space-32);
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      border: 2px dashed var(--color-border);
+      transition: all var(--duration-fast) var(--ease-standard);
+      cursor: pointer;
+    }
+    .drop-area.highlight {
+      border-color: var(--color-primary);
+      background-color: var(--color-gray-100);
+    }
+    .drop-area .fa-file-excel {
+      font-size: 4rem;
+      color: var(--color-primary);
+      margin-bottom: var(--space-16);
+    }
+    .drop-area-text {
+      color: var(--color-text);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--space-8);
+      font-size: var(--font-size-lg);
+    }
+    .drop-area-subtext {
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-sm);
+    }
+    .file-input-wrapper {
+      position: relative;
+      display: inline-block;
+      overflow: hidden;
+      margin-top: var(--space-16);
+    }
+    .file-input-wrapper input[type="file"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .file-input-btn {
+      display: flex;
+      align-items: center;
+      padding: var(--space-12) var(--space-24);
+      font-size: var(--font-size-base);
+      color: var(--color-text);
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+    }
+    .file-input-btn span {
+      margin-left: var(--space-8);
+    }
+    .file-list-container {
+      background: var(--color-surface);
+      border-radius: var(--radius-md);
+      padding: var(--space-24);
+      margin-top: var(--space-24);
+      box-shadow: var(--shadow-sm);
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+      max-height: 250px;
+      overflow-y: auto;
+      margin-bottom: 0;
+    }
+    li {
+      background: var(--color-background);
+      margin-bottom: var(--space-8);
+      padding: var(--space-12);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: var(--font-size-sm);
+    }
+    li.ready {
+      border-color: var(--color-success);
+      background: var(--color-success-light);
+    }
+    li.error {
+      border-color: var(--color-error);
+      background: var(--color-error-light);
+    }
+    .convert-all-btn {
+      display: block;
+      margin-top: var(--space-24);
+      padding: var(--space-12) var(--space-24);
+      width: 100%;
+    }
+    .promo {
+      margin-top: var(--space-32);
+      text-align: center;
+      background: var(--color-background);
+      padding: var(--space-16);
+      border-radius: var(--radius-sm);
+    }
+    .promo a {
+      color: var(--color-primary);
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header__content">
+      <div class="header__logo">
+        <h1><i class="fas fa-rocket"></i> EffortlesslyDone</h1>
+      </div>
+      <nav class="header__nav" id="nav">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="../index.html#templates" class="nav-link">Templates</a>
+        <a href="../index.html#tools" class="nav-link active">Tools</a>
+        <a href="../index.html#games" class="nav-link">Games</a>
+        <a href="../index.html#about" class="nav-link">About</a>
+      </nav>
+      <div class="header__search">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search...">
+        <button id="searchBtn" class="btn btn--primary search-btn"><i class="fas fa-search"></i></button>
+      </div>
+      <button id="mobileMenuBtn" class="mobile-menu-btn">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="tool-container">
+      <h2 class="tool-title"><i class="fas fa-file-excel"></i> Bulk Excel to XLSX Converter</h2>
+      <div class="tool-desc">
+        Convert multiple Excel files (.xls, .xlsm, .csv) to the modern .xlsx format at once. Private and fast processing in your browser.
+      </div>
+      
+      <div class="drop-area" id="dropArea">
+        <i class="fa-solid fa-file-excel"></i>
+        <div class="drop-area-text">Drop Files Here</div>
+        <div class="drop-area-subtext">or click to browse</div>
+        <input type="file" id="fileInput" multiple accept=".xls,.xlsx,.xlsm,.csv" style="display:none" />
+      </div>
+
+      <div class="file-list-container" id="fileListContainer" style="display: none;">
+        <ul id="fileList"></ul>
+        <button id="convertAllBtn" class="btn btn--primary convert-all-btn" disabled>Convert All & Download ZIP</button>
+      </div>
+      
+      <div class="promo">
+        More automation tools on <a href="../index.html">← Back to Home</a><br>
+        Contact: <a href="mailto:decomplicate001@gmail.com">decomplicate001@gmail.com</a>
+      </div>
+    </section>
+  </main>
+  
+  <footer class="footer">
+    <div class="container footer__content">
+      <div class="footer__section">
+        <h3>EffortlesslyDone</h3>
+        <p>Simplifying your digital life, one tool at a time.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../app.js" defer></script>
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const convertAllBtn = document.getElementById('convertAllBtn');
+    const fileList = document.getElementById('fileList');
+    const fileListContainer = document.getElementById('fileListContainer');
+    const dropArea = document.getElementById('dropArea');
+    let files = [];
+    let workbooks = {};
+    let errors = {};
+
+    dropArea.addEventListener('click', () => fileInput.click());
+    dropArea.addEventListener('dragover', (e) => { e.preventDefault(); dropArea.classList.add('highlight'); });
+    dropArea.addEventListener('dragleave', (e) => { e.preventDefault(); dropArea.classList.remove('highlight'); });
+    dropArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropArea.classList.remove('highlight');
+        if (e.dataTransfer.files.length) {
+            handleFiles(e.dataTransfer.files);
+        }
+    });
+
+    fileInput.addEventListener('change', () => {
+        if (fileInput.files.length) {
+            handleFiles(fileInput.files);
+        }
+    });
+
+    function handleFiles(fileListItems) {
+        files = Array.from(fileListItems).filter(f => /\.(xls|xlsx|xlsm|csv)$/i.test(f.name));
+        workbooks = {};
+        errors = {};
+        if (files.length > 0) {
+            fileListContainer.style.display = 'block';
+            parseAllFiles();
+        } else {
+            fileListContainer.style.display = 'none';
+        }
+        updateFileList();
+    }
+
+    async function parseFile(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          try {
+            const data = new Uint8Array(evt.target.result);
+            const wb = XLSX.read(data, { type: 'array' });
+            resolve(wb);
+          } catch (err) {
+            reject(err);
+          }
+        };
+        reader.onerror = (err) => reject(err);
+        reader.readAsArrayBuffer(file);
+      });
+    }
+
+    async function parseAllFiles() {
+      const promises = files.map(file => parseFile(file)
+        .then(wb => { workbooks[file.name] = wb; })
+        .catch(err => { errors[file.name] = err.message; }));
+      
+      await Promise.allSettled(promises);
+      updateFileList();
+    }
+
+    function updateFileList() {
+      fileList.innerHTML = '';
+      convertAllBtn.disabled = true;
+
+      files.forEach(file => {
+        const li = document.createElement('li');
+        const filename = document.createElement('span');
+        filename.textContent = file.name;
+        li.appendChild(filename);
+
+        if (workbooks[file.name]) {
+          li.classList.add('ready');
+          const status = document.createElement('span');
+          status.textContent = 'Ready';
+          li.appendChild(status);
+        } else if (errors[file.name]) {
+          li.classList.add('error');
+          const status = document.createElement('span');
+          status.textContent = `Error: ${errors[file.name]}`;
+          li.appendChild(status);
+        } else {
+          const status = document.createElement('span');
+          status.textContent = 'Parsing...';
+          li.appendChild(status);
+        }
+        fileList.appendChild(li);
+      });
+
+      if (Object.keys(workbooks).length > 0) {
+        convertAllBtn.disabled = false;
+      }
+    }
+
+    convertAllBtn.addEventListener('click', async () => {
+      const zip = new JSZip();
+      
+      for (const name in workbooks) {
+        const workbook = workbooks[name];
+        const newFileName = name.replace(/\.(xls|xlsm|csv)$/i, '.xlsx');
+        const out = XLSX.write(workbook, { type: 'base64', bookType: 'xlsx' });
+        zip.file(newFileName, out, { base64: true });
+      }
+
+      zip.generateAsync({ type: "blob" }).then(blob => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "converted_excels.zip";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1500);
+      });
+    });
+  </script>
+</body>
+</html>
