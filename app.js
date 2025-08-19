@@ -38,7 +38,7 @@ const data = {
             {"name": "Resume Template Builder", "description": "Entry Level Resumes for Free", "url": "https://docs.google.com/spreadsheets/d/1laxbDjTNP5JEdxvJtBgMnJyHai3nChMl1Py-mgqSUeA/copy"}
         ]
     },
-    tools: {
+      tools: {
         'file-tools': [
             {"name": "PDF Combiner & Extractor", "description": "Merge multiple PDF files into one", "url": "./tools/pdfmerge.html"},
             {"name": "Excel Converter", "description": "Convert to .xlsx format", "url": "./tools/excelconverter.html"},
