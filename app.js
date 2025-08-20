@@ -31,7 +31,7 @@ const data = {
             {"name": "WhatsApp Messaging Tool", "description": "Reminders to send messages/ wishes to friends and family", "url": "./template/whatsapp.html"},
             {"name": "BarCode & QRCode Generator", "description": "Create Barcodes or QR codes for your Products", "url": "./template/barcode.html"},
             {"name": "Change Font Template", "description": "Change Fonts Across Multiple Sheets in One Click!", "url": "./template/changefont.html"},
-            {"name": "Conditional Formatting", "description": "Simple way to format your Sheets", "url": "https://docs.google.com/spreadsheets/d/10YbpPdUNXxFRTSPUOwERzFX7_4hRdTVd9SbBqLhNKOw/copy"}
+            {"name": "Conditional Formatting", "description": "Simple way to format your Sheets", "url": "./template/format.html"}
         ],
         education: [
             {"name": "Student Progress Tracker", "description": "Plan and Track my progress", "url": "https://docs.google.com/spreadsheets/d/1gMUTkvIuvqs4CDsOeldcvbnoGwEPKdrSJLoRHcdYgCo/copy"},
