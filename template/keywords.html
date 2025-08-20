@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Keyword Search Tool for Google Sheets – Find Terms Across Files Instantly</title>
+  <meta name="description" content="A no-code Google Sheets tool to search for keywords like 'budget', 'urgent' or more across all Sheets in a Google Drive folder — and get results in seconds." />
+  <link rel="canonical" href="https://effortlesslydone.com/google-sheets-keyword-search-tool" />
+  <meta name="author" content="EffortlesslyDone" />
+  <meta name="keywords" content="google sheets keyword search, search multiple google sheets, spreadsheet keyword finder, drive sheet search tool" />
+
+  <meta property="og:title" content="Keyword Search Tool for Google Sheets – Find Terms Across Files Instantly" />
+  <meta property="og:description" content="Easily search across all Google Sheets in a folder for specific keywords. Get a compiled list with matches, cell locations, and sheet names." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://effortlesslydone.com/google-sheets-keyword-search-tool" />
+  <meta property="og:image" content="https://effortlesslydone.com/images/keyword-search-tool.jpg" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Google Sheets Keyword Search Tool" />
+  <meta name="twitter:description" content="Search across multiple Sheets in a folder for keywords like 'urgent' or 'budget'. No add-ons, no manual work." />
+  <meta name="twitter:image" content="https://effortlesslydone.com/images/keyword-search-tool.jpg" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --color-bg: #FAFAFB;
+      --color-surface: #FFFFFF;
+      --color-text: #213248;
+      --color-muted: #65738a;
+      --color-primary: #FF6F61;
+      --color-primary-600: #3949AB;
+      --color-accent: #FF6B5E;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --shadow-sm: 0 2px 8px rgba(18,30,50,.06);
+      --shadow-md: 0 8px 24px rgba(18,30,50,.10);
+    }
+    * { box-sizing: border-box }
+    body {
+      margin: 0;
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      line-height: 1.6;
+    }
+    header.hero {
+      background: linear-gradient(90deg, var(--color-primary), var(--color-primary-600));
+      color: #fff;
+      padding: 28px 0;
+      text-align: center;
+      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+      box-shadow: var(--shadow-md);
+    }
+    .hero h1 {
+      font-family: 'Poppins', sans-serif;
+      margin: 0 0 6px;
+      font-size: 2rem;
+    }
+    .hero p {
+      margin: .25rem 0 0;
+      opacity: .95;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 1.75rem auto;
+      padding: 0 1rem;
+    }
+    .card {
+      background: var(--color-surface);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    h2 {
+      font-family: 'Poppins', sans-serif;
+      color: var(--color-primary);
+      margin: 0 0 .5rem;
+      font-size: 1.25rem;
+    }
+    .lead {
+      font-size: 1.05rem;
+      color: var(--color-text);
+    }
+    ul {
+      padding-left: 1.2rem;
+      margin: .25rem 0;
+    }
+    li {
+      margin-bottom: .5rem;
+    }
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: .75rem;
+    }
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 700;
+      border-radius: 10px;
+      padding: 12px 18px;
+      box-shadow: var(--shadow-sm);
+      transition: transform .08s ease, opacity .2s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary {
+      background: var(--color-accent);
+      color: #fff;
+    }
+    .btn-primary:hover { opacity: .95; }
+    .grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .feature {
+      border: 1px solid #e9ecfb;
+      border-radius: 12px;
+      padding: 12px;
+      background: linear-gradient(180deg, rgba(63,81,181,.04), rgba(255,107,94,.04));
+    }
+    @media (max-width: 850px) { .grid { grid-template-columns: 1fr; } }
+    footer {
+      text-align: center;
+      color: var(--color-muted);
+      padding: 1.25rem 0;
+      margin-top: .5rem;
+    }
+    .meta {
+      font-size: 0.85rem;
+      color: var(--color-muted);
+      margin-top: 0.75rem;
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="hero" role="banner">
+  <h1>Keyword Search Tool for Google Sheets</h1>
+  <p>Search for keywords like “budget”, “urgent” or more across multiple Google Sheets in seconds.</p>
+</header>
+
+<main class="container" role="main">
+
+  <section class="card">
+    <p class="lead">
+      Instead of manually opening and searching each Google Sheet, this no-code tool lets you enter keywords and scan every file in a Drive folder. Results include sheet name, cell location, and matched content — instantly.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" target="_blank" rel="noopener noreferrer"
+         href="https://docs.google.com/spreadsheets/d/1fcBaqxUPFsEfkw8dJWv_jdIArzBsBsYLeb0KwOTdBUc/copy">📥 Open the Keyword Search Template</a>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>✨ What This Tool Does</h2>
+    <div class="grid">
+      <div class="feature">✅ Search multiple keywords across Google Sheets in a folder</div>
+      <div class="feature">🔎 Case-insensitive, comma-separated keyword search</div>
+      <div class="feature">📄 See file name, sheet name, cell location, and match</div>
+      <div class="feature">📊 All results compiled into a single table</div>
+      <div class="feature">⚙️ No coding or add-ons — built with Google Apps Script</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>🧠 Use Cases</h2>
+    <ul>
+      <li>📂 Projects & Ops Managers — track codes or statuses across client sheets</li>
+      <li>👥 Team Leads — quickly find urgent or pending items</li>
+      <li>📊 Auditors — locate financial terms like "invoice" or "budget"</li>
+      <li>✍️ Content Reviewers — ensure consistent use of campaign names</li>
+      <li>🛡️ Compliance Officers — check mentions of required policies</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>⚙️ How It Works (3 Simple Steps)</h2>
+    <h3>Step 1: Paste Folder URL</h3>
+    <p>In the “Setup” sheet, paste your Google Drive folder link.</p>
+    <h3>Step 2: Enter Keywords</h3>
+    <p>Add comma-separated keywords to search for.</p>
+    <h3>Step 3: Click “Run Search”</h3>
+    <p>The script scans all Sheets and compiles results automatically in the “Results” tab.</p>
+  </section>
+
+  <section class="card">
+    <h2>🔐 Privacy & Security</h2>
+    <ul>
+      <li>✅ Runs entirely on your Google account — no external access</li>
+      <li>✅ No third-party add-ons or extensions needed</li>
+      <li>✅ Your data stays private and secure</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>🚀 Start Using It Now</h2>
+    <p>Open the template and save yourself hours of manual keyword searching:</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" target="_blank" rel="noopener noreferrer"
+         href="https://docs.google.com/spreadsheets/d/1fcBaqxUPFsEfkw8dJWv_jdIArzBsBsYLeb0KwOTdBUc/copy">👇 Try the Keyword Search Tool</a>
+    </div>
+    <p class="meta">⚡ No add-ons. No subscriptions. Just your data — searchable and structured.</p>
+  </section>
+
+</main>
+
+<footer>
+  © 2025 EffortlesslyDone — Smart Google Sheets Tools
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"SoftwareApplication",
+  "name":"Google Sheets Keyword Search Tool",
+  "applicationCategory":"BusinessApplication",
+  "operatingSystem":"Web",
+  "description":"Search for keywords across multiple Google Sheets in a Drive folder. Returns matching cells, sheets, and content — no code required.",
+  "author":{"@type":"Organization","name":"EffortlesslyDone"},
+  "publisher":{"@type":"Organization","name":"EffortlesslyDone"},
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+  "url":"https://effortlesslydone.com/google-sheets-keyword-search-tool",
+  "image":"https://effortlesslydone.com/images/keyword-search-tool.jpg",
+  "keywords":"google sheets keyword search, spreadsheet keyword finder, drive folder scan"
+}
+</script>
+
+</body>
+</html>
