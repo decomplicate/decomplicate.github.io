@@ -15,7 +15,7 @@ const data = {
             {"name": "Gmail Search & Organize Tool", "description": "Search, Export, and Clean Your Inbox in One Click!", "url": "./template/gmailsearch.html"},
             {"name": "Gmail To Sheet Extractor Tool", "description": "Filter, Search & Export Emails in Seconds!", "url": "./template/gmailtosheet.html"},
             {"name": "Send Email from Sheet", "description": "Personalized Emails Directly from Google Sheets", "url": "./template/sendmail.html"},
-            {"name": "GSheet Keywords Search", "description": "Search Made Easy", "url": "https://docs.google.com/spreadsheets/d/1fcBaqxUPFsEfkw8dJWv_jdIArzBsBsYLeb0KwOTdBUc/copy"},
+            {"name": "GSheet Keywords Search", "description": "Search Made Easy", "url": "./template/keywords.html"},
             {"name": "Pre-Filled GForm", "description": "Create Prefilled Google Form Links in Bulk","url": "./template/gform.html"}
         ],
         business: [
